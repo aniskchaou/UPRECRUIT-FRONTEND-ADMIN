@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import './Navigation.css';
+import { Link } from "react-router-dom"
 
 const Navigation = () => (
   <aside id="left-panel" className="left-panel">
@@ -9,37 +9,37 @@ const Navigation = () => (
         <div id="main-menu" className="main-menu collapse navbar-collapse">
           <ul className="nav navbar-nav">
             <li className="active">
-              <a href="/dashboard"><i className="menu-icon fa fa-laptop"></i>Tableau de bord </a>
+              <Link to="/dashboard"><i className="menu-icon fa fa-laptop"></i>Tableau de bord </Link>
             </li>
             <li>
-              <a href="/apply"><i className="menu-icon fa fa-laptop"></i>Demande emplois </a>
+              <Link to="/apply"><i className="menu-icon fa fa-laptop"></i>Demande emplois </Link>
             </li>
             <li>
-              <a href="/candidate"><i className="menu-icon fa fa-laptop"></i>Candidats </a>
+              <Link to="/candidate"><i className="menu-icon fa fa-laptop"></i>Candidats </Link>
             </li>
             <li>
-              <a href="/category"><i className="menu-icon fa fa-laptop"></i>Categorie d'emplois </a>
+              <Link to="/category"><i className="menu-icon fa fa-laptop"></i>Categorie d'emplois </Link>
             </li>
             <li>
-              <a href="/interview"><i className="menu-icon fa fa-laptop"></i>Entretien </a>
+              <Link to="/interview"><i className="menu-icon fa fa-laptop"></i>Entretien </Link>
             </li>
             <li>
-              <a href="/job"><i className="menu-icon fa fa-laptop"></i>Emplois </a>
+              <Link to="/job"><i className="menu-icon fa fa-laptop"></i>Emplois </Link>
             </li>
             <li>
-              <a href="/location"><i className="menu-icon fa fa-laptop"></i>Location </a>
+              <Link to="/location"><i className="menu-icon fa fa-laptop"></i>Location </Link>
             </li>
             <li>
-              <a href="/skill"><i className="menu-icon fa fa-laptop"></i>Compétences </a>
+              <Link to="/skill"><i className="menu-icon fa fa-laptop"></i>Compétences </Link>
             </li>
             <li>
-              <a href="/staff"><i className="menu-icon fa fa-laptop"></i>Equipes </a>
+              <Link to="/staff"><i className="menu-icon fa fa-laptop"></i>Equipes </Link>
             </li>
             <li>
-              <a href="/task"><i className="menu-icon fa fa-laptop"></i>Taches </a>
+              <Link to="/task"><i className="menu-icon fa fa-laptop"></i>Taches </Link>
             </li>
             <li>
-              <a href="/configuration"><i className="menu-icon fa fa-laptop"></i>Paramètres </a>
+              <Link to="/configuration"><i className="menu-icon fa fa-laptop"></i>Paramètres </Link>
             </li>
           </ul>
         </div>

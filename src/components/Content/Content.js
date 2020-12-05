@@ -1,7 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import './Content.css';
-import { BrowserRouter as Router, Route } from "react-router-dom"
 import Configuration from '../Configuration/Configuration';
 import Dashbord from '../DashBoard/DashBoard';
 import Category from '../Category/Category';
@@ -13,11 +11,12 @@ import Skill from '../Skill/Skill';
 import Staff from '../Staff/Staff';
 import Task from '../Task/Task';
 import DashBoard from '../DashBoard/DashBoard';
+import {  Route } from "react-router-dom"
 
 const Content = () => (
   <div className="col-md-12">
-    <Router>
-        <div>
+    
+        
         <Route exact path="/" component={DashBoard} />
         <Route exact path="/dashboard" component={DashBoard} />
         <Route exact path="/category" component={Category} />
@@ -32,8 +31,8 @@ const Content = () => (
         <Route exact path="/configuration" component={Configuration} />
          
           
-        </div>
-      </Router>
+  
+     
    
 </div>
 );

@@ -4,6 +4,7 @@ import Header from '../Header/Header';
 import Content from '../Content/Content';
 
 import { BrowserRouter as Router, Route } from "react-router-dom"
+
 import Footer from '../Footer/Footer';
 import Path from '../Path/Path';
 
@@ -15,6 +16,7 @@ class Root extends React.Component {
   render() {
     return (
       <div>
+        <Router>
         <Navigation />
         <Header/>
         
@@ -38,6 +40,7 @@ class Root extends React.Component {
           
 
         </div>
+        </Router>
       </div>
     );
   }
