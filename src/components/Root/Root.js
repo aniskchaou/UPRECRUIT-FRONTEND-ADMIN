@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom"
 
 import Footer from '../Footer/Footer';
 import Path from '../Path/Path';
+import Login from '../Login/Login';
 
 class Root extends React.Component {
   constructor(props) {
@@ -14,6 +15,9 @@ class Root extends React.Component {
     this.state = {};
   }
   render() {
+    if (window.location.pathname=="/"){
+      return (<Login/>);
+    }
     return (
       <div>
         <Router>

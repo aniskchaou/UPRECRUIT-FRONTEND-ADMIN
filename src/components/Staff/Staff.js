@@ -13,7 +13,7 @@ const Staff = () => (
                   <tr>
                     <th>Email</th>
                     <th>Role</th>
-                    
+                    <th>Actions</th>
                     
                   </tr>
                   </thead>
@@ -21,11 +21,14 @@ const Staff = () => (
                   <tr>
                     <td>anis@gmail.com</td>
                     <td>recruiter</td>
-                   
+                    <td><button disabled type="button" className="btn btn-primary btn-sm">voir</button>
+              <button disabled type="button" className="btn btn-warning btn-sm">editer</button>
+              <button disabled type="button" className="btn btn-danger btn-sm">Supprimer</button></td>
                     
                  
                   </tr></tbody>
                   </table>
+                  <button  type="button" className="btn btn-success btn-sm">Ajouter</button>
   </div>
 </div>
 );
