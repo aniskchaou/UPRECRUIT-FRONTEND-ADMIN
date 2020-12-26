@@ -1,6 +1,6 @@
 import React from 'react';
 import './Navigation.css';
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 
 const Navigation = () => (
   <aside id="left-panel" className="left-panel">
@@ -8,38 +8,38 @@ const Navigation = () => (
 
         <div id="main-menu" className="main-menu collapse navbar-collapse">
           <ul className="nav navbar-nav">
-            <li className="active">
-              <Link to="/dashboard"><i className="menu-icon fa fa-laptop"></i>Tableau de bord </Link>
+            <li >
+              <NavLink activeClassName="activeLink" to="/dashboard"><i className="menu-icon fa fa-laptop"></i>Tableau de bord </NavLink>
             </li>
-            <li>
-              <Link to="/apply"><i className="menu-icon fa fa-laptop"></i>Demande emplois </Link>
+            <li >
+              <NavLink activeClassName="activeLink" to="/apply"><i className="menu-icon fa fa-briefcase"></i>Demande emplois </NavLink>
             </li>
-            <li>
-              <Link to="/candidate"><i className="menu-icon fa fa-laptop"></i>Candidats </Link>
+            <li >
+              <NavLink activeClassName="activeLink" to="/candidate"><i className="menu-icon fa fa-user"></i>Candidats </NavLink>
             </li>
-            <li>
-              <Link to="/category"><i className="menu-icon fa fa-laptop"></i>Categorie d'emplois </Link>
+            <li >
+              <NavLink activeClassName="activeLink" to="/category"><i className="menu-icon fa fa-columns"></i>Categorie d'emplois </NavLink>
             </li>
-            <li>
-              <Link to="/interview"><i className="menu-icon fa fa-laptop"></i>Entretien </Link>
+            <li >
+              <NavLink activeClassName="activeLink" to="/interview"><i className="menu-icon fa fa-award"></i>Entretien </NavLink>
             </li>
-            <li>
-              <Link to="/job"><i className="menu-icon fa fa-laptop"></i>Emplois </Link>
+            <li >
+              <NavLink activeClassName="activeLink" to="/job"><i className="menu-icon fa fa-brain"></i>Emplois </NavLink>
             </li>
-            <li>
-              <Link to="/location"><i className="menu-icon fa fa-laptop"></i>Location </Link>
+            <li >
+              <NavLink activeClassName="activeLink" to="/location"><i className="menu-icon fa fa-archway"></i>Location </NavLink>
             </li>
-            <li>
-              <Link to="/skill"><i className="menu-icon fa fa-laptop"></i>Compétences </Link>
+            <li >
+              <NavLink activeClassName="activeLink" to="/skill"><i className="menu-icon fa fa-bolt"></i>Compétences </NavLink>
             </li>
-            <li>
-              <Link to="/staff"><i className="menu-icon fa fa-laptop"></i>Equipes </Link>
+            <li >
+              <NavLink activeClassName="activeLink" to="/staff"><i className="menu-icon fa fa-users"></i>Equipes </NavLink>
             </li>
-            <li>
-              <Link to="/task"><i className="menu-icon fa fa-laptop"></i>Taches </Link>
+            <li >
+              <NavLink activeClassName="activeLink" to="/task"><i className="menu-icon fa fa-bars"></i>Taches </NavLink>
             </li>
-            <li>
-              <Link to="/configuration"><i className="menu-icon fa fa-laptop"></i>Paramètres </Link>
+            <li >
+              <NavLink activeClassName="activeLink" to="/configuration"><i className="menu-icon fa fa-cog"></i>Paramètres </NavLink>
             </li>
           </ul>
         </div>

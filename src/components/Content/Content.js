@@ -13,6 +13,7 @@ import Task from '../Task/Task';
 import DashBoard from '../DashBoard/DashBoard';
 import {  Route } from "react-router-dom"
 import Login from '../Login/Login';
+import ApplyJob from './../ApplyJob/ApplyJob';
 
 const Content = () => (
   <div className="col-md-12">
@@ -21,7 +22,7 @@ const Content = () => (
         <Route exact path="/" component={DashBoard} />
         <Route exact path="/dashboard" component={DashBoard} />
         <Route exact path="/category" component={Category} />
-        <Route exact path="/apply" component={Category} />
+        <Route exact path="/apply" component={ApplyJob} />
         <Route exact path="/candidate" component={Candidate} />
         <Route exact path="/interview" component={Interview} />
         <Route exact path="/job" component={Job} />

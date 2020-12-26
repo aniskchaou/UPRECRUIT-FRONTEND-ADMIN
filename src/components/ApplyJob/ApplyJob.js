@@ -1,6 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './ApplyJob.css';
+import AddApplyJob from './../AddApplyJob/AddApplyJob';
+import EditApplyJob from './../EditApplyJob/EditApplyJob';
+import ViewApplyJob from './../ViewApplyJob/ViewApplyJob';
+import ViewCandidate from './../ViewCandidate/ViewCandidate';
+
+
+const deleteApplyJob=()=>{
+  return  window.confirm("Êtes-vous sûr de vouloir supprimer cet candidat ?")
+}
+
 
 const ApplyJob = () => (
   <div className="card">
@@ -24,16 +34,102 @@ const ApplyJob = () => (
             <td>Anis</td>
             <td>developpeur</td>
             <td>Paris</td>
-            <td>1Active</td>
-            <td><button disabled type="button" className="btn btn-primary btn-sm">voir</button>
-              <button disabled type="button" className="btn btn-warning btn-sm">editer</button>
-              <button disabled type="button" className="btn btn-danger btn-sm">Supprimer</button></td>
+            <td><span class="badge badge-success">Accepté</span></td>
+            <td>
+            <button  type="button" data-toggle="modal" data-target="#viewCandidate" class="btn btn-info btn-sm"><i class="fas fa-user"></i></button>
+              <button  type="button" data-toggle="modal" data-target="#viewApplyJob" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
+              <button type="button" data-toggle="modal" data-target="#editApplyJob"class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+              <button type="button" class="btn btn-danger btn-sm" onClick={deleteApplyJob}><i class="fas fa-trash-alt"></i></button></td>
 
 
 
           </tr></tbody>
       </table>
-      <button  type="button" className="btn btn-success btn-sm">Ajouter</button>
+      <button  type="button" data-toggle="modal" data-target="#addApplyJob" className="btn btn-success btn-sm">Ajouter</button>
+
+      <div class="modal fade" id="addApplyJob" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Ajouter demande d'emploi</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <AddApplyJob/>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+             
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="modal fade" id="editApplyJob" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Editer demande d'emploi</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <EditApplyJob/>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+             
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="modal fade" id="viewCandidate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Voir profil</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <ViewCandidate/>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="viewApplyJob" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Documents</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <ViewApplyJob/>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
+
     </div>
   </div>
 );
