@@ -1,9 +1,9 @@
 # Up Recruit
 
-Up recruit is a web application that allows you to manage the staff recruitment process for companies and establishments.
+Up recruit is a web application that allows you to manage the staff recruitment process for companies.
 
 ## Informations
--Status : under development
+- Status : under development
 - Latest version: 1.0
 - Sector: industry
 - Created: November 2020
