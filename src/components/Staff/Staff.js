@@ -1,14 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './Staff.css';
 import AddStaff from './../AddStaff/AddStaff';
 import EditStaff from './../EditStaff/EditStaff';
 import ViewStaff from './../ViewStaff/ViewStaff';
+import { LoadJS } from './../init';
 const deleteStaff=()=>{
   return  window.confirm("Êtes-vous sûr de vouloir supprimer  ?")
 }
 
-const Staff = () => (
+const Staff = ()=>{
+
+  useEffect(() => {
+    // Runs ONCE after initial rendering
+    LoadJS()
+    console.log('hello')
+  }, []);
+
+
+ return(
   <div className="card">
   <div className="card-header">
     <strong className="card-title">Equipes</strong>
@@ -100,7 +110,7 @@ const Staff = () => (
       </div>     
   </div>
 </div>
-);
+)};
 
 Staff.propTypes = {};
 

@@ -1,14 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './Job.css';
 import EditJob from './../EditJob/EditJob';
 import ViewJob from './../ViewJob/ViewJob';
+import { LoadJS } from './../init';
 
 const deleteJob=()=>{
   return  window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?")
 }
 
-const Job = () => (
+const Job = () =>{
+
+  useEffect(() => {
+    // Runs ONCE after initial rendering
+    LoadJS()
+    console.log('hello')
+  }, []);
+
+
+ return(
   <div className="card">
   <div className="card-header">
     <strong className="card-title">Emplois</strong>
@@ -83,7 +93,7 @@ const Job = () => (
       </div>
   </div>
 </div>
-);
+)};
 
 Job.propTypes = {};
 

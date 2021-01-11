@@ -24,7 +24,7 @@ const Navigation = () => (
               <NavLink activeClassName="activeLink" to="/interview"><i className="menu-icon fa fa-award"></i>Entretien </NavLink>
             </li>
             <li >
-              <NavLink activeClassName="activeLink" to="/job"><i className="menu-icon fa fa-brain"></i>Emplois </NavLink>
+              <NavLink activeClassName="activeLink" to="/job"><i className="menu-icon fa fa-brain"></i>Offres d'emplois </NavLink>
             </li>
             <li >
               <NavLink activeClassName="activeLink" to="/location"><i className="menu-icon fa fa-archway"></i>Location </NavLink>

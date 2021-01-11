@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './Location.css';
 import AddLocation from './../AddLocation/AddLocation';
 import EditLocation from './../EditLocation/EditLocation';
 import ViewLocation from './../ViewLocation/ViewLocation';
+import { LoadJS } from './../init';
 
 const deleteLocation=()=>{
   return  window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?")
 }
 
-const Location = () => (
+const Location = () =>{
+
+  useEffect(() => {
+    // Runs ONCE after initial rendering
+    LoadJS()
+    console.log('hello')
+  }, []);
+
+
+ return(
   <div className="card">
   <div className="card-header">
     <strong className="card-title">Location</strong>
@@ -98,7 +108,7 @@ const Location = () => (
       </div>
   </div>
 </div>
-);
+)};
 
 Location.propTypes = {};
 

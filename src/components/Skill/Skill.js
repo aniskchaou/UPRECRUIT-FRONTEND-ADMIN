@@ -1,14 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './Skill.css';
 import AddSkill from './../AddSkill/AddSkill';
+import { LoadJS } from './../init';
 
 const deleteSkill=()=>{
   return  window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?")
 }
 
 
-const Skill = () => (
+const Skill = () =>{
+
+  useEffect(() => {
+    // Runs ONCE after initial rendering
+    LoadJS()
+    console.log('hello')
+  }, []);
+
+
+ return(
   <div className="card">
   <div className="card-header">
     <strong className="card-title">Compétences</strong>
@@ -95,7 +105,7 @@ const Skill = () => (
       </div>
   </div>
 </div>
-);
+)};
 
 Skill.propTypes = {};
 

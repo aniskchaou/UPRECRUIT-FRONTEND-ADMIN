@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './User.css';
 import EditUser from './../EditUser/EditUser';
 import ViewUser from './../ViewUser/ViewUser';
+import { LoadJS } from './../init';
 const deleteUser=()=>{
 
     return  window.confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?")
 }
-const User = () => (
+const User = () =>{
+
+  useEffect(() => {
+    // Runs ONCE after initial rendering
+    LoadJS()
+    console.log('hello')
+  }, []);
+
+
+ return(
   <div className="card">
   <div className="card-header">
       <strong className="card-title">Utilisateurs</strong>
@@ -82,7 +92,7 @@ const User = () => (
 
   </div>
 </div>
-);
+)};
 
 User.propTypes = {};
 

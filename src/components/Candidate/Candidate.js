@@ -1,14 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './Candidate.css';
 import EditCandidate from './../EditCandidate/EditCandidate';
+import { LoadJS } from './../init';
 
 const deleteCandidate=()=>{
   return  window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?")
 }
 
-const Candidate = () => (
+const Candidate = () =>{
 
+  useEffect(() => {
+    // Runs ONCE after initial rendering
+    LoadJS()
+    console.log('hello')
+  }, []);
+
+
+ return(
   <div className="card">
     <div className="card-header">
       <strong className="card-title">Candidats</strong>
@@ -104,7 +113,7 @@ const Candidate = () => (
 
     </div>
   </div>
-);
+)};
 
 Candidate.propTypes = {};
 

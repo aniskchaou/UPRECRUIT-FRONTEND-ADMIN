@@ -1,15 +1,58 @@
 import React from 'react';
 import './AddCategory.css';
 import { useForm } from 'react-hook-form'
-
-
-
-const AddCategory = () => {
+import axios from 'axios';
+import  { Redirect } from 'react-router-dom'
+import Category from './../Category/Category';
+import AlertMsgs from './AlertMsg';
+const AddCategory = (props) => {
     const { register, handleSubmit, errors } = useForm() // initialise the hook
-    const onSubmit = (data) => { console.log(data) } // callback when validation pass
+    var msg='hhj';
+    
+   
+    const onSubmit = (data) => { console.log(data) 
+       
+          const myNotification = window.createNotification({
+           
+      });
+      myNotification({ 
+        title: 'Title',
+        message: 'Notification Message',
+         // close on click
+  closeOnClick: true,
+
+  // displays close button
+  displayCloseButton: false,
+
+  // nfc-top-left
+  // nfc-bottom-right
+  // nfc-bottom-left
+  positionClass: 'nfc-top-right',
+
+  // callback
+  onclick: false,
+
+  // timeout in milliseconds
+  
+
+  // success, info, warning, error, and none
+  theme: 'success'
+      });
+        axios.post('http://localhost:8080/category/create', data)
+        .then(res => {
+         
+        }).catch(err=>{
+            
+        });
+        msg="jfcfc"
+       
+        //window.alert("fjjg")
+    } // callback when validation pass
 
     return (
         <div className="AddCategory">
+        
+        
             <form className="ajax-form" onSubmit={handleSubmit(onSubmit)} id="createForm" >
 
                 <div id="education_fields">
@@ -38,3 +81,5 @@ AddCategory.propTypes = {};
 AddCategory.defaultProps = {};
 
 export default AddCategory;
+
+

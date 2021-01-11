@@ -1,14 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './Interview.css';
 import AddInterview from './../AddInterview/AddInterview';
 import EditInterview from './../EditInterview/EditInterview';
 import ViewInterview from './../ViewInterview/ViewInterview';
+import { LoadJS } from './../init';
 const deleteInterview=()=>{
   return  window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?")
 }
 
-const Interview = () => (
+const Interview = () =>{
+
+  useEffect(() => {
+    // Runs ONCE after initial rendering
+    LoadJS()
+    console.log('hello')
+  }, []);
+
+
+ return(
   <div className="card">
   <div className="card-header">
     <strong className="card-title">Entretiens</strong>
@@ -104,7 +114,7 @@ const Interview = () => (
 
   </div>
 </div>
-);
+)};
 
 Interview.propTypes = {};
 

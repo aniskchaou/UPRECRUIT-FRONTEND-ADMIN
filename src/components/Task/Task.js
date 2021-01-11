@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './Task.css';
 import AddTask from '../AddTask/AddTask';
 import EditTask from "../EditTask/EditTask";
 import ViewTask from "../ViewTask/ViewTask";
+import { LoadJS } from './../init';
 
 const deleteTask=()=>{
    return  window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?")
 }
 
 
-const Task = () => (
+const Task = () =>{
+
+  useEffect(() => {
+    // Runs ONCE after initial rendering
+    LoadJS()
+    console.log('hello')
+  }, []);
+
+
+ return(
   <div className="card">
     <div className="card-header">
       <strong className="card-title">Taches</strong>
@@ -106,7 +116,7 @@ const Task = () => (
       
     </div>
   </div>
-);
+)};
 
 Task.propTypes = {};
 
