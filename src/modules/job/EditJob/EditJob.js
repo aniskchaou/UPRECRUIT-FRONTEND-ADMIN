@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import './EditJob.css';
 import { useForm } from 'react-hook-form';
 import CategoryTestService from '../../../main/mocks/CategoryTestService';
+import JobTestService from '../../../main/mocks/JobTestService';
+import showMessage from '../../../libraries/messages/messages';
+import jobMessage from '../../../main/messages/messages';
 
 const EditJob = (props) => {
   const { register, handleSubmit, errors } = useForm() // initialise the hook
@@ -16,25 +19,12 @@ const EditJob = (props) => {
 
   const onSubmit = (data) => {
 
-    console.log(data)
-    setMessage('hgvhgvjhcghcfcfhf')
-    CategoryTestService.update(props.job, data)
-
-    const myNotification = window.createNotification({});
-    myNotification({
-      title: 'Title',
-      message: 'Notification Message',
-      closeOnClick: true,
-      displayCloseButton: false,
-      positionClass: 'nfc-top-right',
-      onclick: false,
-      theme: 'success'
-    });
-
+    JobTestService.update(props.job, data)
+    showMessage('Confirmation', jobMessage.edit, 'success')
   }
 
   return (
-    <div className="AddJob">
+    <div className="EditJob">
       <h2>{message}</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div class="form-group row">
@@ -121,7 +111,7 @@ const EditJob = (props) => {
 
         <div class="form-group row">
           <div class="offset-4 col-8">
-            <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+            <button name="submit" type="submit" class="btn btn-primary"><i className="fa fa-check"></i><font ><font  > Editer</font></font></button>
           </div>
         </div>
       </form>

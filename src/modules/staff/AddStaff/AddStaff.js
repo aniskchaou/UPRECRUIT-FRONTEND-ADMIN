@@ -299,14 +299,13 @@ const AddStaff = () => (
             <div className="form-group">
                 <label for="company_phone">  Nom de rôle  </label>
                 <select className="form-control" name="role_id" id="role_id">
-                    <option value="1">  Administrateur d'applications  </option>
+                    <option value="1">  Administrateur   </option>
                     <option value="2">  Directeur  </option>
                 </select>
             </div>
 
-            <button type="button" id="save-form" className="btn btn-success waves-effect waves-light m-r-10">
-                Sauvegarder                          </button>
-            <button type="reset" className="btn btn-inverse waves-effect waves-light">  Réinitialiser  </button>
+            <button type="button" id="save-form" className="btn btn-success waves-effect waves-light m-r-10"><i className="fa fa-check"></i><font ><font  > Sauvegarder</font></font>                         </button>
+
 
 
         </form>

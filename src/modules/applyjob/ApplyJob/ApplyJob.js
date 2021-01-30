@@ -74,13 +74,14 @@ const ApplyJob = () => {
             </tr>
           </tfoot>
         </table>
-        <button type="button" data-toggle="modal" data-target="#addApplyJob" className="btn btn-success btn-sm">Ajouter</button>
+        <button type="button" data-toggle="modal" data-target="#addApplyJob" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
+ Ajouter</button>
 
         <div class="modal fade" id="addApplyJob" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Ajouter demande d'emploi</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Nouveau</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -101,7 +102,7 @@ const ApplyJob = () => {
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Editer demande d'emploi</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -122,7 +123,7 @@ const ApplyJob = () => {
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Voir profil</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Voir</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>

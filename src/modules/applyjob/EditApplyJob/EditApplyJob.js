@@ -36,18 +36,21 @@ const EditApplyJob = () => (
 </div>
 
 
-<div id="show-sections"><div className="row b-b">
-  <div className="col-md-8 offset-md-4">
-    <div className="form-group">
-      <h6>
-        <strong><font   ><font   >
-          Photo                    </font></font></strong>
-      </h6>
-      <input className="select-file" accept=".png,.jpg,.jpeg" type="file" name="photo" /><br />
-      <span><font   ><font   >Nous acceptons les fichiers PNG, JPG et JPEG</font></font></span>
-    </div>
-  </div>
-</div>
+      <div id="show-sections">
+
+        <div className="row b-b">
+          <div className="col-md-4 pl-4 pr-4 pb-4 pt-4 b-b">
+            <h5><font   ><font   >Photo</font></font></h5>
+          </div>
+
+
+          <div className="col-md-8 pb-4 pt-4 b-b">
+              <div className="form-group">
+              <input className="select-file" accept=".png,.jpg,.jpeg,.pdf,.doc,.docx,.xls,.xlsx,.rtf" type="file" name="resume" /><br />
+
+              </div>
+            </div>
+          </div>
 
   <div className="row b-b">
     <div className="col-md-4 pl-4 pr-4 pb-4 pt-4 b-b">
@@ -58,7 +61,7 @@ const EditApplyJob = () => (
     <div className="col-md-8 pb-4 pt-4 b-b">
       <div className="form-group">
         <input className="select-file" accept=".png,.jpg,.jpeg,.pdf,.doc,.docx,.xls,.xlsx,.rtf" type="file" name="resume" /><br />
-        <span><font   ><font   >Nous acceptons les fichiers JPEG, JPG, PNG, DOC, DOCX, RTF, XLS, XLSX et PDF</font></font></span>
+
       </div>
     </div>
 
@@ -80,7 +83,7 @@ const EditApplyJob = () => (
 
 <br />
 <button type="button" id="save-form" className="btn btn-success"><i className="fa fa-check"></i>
-<font   ><font   > Sauvegarder</font></font></button>
+        <font   ><font   > Editer</font></font></button>
 
 </form>
   </div>

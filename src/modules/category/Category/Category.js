@@ -87,7 +87,8 @@ export default class PersonList extends React.Component {
 
         </tr>))}</tbody>
     </table>
-    <button type="button" data-toggle="modal" data-target="#addCategory" className="btn btn-success btn-sm">Ajouter</button>
+          <button type="button" data-toggle="modal" data-target="#addCategory" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
+ Ajouter</button>
 
     <div className="modal fade" id="editCategory" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -113,7 +114,7 @@ export default class PersonList extends React.Component {
       <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                  <h5 className="modal-title" id="exampleModalLongTitle">Nouveau</h5>
             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>

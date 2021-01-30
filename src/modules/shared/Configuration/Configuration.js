@@ -49,9 +49,7 @@ const Configuration = () => (
       </div>
     </div>
 
-    <button id="payment-button" type="submit" class="btn btn-info">
-                                                  <i class="fa fa-save fa-lg"></i>&nbsp;
-                                                  <span id="payment-button-amount">Enregister</span>
+      <button id="payment-button" type="submit" class="btn btn-info"><i className="fa fa-check"></i><font ><font  > Sauvegarder</font></font>
                                                   
                                               </button>
 

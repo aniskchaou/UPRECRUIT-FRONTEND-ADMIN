@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './DashBoard.css';
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
 
 const DashBoard = () => (
     <div className="row">
@@ -32,7 +34,7 @@ const DashBoard = () => (
                         <div className="stat-content">
                             <div className="text-left dib">
                                 <div className="stat-text"><span className="count">5</span></div>
-                                <div className="stat-heading">Entretien</div>
+                                <div className="stat-heading">Entretiens</div>
                             </div>
                         </div>
                     </div>
@@ -91,63 +93,30 @@ const DashBoard = () => (
 
 
         
-            <div class="col-md-6">
+        <div class="col-md-12">
 
                 <div class="card">
                     <div class="card-header">
-                        <strong class="card-title">Taches en cours</strong>
+                    <strong class="card-title">Entretiens</strong>
                     </div>
                     <div class="card-body">
-                        <div class="alert alert-primary" role="alert">
-                            taches 1
-                                    </div>
-                        <div class="alert alert-secondary" role="alert">
-                        taches 2
-                                    </div>
-                        <div class="alert alert-success" role="alert">
-                        taches 3
-                                    </div>
-                        <div class="alert alert-danger" role="alert">
-                        taches 4
-                                    </div>
-                        <div class="alert alert-warning" role="alert">
-                        taches 5
-                                    </div>
+                    <FullCalendar
+                        plugins={[dayGridPlugin]}
+                        initialView="dayGridMonth"
+                        weekends={false}
+                        events={[
+                            { title: 'entretien Développeur web', date: '2021-02-01' },
+                            { title: 'event 2', date: '2019-04-02' }
+                        ]}
+                    />
                        
                     </div>
                 </div>
 
-            </div>
+        </div>
 
 
-            <div class="col-md-6">
-
-                <div class="card">
-                    <div class="card-header">
-                        <strong class="card-title">Taches terminées</strong>
-                    </div>
-                    <div class="card-body">
-                    <div class="alert alert-primary" role="alert">
-                            taches 1
-                                    </div>
-                        <div class="alert alert-secondary" role="alert">
-                        taches 2
-                                    </div>
-                        <div class="alert alert-success" role="alert">
-                        taches 3
-                                    </div>
-                        <div class="alert alert-danger" role="alert">
-                        taches 4
-                                    </div>
-                        <div class="alert alert-warning" role="alert">
-                        taches 5
-                                    </div>
-                       
-                    </div>
-                </div>
-
-            </div>
-
+      
 
 
         

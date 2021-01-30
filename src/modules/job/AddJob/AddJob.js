@@ -7,7 +7,8 @@ import CategoryTestService from '../../../main/mocks/CategoryTestService';
 import showMessage from '../../../libraries/messages/messages'
 import jobMessage from '../../../main/messages/messages'
 import jobValidation from '../../../main/validations/validations'
-
+import ApplyJobService from '../../../main/services/ApplyJobService'
+import JobTestService from '../../../main/mocks/JobTestService';
 const AddJob = () => {
 
 
@@ -20,7 +21,7 @@ const AddJob = () => {
   const [job, setJob] = useState(initialState);
 
   const onSubmit = (data) => {
-    CategoryTestService.create(data)
+    JobTestService.create(data)
     setJob(initialState)
     showMessage('Confirmation', jobMessage.add, 'success')
   }
@@ -137,7 +138,7 @@ const AddJob = () => {
 
         <div class="form-group row">
           <div class="offset-4 col-8">
-            <button name="submit" type="submit" class="btn btn-primary"><i class="fas fa-plus"></i>  Ajouter</button>
+            <button name="submit" type="submit" class="btn btn-primary"><i className="fa fa-check"></i><font ><font  > Sauvegarder</font></font></button>
           </div>
         </div>
 

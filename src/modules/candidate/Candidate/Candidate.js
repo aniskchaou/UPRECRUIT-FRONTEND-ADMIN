@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import './Candidate.css';
 import EditCandidate from './../EditCandidate/EditCandidate';
 import { LoadJS } from './../../../libraries/datatables/datatables';
+import ViewCandidate from '../ViewCandidate/ViewCandidate';
 
 const deleteCandidate=()=>{
   return  window.confirm("Êtes-vous sûr de vouloir supprimer cette utilisateur ?")
@@ -73,7 +74,7 @@ const Candidate = () =>{
 
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
               
             </div>
           </div>
@@ -84,7 +85,7 @@ const Candidate = () =>{
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+               <h5 class="modal-title" id="exampleModalLongTitle">Edit</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -93,7 +94,7 @@ const Candidate = () =>{
               <EditCandidate />
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
               
             </div>
           </div>
@@ -105,16 +106,16 @@ const Candidate = () =>{
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+               <h5 class="modal-title" id="exampleModalLongTitle">Voir</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-
+               <ViewCandidate />
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
               
             </div>
           </div>

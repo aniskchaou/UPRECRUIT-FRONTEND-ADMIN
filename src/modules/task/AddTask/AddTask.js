@@ -18,7 +18,7 @@ const AddTask = () => (
                         </div>
                     </div>
                     <div class="form-actions">
-                        <button type="button" id="create-todo-item" class="btn btn-success">Create <i class="fa fa-arrow-right"></i></button>
+                <button type="button" id="create-todo-item" class="btn btn-success"><i className="fa fa-check"></i><font ><font  > Sauvegarder</font></font></button>
                     </div>
     </form>
   </div>

@@ -12,16 +12,16 @@ const Navigation = () => (
               <NavLink activeClassName="activeLink" to="/dashboard"><i className="menu-icon fa fa-laptop"></i>Tableau de bord </NavLink>
             </li>
             <li >
-              <NavLink activeClassName="activeLink" to="/apply"><i className="menu-icon fa fa-briefcase"></i>Demande emplois </NavLink>
+            <NavLink activeClassName="activeLink" to="/apply"><i className="menu-icon fa fa-briefcase"></i>Demandes emplois <span className="badge badge-primary">5</span> </NavLink>
             </li>
             <li >
               <NavLink activeClassName="activeLink" to="/candidate"><i className="menu-icon fa fa-user"></i>Candidats </NavLink>
             </li>
             <li >
-              <NavLink activeClassName="activeLink" to="/category"><i className="menu-icon fa fa-columns"></i>Categorie d'emplois </NavLink>
+            <NavLink activeClassName="activeLink" to="/category"><i className="menu-icon fa fa-columns"></i>Categories d'emplois </NavLink>
             </li>
             <li >
-              <NavLink activeClassName="activeLink" to="/interview"><i className="menu-icon fa fa-award"></i>Entretien </NavLink>
+            <NavLink activeClassName="activeLink" to="/interview"><i className="menu-icon fa fa-award"></i>Entretiens  <span className="badge badge-warning">2</span> </NavLink>
             </li>
             <li >
               <NavLink activeClassName="activeLink" to="/job"><i className="menu-icon fa fa-brain"></i>Offres d'emplois </NavLink>
@@ -33,7 +33,7 @@ const Navigation = () => (
               <NavLink activeClassName="activeLink" to="/skill"><i className="menu-icon fa fa-bolt"></i>Compétences </NavLink>
             </li>
             <li >
-              <NavLink activeClassName="activeLink" to="/staff"><i className="menu-icon fa fa-users"></i>Equipes </NavLink>
+            <NavLink activeClassName="activeLink" to="/staff"><i className="menu-icon fa fa-users"></i>Equipes  <span className="badge badge-info">16</span> </NavLink>
             </li>
             <li >
               <NavLink activeClassName="activeLink" to="/task"><i className="menu-icon fa fa-bars"></i>Taches </NavLink>

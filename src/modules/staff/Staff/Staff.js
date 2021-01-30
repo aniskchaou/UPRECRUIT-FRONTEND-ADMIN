@@ -50,14 +50,15 @@ const Staff = () => {
             </tr>
             </tbody>
         </table>
-        <button type="button" data-toggle="modal" data-target="#addStaff" className="btn btn-success btn-sm">Ajouter</button>
+        <button type="button" data-toggle="modal" data-target="#addStaff" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
+ Ajouter</button>
 
 
         <div class="modal fade" id="addStaff" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Nouveau</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -66,7 +67,7 @@ const Staff = () => {
                 <AddStaff />
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                 
               </div>
             </div>
@@ -78,7 +79,7 @@ const Staff = () => {
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -87,7 +88,7 @@ const Staff = () => {
                 <EditStaff />
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                 
               </div>
             </div>
@@ -108,7 +109,7 @@ const Staff = () => {
                 <ViewStaff />
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                 
               </div>
             </div>

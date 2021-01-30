@@ -4,11 +4,11 @@ import './Job.css';
 import { LoadJS } from '../../../libraries/datatables/datatables';
 import EditJob from '../EditJob/EditJob';
 import AddJob from '../AddJob/AddJob';
-import CategoryTestService from '../../../main/mocks/CategoryTestService';
 import useForceUpdate from 'use-force-update';
 import showMessage from '../../../libraries/messages/messages';
 import jobMessage from '../../../main/messages/messages';
 import ApplyJobService from '../../../main/services/ApplyJobService';
+import JobTestService from '../../../main/mocks/JobTestService';
 
 const Job = () => {
   
@@ -36,7 +36,7 @@ const Job = () => {
 
 
   const retrieveJobs = () => {
-    var jobs = CategoryTestService.getAll();
+    var jobs = JobTestService.getAll();
     setJobs(jobs);
   };
 
@@ -50,7 +50,7 @@ const Job = () => {
     var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
     if (r) {
       showMessage('Confirmation', jobMessage.delete, 'success')
-      CategoryTestService.remove(data)
+      JobTestService.remove(data)
     resfresh()
     }
       
@@ -124,7 +124,8 @@ const Job = () => {
             </tr>
           </tfoot>
         </table>
-        <button type="button" className="btn btn-success btn-sm" data-toggle="modal" data-target="#addJob">Ajouter</button>
+        <button type="button" className="btn btn-success btn-sm" data-toggle="modal" data-target="#addJob"><i class="fas fa-plus"></i>
+ Ajouter</button>
 
         <div class="modal fade" id="addJob" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -160,7 +161,7 @@ const Job = () => {
                 <EditJob job={updatedItem} />
               </div>
               <div class="modal-footer">
-                <button type="button" onClick={resfresh} class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" onClick={resfresh} class="btn btn-secondary" data-dismiss="modal">Fermer</button>
 
               </div>
             </div>
@@ -181,7 +182,7 @@ const Job = () => {
 
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
 
               </div>
             </div>

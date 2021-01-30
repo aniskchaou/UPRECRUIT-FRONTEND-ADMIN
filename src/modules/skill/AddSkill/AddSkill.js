@@ -28,15 +28,13 @@ const AddSkill = () => (
                         <div className="form-group">
                             <div className="input-group">
                                 <input type="text" name="name[]" className="form-control" placeholder="Nom des compétences" value="" />
-                                <div className="input-group-append">
-                                    <button className="btn btn-success" type="button" id="add-more"><i className="fa fa-plus"></i></button>
-                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <button type="button" id="save-form" className="btn btn-success"><i className="fa fa-check"></i><font   ><font   > sauver</font></font></button>
+            <button type="button" id="save-form" className="btn btn-success"><i className="fa fa-check"></i><font ><font  > Sauvegarder</font></font></button>
 
         </form>
     </div>

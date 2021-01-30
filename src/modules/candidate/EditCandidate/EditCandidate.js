@@ -4,7 +4,7 @@ import './EditCandidate.css';
 
 const EditCandidate = () => (
   <div className="EditCandidate">
-    EditCandidate Component
+    En cours de developpment
   </div>
 );
 

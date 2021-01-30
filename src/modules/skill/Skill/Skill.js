@@ -65,7 +65,8 @@ const Skill = () => {
                   </tr>
                   </tfoot>
         </table>
-        <button type="button" data-toggle="modal" data-target="#addSkill" className="btn btn-success btn-sm">Ajouter</button>
+        <button type="button" data-toggle="modal" data-target="#addSkill" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
+ Ajouter</button>
 
         <div class="modal fade" id="addSkill" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -80,7 +81,7 @@ const Skill = () => {
                 <AddSkill />
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                 
               </div>
             </div>
@@ -100,7 +101,7 @@ const Skill = () => {
 
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                 
               </div>
             </div>
@@ -120,7 +121,7 @@ const Skill = () => {
 
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                 
               </div>
             </div>

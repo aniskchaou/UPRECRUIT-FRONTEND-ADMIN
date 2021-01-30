@@ -10,7 +10,7 @@ const AddLocation = () => (
                             <div className="col-md-9">
 
                                 <div className="form-group">
-                                    <label for="address">Country</label>
+                        <label for="address">Pays</label><br />
                                     <select name="country_id" id="country_id" className="form-control select2 custom-select select2-hidden-accessible" tabindex="-1" aria-hidden="true">
                                                                                     <option value="1">Afghanistan</option>
                                                                                     <option value="2">Albania</option>
@@ -257,7 +257,7 @@ const AddLocation = () => (
                                                                                     <option value="243">Zaire</option>
                                                                                     <option value="244">Zambia</option>
                                                                                     <option value="245">Zimbabwe</option>
-                                                                            </select><span className="select2 select2-container select2-container--default" dir="ltr" ><span className="selection"><span className="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-country_id-container"><span className="select2-selection__rendered" id="select2-country_id-container" title="Afghanistan">Afghanistan</span><span className="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span className="dropdown-wrapper" aria-hidden="true"></span></span>
+                        </select>
                                 </div>
 
                             </div>
@@ -268,19 +268,15 @@ const AddLocation = () => (
                                 <div className="col-sm-9 nopadding">
                                     <div className="form-group">
                                         <div className="input-group">
-                                            <input type="text" name="locations[]" className="form-control" placeholder="Job Locations Name"/>
-                                            <div className="input-group-append">
-                                                <button className="btn btn-success" type="button" id="add-more">
-                                                    <i className="fa fa-plus"></i>
-                                                </button>
-                                            </div>
+                                <input type="text" name="locations[]" className="form-control" placeholder="lieu" />
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <button type="button" id="save-form" className="btn btn-success"><i className="fa fa-check"></i> Save</button>
+            <button type="button" id="save-form" className="btn btn-success"><i className="fa fa-check"></i> Sauvegarder</button>
 
                     </form>
   </div>

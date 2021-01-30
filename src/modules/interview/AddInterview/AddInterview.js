@@ -53,7 +53,7 @@ const AddInterview = () => (
                 </div>
             </div>
 
-            <button className="btn btn-success">Valider</button>
+                <button className="btn btn-success"><i className="fa fa-check"></i><font ><font  > Sauvegarder</font></font></button>
         </div>
     </form>
   </div>

@@ -70,7 +70,7 @@ const AddCategory = (props) => {
                     </div>
                 </div>
 
-                <button type="submit" id="save-form" className="btn btn-success"><i className="fa fa-check"></i><font ><font  > sauver</font></font></button>
+                <button type="submit" id="save-form" className="btn btn-success"><i className="fa fa-check"></i><font ><font  > Sauvegarder</font></font></button>
             </form>
         </div>
     )
