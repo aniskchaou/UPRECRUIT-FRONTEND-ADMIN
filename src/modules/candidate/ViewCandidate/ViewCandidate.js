@@ -4,10 +4,7 @@ import './ViewCandidate.css';
 import { LoadJS } from '../../../libraries/datatables/datatables';
 
 const ViewCandidate = () => {
-    useEffect(() => {
-        LoadJS()
-        //retrieveJobs()
-    }, []);
+
     return (
         <div className="ViewCandidate">
             <div className="slimscrollright" id="right-sidebar-content">
