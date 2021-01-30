@@ -20,15 +20,13 @@ const ApplyJob = () => {
 
   useEffect(() => {
     LoadJS()
-    retrieveJobs()
+    //retrieveJobs()
   }, []);
   
-  const retrieveJobs = () => {
+  const getAll = () => {
     ApplyJobService.getAll()
       .then(response => {
         setJobs(response.data);
-
-        console.log(response.data);
       })
       .catch(e => {
         console.log(e);

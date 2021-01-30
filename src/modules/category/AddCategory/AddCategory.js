@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import axios from 'axios';
 import  { Redirect } from 'react-router-dom'
 import Category from './../Category/Category';
-import AlertMsgs from './AlertMsg';
+import AlertMsgs from '../../../libraries/messages/messages';
 const AddCategory = (props) => {
     const { register, handleSubmit, errors } = useForm() // initialise the hook
     var msg='hhj';
