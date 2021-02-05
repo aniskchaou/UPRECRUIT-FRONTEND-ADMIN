@@ -1,34 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import './AddJob.css';
 import { useForm } from 'react-hook-form';
-import create from '../../../main/mocks/CategoryTestService';
-import CategoryTestService from '../../../main/mocks/CategoryTestService';
 import showMessage from '../../../libraries/messages/messages'
-import jobMessage from '../../../main/messages/messages'
-import jobValidation from '../../../main/validations/validations'
-import ApplyJobService from '../../../main/services/ApplyJobService'
+import jobMessage from '../../../main/messages/jobMessage'
+import jobValidation from '../../../main/validations/jobValidations'
 import JobTestService from '../../../main/mocks/JobTestService';
+import HTTPService from '../../../main/services/HTTPService';
 const AddJob = () => {
 
 
 
   const initialState = {
-    post: ""
+    post: "",
+    description: "",
+    start: "",
+    end: "",
+    location: "",
+    requirement: ""
   };
 
   const { register, handleSubmit, errors } = useForm()
   const [job, setJob] = useState(initialState);
 
   const onSubmit = (data) => {
+    //saveJob(data)
     JobTestService.create(data)
     setJob(initialState)
     showMessage('Confirmation', jobMessage.add, 'success')
   }
-
+  
   const saveJob = (data) => {
 
-    ApplyJobService.create(data)
+    HTTPService.create(data)
       .then(response => {
         setJob(initialState)
       })
@@ -37,6 +40,7 @@ const AddJob = () => {
       });
 
   };
+
 
   const handleInputChange = event => {
     const { name, value } = event.target;
@@ -70,23 +74,35 @@ const AddJob = () => {
         <div class="form-group row">
           <label for="textarea" class="col-4 col-form-label">Description</label>
           <div class="col-8">
-            <textarea onChange={handleInputChange} id="textarea" name="description" cols="40" rows="5" class="form-control" ref={register({ required: true })} ></textarea>
+            <textarea onChange={handleInputChange} value={job.description} id="textarea" name="description" cols="40" rows="5" class="form-control" ref={register({ required: true })} ></textarea>
+            <div className="error text-danger">
+              {errors.description && jobValidation.description}
+            </div>
           </div>
         </div>
 
         <div class="form-group row">
           <label for="textarea1" class="col-4 col-form-label">Exigence</label>
           <div class="col-8">
-            <textarea onChange={handleInputChange} id="textarea1" name="required" cols="40" rows="5" class="form-control" ref={register({ required: true })} ></textarea>
+            <textarea onChange={handleInputChange} value={job.requirement} id="requirement" name="requirement" cols="40" rows="5" class="form-control" ref={register({ required: true })} ></textarea>
+          </div>
+          <div className="error text-danger">
+            {errors.requirement && jobValidation.requirement}
           </div>
         </div>
+
 
         <div class="form-group row">
           <label for="text2" class="col-4 col-form-label">Lieu</label>
           <div class="col-8">
-            <input id="text2" name="location" type="text" class="form-control" ref={register({ required: true })} />
+            <input onChange={handleInputChange} value={job.location} id="text2" name="location" type="text" class="form-control" ref={register({ required: true })} />
+            <div className="error text-danger">
+              {errors.location && jobValidation.location}
+            </div>
           </div>
+         
         </div>
+
 
         <div class="form-group row">
           <label for="select1" class="col-4 col-form-label">Catégorie</label>
@@ -96,7 +112,11 @@ const AddJob = () => {
               <option value="Devops">Devops</option>
               <option value="Design">Design</option>
             </select>
+            <div className="error text-danger">
+              {errors.category && jobValidation.category}
+            </div>
           </div>
+
         </div>
 
 
@@ -107,22 +127,33 @@ const AddJob = () => {
               <option value="PHP">PHP</option>
               <option value="Java">Java</option>
             </select>
+            <div className="error text-danger">
+              {errors.skill && jobValidation.skill}
+            </div>
           </div>
+
         </div>
 
 
         <div class="form-group row">
           <label for="text4" class="col-4 col-form-label">Date Début</label>
           <div class="col-8">
-            <input onChange={handleInputChange} id="text4" name="start" type="date" class="form-control" ref={register({ required: true })} />
+            <input onChange={handleInputChange} value={job.start} id="text4" name="start" type="date" class="form-control" ref={register({ required: true })} />
+            <div className="error text-danger">
+              {errors.start && jobValidation.start}
+            </div>
           </div>
         </div>
 
         <div class="form-group row">
           <label for="text3" class="col-4 col-form-label">Date fin</label>
           <div class="col-8">
-            <input onChange={handleInputChange} id="text3" name="end" type="date" class="form-control" ref={register({ required: true })} />
+            <input onChange={handleInputChange} value={job.end} id="text3" name="end" type="date" class="form-control" ref={register({ required: true })} />
+            <div className="error text-danger">
+              {errors.end && jobValidation.end}
+            </div>
           </div>
+
         </div>
 
 
@@ -130,15 +161,21 @@ const AddJob = () => {
           <label for="select4" class="col-4 col-form-label">Statut</label>
           <div class="col-8">
             <select id="select4" name="state" class="custom-select" ref={register({ required: true })}>
-              <option value="rabbit">Actif</option>
-              <option value="fish">Inactive</option>
+              <option value="active">Actif</option>
+              <option value="inactive">Inactive</option>
             </select>
+            <div className="error text-danger">
+              {errors.state && jobValidation.state}
+            </div>
           </div>
+
         </div>
 
         <div class="form-group row">
           <div class="offset-4 col-8">
-            <button name="submit" type="submit" class="btn btn-primary"><i className="fa fa-check"></i><font ><font  > Sauvegarder</font></font></button>
+            <button name="submit" type="submit" class="btn btn-primary">
+              <i className="fa fa-check"></i><font><font> Sauvegarder</font></font></button>
+
           </div>
         </div>
 

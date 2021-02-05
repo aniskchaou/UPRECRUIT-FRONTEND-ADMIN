@@ -7,7 +7,7 @@ import ViewTask from "../ViewTask/ViewTask";
 import { LoadJS } from './../../../libraries/datatables/datatables';
 import TaskTestService from '../../../main/mocks/TaskTestService';
 import showMessage from '../../../libraries/messages/messages';
-import jobMessage from '../../../main/messages/messages';
+import jobMessage from '../../../main/messages/jobMessage';
 import useForceUpdate from 'use-force-update';
 
 const deleteTask = () => {
@@ -85,14 +85,22 @@ const Task = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>tache 1</td>
-              <td class="badge badge-success">terminé</td>
-              <td><button type="button" data-toggle="modal" data-target="#viewTask" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
-                <button type="button" data-toggle="modal" data-target="#editTask" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-sm" onClick={deleteTask}><i class="fas fa-trash-alt"></i></button>
-              </td>
-            </tr>
+
+            {tasks.map(item =>
+              <tr>
+                <td>{item.title}</td>
+                <td class="badge badge-success">en cours</td>
+                <td>
+                  <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editTask" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                  <button onClick={e => remove(e, tasks.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+
+
+              </tr>
+
+
+            )}
+
+
             <tr>
               <td>tache 2</td>
               <td class="badge badge-warning">en cours</td>
@@ -119,7 +127,7 @@ const Task = () => {
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Nouveau</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button onClick={resfresh} type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
@@ -127,7 +135,7 @@ const Task = () => {
                 <AddTask />
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button onClick={resfresh} type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
 
               </div>
             </div>
@@ -145,7 +153,7 @@ const Task = () => {
                 </button>
               </div>
               <div class="modal-body">
-                <EditTask />
+                <EditTask task={updatedItem} />
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>

@@ -1,25 +1,25 @@
-const _categories = []
+const _interview = []
 
 const getAll = () => {
-    return _categories;
+    return _interview;
 };
 
 const get = id => {
-    return _categories.find(item => item.id === id);
+    return _interview.find(item => item.id === id);
 };
 
 const create = (data) => {
-    _categories.push(data);
+    _interview.push(data);
 };
 
 const update = (old, data) => {
 
-    var foundIndex = _categories.findIndex(item => item === old);
-    _categories[foundIndex] = data;
+    var foundIndex = _interview.findIndex(item => item === old);
+    _interview[foundIndex] = data;
 };
 
 const remove = id => {
-    _categories.splice(id, 1);
+    _interview.splice(id, 1);
 };
 
 const removeAll = () => {

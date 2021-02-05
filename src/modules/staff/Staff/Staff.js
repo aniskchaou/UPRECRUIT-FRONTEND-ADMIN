@@ -1,21 +1,76 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import './Staff.css';
-import AddStaff from './../AddStaff/AddStaff';
-import EditStaff from './../EditStaff/EditStaff';
-import ViewStaff from './../ViewStaff/ViewStaff';
-import { LoadJS } from './../../../libraries/datatables/datatables';
-const deleteStaff = () => {
-  return window.confirm("Êtes-vous sûr de vouloir supprimer  ?")
-}
+import { LoadJS } from '../../../libraries/datatables/datatables';
+import EditStaff from '../EditStaff/EditStaff';
+import AddStaff from '../AddStaff/AddStaff';
+import useForceUpdate from 'use-force-update';
+import showMessage from '../../../libraries/messages/messages';
+import staffMessage from '../../../main/messages/staffMessage';
+import StaffTestService from '../../../main/mocks/StaffTestService';
+import HTTPService from '../../../main/services/HTTPService';
 
 const Staff = () => {
 
+  const [staffs, setStaffs] = useState([]);
+  const [updatedItem, setUpdatedItem] = useState({});
+  const forceUpdate = useForceUpdate();
+
+
   useEffect(() => {
-    // Runs ONCE after initial rendering
     LoadJS()
-    console.log('hello')
+    retrieveStaffs()
   }, []);
+
+
+  const getAll = () => {
+    HTTPService.getAll()
+      .then(response => {
+        setStaffs(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+  const removeOne = (data) => {
+    HTTPService.remove(data)
+      .then(response => {
+
+      })
+      .catch(e => {
+
+      });
+  }
+
+
+
+  const retrieveStaffs = () => {
+    var staffs = StaffTestService.getAll();
+    setStaffs(staffs);
+  };
+
+  const resfresh = () => {
+    retrieveStaffs()
+    forceUpdate()
+  }
+
+  const remove = (e, data) => {
+    e.preventDefault();
+    var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
+    if (r) {
+      showMessage('Confirmation', staffMessage.delete, 'success')
+      StaffTestService.remove(data)
+      //removeOne(data)
+      resfresh()
+    }
+
+  }
+
+  const update = (e, data) => {
+    e.preventDefault();
+    setUpdatedItem(data)
+    resfresh()
+  }
 
 
   return (
@@ -34,19 +89,31 @@ const Staff = () => {
             </tr>
           </thead>
           <tbody>
+            {staffs.map(item =>
+              <tr>
+                <td>{item.email}</td>
+                <td>{item.full_name}</td>
+                <td>
+                  <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editStaff" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                  <button onClick={e => remove(e, staffs.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+              </tr>
+            )}
+
             <tr>
               <td>GregoireMoquin@armyspy.com</td>
               <td>recruteur</td>
               <td>
                 <button type="button" data-toggle="modal" data-target="#editTask" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-sm" onClick={deleteStaff}><i class="fas fa-trash-alt"></i></button></td>
+                <button type="button" class="btn btn-danger btn-sm" ><i class="fas fa-trash-alt"></i></button></td>
             </tr>
+
+
             <tr>
               <td>GAviceRouze@teleworm.us</td>
               <td>assistant</td>
               <td>
                 <button type="button" data-toggle="modal" data-target="#editTask" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-sm" onClick={deleteStaff}><i class="fas fa-trash-alt"></i></button></td>
+                <button type="button" class="btn btn-danger btn-sm" Edit><i class="fas fa-trash-alt"></i></button></td>
             </tr>
             </tbody>
         </table>
@@ -59,7 +126,7 @@ const Staff = () => {
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Nouveau</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button onClick={resfresh} type="button" onClick={resfresh} class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
@@ -67,7 +134,7 @@ const Staff = () => {
                 <AddStaff />
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button onClick={resfresh} type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                 
               </div>
             </div>
@@ -85,7 +152,7 @@ const Staff = () => {
                 </button>
               </div>
               <div class="modal-body">
-                <EditStaff />
+                <EditStaff staff={updatedItem} />
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
@@ -106,7 +173,7 @@ const Staff = () => {
                 </button>
               </div>
               <div class="modal-body">
-                <ViewStaff />
+
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>

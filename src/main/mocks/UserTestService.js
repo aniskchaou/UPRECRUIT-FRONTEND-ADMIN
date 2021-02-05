@@ -1,25 +1,25 @@
-const _categories = []
+const _user = []
 
 const getAll = () => {
-    return _categories;
+    return _user;
 };
 
 const get = id => {
-    return _categories.find(item => item.id === id);
+    return _user.find(item => item.id === id);
 };
 
 const create = (data) => {
-    _categories.push(data);
+    _user.push(data);
 };
 
 const update = (old, data) => {
 
-    var foundIndex = _categories.findIndex(item => item === old);
-    _categories[foundIndex] = data;
+    var foundIndex = _user.findIndex(item => item === old);
+    _user[foundIndex] = data;
 };
 
 const remove = id => {
-    _categories.splice(id, 1);
+    _user.splice(id, 1);
 };
 
 const removeAll = () => {

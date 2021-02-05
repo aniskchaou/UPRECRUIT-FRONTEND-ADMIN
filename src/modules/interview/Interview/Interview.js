@@ -1,24 +1,80 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import './Interview.css';
-import AddInterview from './../AddInterview/AddInterview';
-import EditInterview from './../EditInterview/EditInterview';
-import ViewInterview from './../ViewInterview/ViewInterview';
-import { LoadJS } from './../../../libraries/datatables/datatables';
+import { LoadJS } from '../../../libraries/datatables/datatables';
+import EditInterview from '../EditInterview/EditInterview';
+import AddInterview from '../AddInterview/AddInterview';
+import useForceUpdate from 'use-force-update';
+import showMessage from '../../../libraries/messages/messages';
+import interviewMessage from '../../../main/messages/interviewMessage';
+import InterviewTestService from '../../../main/mocks/InterviewTestService';
+import HTTPService from '../../../main/services/HTTPService';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
-
-const deleteInterview = () => {
-  return window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?")
-}
+import ViewInterview from './../ViewInterview/ViewInterview';
 
 const Interview = () => {
-  const [hidden, setHidden] = useState(false);
-  useEffect(() => {
-    // Runs ONCE after initial rendering
-    LoadJS()
 
+  const [interviews, setInterviews] = useState([]);
+  const [hidden, setHidden] = useState(false);
+  const [updatedItem, setUpdatedItem] = useState({});
+  const forceUpdate = useForceUpdate();
+
+
+  useEffect(() => {
+    LoadJS()
+    retrieveInterviews()
   }, []);
+
+
+  const getAll = () => {
+    HTTPService.getAll()
+      .then(response => {
+        setInterviews(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+  const removeOne = (data) => {
+    HTTPService.remove(data)
+      .then(response => {
+
+      })
+      .catch(e => {
+
+      });
+  }
+
+
+
+  const retrieveInterviews = () => {
+    var interviews = InterviewTestService.getAll();
+    setInterviews(interviews);
+  };
+
+  const resfresh = () => {
+    retrieveInterviews()
+    forceUpdate()
+  }
+
+  const remove = (e, data) => {
+    e.preventDefault();
+    var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
+    if (r) {
+      showMessage('Confirmation', interviewMessage.delete, 'success')
+      InterviewTestService.remove(data)
+      //removeOne(data)
+      resfresh()
+    }
+
+  }
+
+  const update = (e, data) => {
+    e.preventDefault();
+    setUpdatedItem(data)
+    resfresh()
+  }
 
 
   return (
@@ -39,16 +95,31 @@ const Interview = () => {
             </tr>
           </thead>
           <tbody>
+            {interviews.map(item =>
+              <tr>
+                <td>{item.candidates}</td>
+                <td>{item.scheduleDate}</td>
+                <td><span class="badge badge-success">Accepté</span></td>
+                <td>
+                  <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editInterview" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                  <button onClick={e => remove(e, interviews.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+              </tr>
+            )}
+
+
             <tr>
               <td>Anis</td>
               <td>12/11/2020</td>
               <td><span class="badge badge-success">Accepté</span></td>
               <td>
                 <button type="button" data-toggle="modal" data-target="#editInterview" className="btn btn-warning btn-sm"><i className="fas fa-edit"></i></button>
-                <button type="button" className="btn btn-danger btn-sm" onClick={deleteInterview}><i className="fas fa-trash-alt"></i></button></td>
+                <button type="button" className="btn btn-danger btn-sm" ><i className="fas fa-trash-alt"></i></button></td>
+            </tr>
 
 
-            </tr></tbody>  <tfoot>
+          
+          
+          </tbody>  <tfoot>
             <tr>
               <th>Nom de l'applicant</th>
               <th>Date</th>
@@ -81,7 +152,7 @@ const Interview = () => {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLongTitle">Nouveau</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <button onClick={resfresh} type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
@@ -89,7 +160,7 @@ const Interview = () => {
                 <AddInterview />
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button onClick={resfresh} type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
 
               </div>
             </div>
@@ -108,7 +179,7 @@ const Interview = () => {
                 </button>
               </div>
               <div className="modal-body">
-                <EditInterview />
+                <EditInterview interview={updatedItem} />
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>

@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import './Job.css';
 import { LoadJS } from '../../../libraries/datatables/datatables';
 import EditJob from '../EditJob/EditJob';
 import AddJob from '../AddJob/AddJob';
 import useForceUpdate from 'use-force-update';
 import showMessage from '../../../libraries/messages/messages';
-import jobMessage from '../../../main/messages/messages';
-import ApplyJobService from '../../../main/services/ApplyJobService';
+import jobMessage from '../../../main/messages/jobMessage';
 import JobTestService from '../../../main/mocks/JobTestService';
+import HTTPService from '../../../main/services/HTTPService';
 
 const Job = () => {
   
@@ -24,7 +23,7 @@ const Job = () => {
 
 
   const getAll = () => {
-    ApplyJobService.getAll()
+    HTTPService.getAll()
       .then(response => {
         setJobs(response.data);
       })
@@ -32,6 +31,16 @@ const Job = () => {
         console.log(e);
       });
   };
+
+  const removeOne = (data) => {
+    HTTPService.remove(data)
+      .then(response => {
+
+      })
+      .catch(e => {
+      
+      });
+  }
 
 
 
@@ -51,6 +60,7 @@ const Job = () => {
     if (r) {
       showMessage('Confirmation', jobMessage.delete, 'success')
       JobTestService.remove(data)
+      //removeOne(data)
     resfresh()
     }
       

@@ -1,53 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './AddCategory.css';
 import { useForm } from 'react-hook-form'
 import axios from 'axios';
-import  { Redirect } from 'react-router-dom'
-import Category from './../Category/Category';
-import AlertMsgs from '../../../libraries/messages/messages';
-const AddCategory = (props) => {
-    const { register, handleSubmit, errors } = useForm() // initialise the hook
-    var msg='hhj';
-    
+import showMessage from '../../../libraries/messages/messages'
+import categoryMessage from '../../../main/messages/categoryMessage'
+import categoryValidation from '../../../main/validations/categoryValidation'
+import CategoryTestService from '../../../main/mocks/CategoryTestService';
+import HTTPService from '../../../main/services/HTTPService';
+
+
+const AddCategory = () => {
+
+    const initialState = {
+        category: "",
    
-    const onSubmit = (data) => { console.log(data) 
-       
-          const myNotification = window.createNotification({
-           
-      });
-      myNotification({ 
-        title: 'Title',
-        message: 'Notification Message',
-         // close on click
-  closeOnClick: true,
+    };
+    const { register, handleSubmit, errors } = useForm() // initialise the hook
+    const [category, setCategory] = useState(initialState);
 
-  // displays close button
-  displayCloseButton: false,
 
-  // nfc-top-left
-  // nfc-bottom-right
-  // nfc-bottom-left
-  positionClass: 'nfc-top-right',
 
-  // callback
-  onclick: false,
+    const onSubmit = (data) => {
+        //saveCategory(data)
+        CategoryTestService.create(data)
+        setCategory(initialState)
+        showMessage('Confirmation', categoryMessage.add, 'success')
+    }
 
-  // timeout in milliseconds
-  
+    const saveCategory = (data) => {
 
-  // success, info, warning, error, and none
-  theme: 'success'
-      });
-        axios.post('http://localhost:8080/category/create', data)
-        .then(res => {
-         
-        }).catch(err=>{
-            
-        });
-        msg="jfcfc"
-       
-        //window.alert("fjjg")
-    } // callback when validation pass
+        HTTPService.create(data)
+            .then(response => {
+                setCategory(initialState)
+            })
+            .catch(e => {
+                console.log(e);
+            });
+
+    };
+
+
+    const handleInputChange = event => {
+        const { name, value } = event.target;
+        setCategory({ ...category, [name]: value });
+    };
 
     return (
         <div className="AddCategory">
@@ -59,12 +55,15 @@ const AddCategory = (props) => {
                     <div className="row">
                         <div className="col-sm-9 nopadding">
                             <div className="form-group">
+
                                 <div className="input-group">
-                                    <input type="text" name="name" className="form-control" ref={register({ required: true })} placeholder="Nom des catégories d'emplois" />
+                                    <input type="text" onChange={handleInputChange} value={category.category} name="category" className="form-control" ref={register({ required: true })} placeholder="Nom des catégories d'emplois" />
                                 </div>
                                 <div className="error text-danger">
-                                    {errors.name && 'Last name is required.'}
+                                    {errors.category && categoryValidation.category}
                                 </div>
+
+
                             </div>
                         </div>
                     </div>

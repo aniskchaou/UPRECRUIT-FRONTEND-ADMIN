@@ -1,62 +1,85 @@
-import React, { useState, useEffect,forceUpdate } from 'react';
-import axios from 'axios';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import './Category.css';
-import AddCategory from './../AddCategory/AddCategory';
-import EditCategory from './../EditCategory/EditCategory';
-import { LoadJS } from './../../../libraries/datatables/datatables';
+import { LoadJS } from '../../../libraries/datatables/datatables';
+import EditCategory from '../EditCategory/EditCategory';
+import AddCategory from '../AddCategory/AddCategory';
+import useForceUpdate from 'use-force-update';
+import showMessage from '../../../libraries/messages/messages';
+import categoryMessage from '../../../main/messages/categoryMessage';
+import CategoryTestService from '../../../main/mocks/CategoryTestService';
+import HTTPService from '../../../main/services/HTTPService';
 
 
 
 
 
-export default class PersonList extends React.Component {
+const Category = () => {
 
 
 
 
-
-  state = {
-    categories: [],
-    id:''
-  }
-
-   refresh= (e)=>{
-    e.preventDefault();
-    axios.get(`http://localhost:8080/categories`)
-    .then(res => {
-      const categories = res.data._embedded.categories;
-      this.setState({ categories });
-    })
-   }
+  const [categorys, setCategorys] = useState([]);
+  const [updatedItem, setUpdatedItem] = useState({});
+  const forceUpdate = useForceUpdate();
 
 
-   deleteCategory = (e,id) => {
-    // return window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?")
-    e.preventDefault();
-     
-   
-     axios(`http://localhost:8080/category/delete/${id}`)
-       .then(res => {
-        this.setState(previousState => {
-          return {
-            categories: previousState.categories.filter(m => m.id !==id)
-          };
-        });
-       })
-   
-   }
-
-  componentDidMount() {
+  useEffect(() => {
     LoadJS()
-    axios.get(`http://localhost:8080/categories`)
-      .then(res => {
-        const categories = res.data._embedded.categories;
-        this.setState({ categories });
+    retrieveCategorys()
+  }, []);
+
+
+  const getAll = () => {
+    HTTPService.getAll()
+      .then(response => {
+        setCategorys(response.data);
       })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+  const removeOne = (data) => {
+    HTTPService.remove(data)
+      .then(response => {
+
+      })
+      .catch(e => {
+
+      });
   }
 
-  render() {
+
+
+  const retrieveCategorys = () => {
+    var categorys = CategoryTestService.getAll();
+    setCategorys(categorys);
+  };
+
+  const resfresh = () => {
+    retrieveCategorys()
+    forceUpdate()
+  }
+
+  const remove = (e, data) => {
+    e.preventDefault();
+    var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
+    if (r) {
+      showMessage('Confirmation', categoryMessage.delete, 'success')
+      CategoryTestService.remove(data)
+      //removeOne(data)
+      resfresh()
+    }
+      
+  }
+
+  const update = (e, data) => {
+    e.preventDefault();
+    setUpdatedItem(data)
+    resfresh()
+  }
+
+
 
     return (
        
@@ -76,16 +99,19 @@ export default class PersonList extends React.Component {
         </tr>
       </thead>
       <tbody>
-      {this.state.categories.map(item => (
-        <tr>
-          <td>{item.name}</td>
-          <td>{item.name}</td>
+              {categorys.map(item => (
+          <tr>
+                  <td>{item.category}</td>
+                  <td>{item.category}</td>
           <td>
-            <button type="button" data-toggle="modal" data-target="#editCategory" className="btn btn-warning btn-sm"><i className="fas fa-edit"></i></button>
-            <button type="button" className="btn btn-danger btn-sm" onClick={e =>this.deleteCategory(e,item.id)}><i className="fas fa-trash-alt"></i></button></td>
+                    <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editCategory" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                    <button onClick={e => remove(e, categorys.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
 
 
-        </tr>))}</tbody>
+                </tr>))}
+            
+            
+            </tbody>
     </table>
           <button type="button" data-toggle="modal" data-target="#addCategory" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
  Ajouter</button>
@@ -100,7 +126,7 @@ export default class PersonList extends React.Component {
             </button>
           </div>
           <div className="modal-body">
-            <EditCategory />
+                  <EditCategory category={updatedItem} />
           </div>
           <div className="modal-footer">
             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -115,7 +141,7 @@ export default class PersonList extends React.Component {
         <div className="modal-content">
           <div className="modal-header">
                   <h5 className="modal-title" id="exampleModalLongTitle">Nouveau</h5>
-            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                  <button onClick={resfresh} type="button" className="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -123,7 +149,7 @@ export default class PersonList extends React.Component {
              <AddCategory/>
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-danger" onClick={e =>this.refresh(e)} data-dismiss="modal">Close</button>
+                  <button onClick={resfresh} type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
            
           </div>
         </div>
@@ -134,6 +160,7 @@ export default class PersonList extends React.Component {
 </div>
     )
   }
-}
 
+
+export default Category;
 

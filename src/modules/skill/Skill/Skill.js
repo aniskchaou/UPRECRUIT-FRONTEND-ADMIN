@@ -1,21 +1,75 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import './Skill.css';
-import AddSkill from './../AddSkill/AddSkill';
-import { LoadJS } from './../../../libraries/datatables/datatables';
-
-const deleteSkill = () => {
-  return window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?")
-}
-
+import { LoadJS } from '../../../libraries/datatables/datatables';
+import AddSkill from '../AddSkill/AddSkill';
+import useForceUpdate from 'use-force-update';
+import showMessage from '../../../libraries/messages/messages';
+import skillMessage from '../../../main/messages/skillMessage';
+import SkillTestService from '../../../main/mocks/SkillTestService';
+import HTTPService from '../../../main/services/HTTPService';
 
 const Skill = () => {
 
+  const [skills, setSkills] = useState([]);
+  const [updatedItem, setUpdatedItem] = useState({});
+  const forceUpdate = useForceUpdate();
+
+
   useEffect(() => {
-    // Runs ONCE after initial rendering
     LoadJS()
-    console.log('hello')
+    retrieveSkills()
   }, []);
+
+
+  const getAll = () => {
+    HTTPService.getAll()
+      .then(response => {
+        setSkills(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+  const removeOne = (data) => {
+    HTTPService.remove(data)
+      .then(response => {
+
+      })
+      .catch(e => {
+
+      });
+  }
+
+
+
+  const retrieveSkills = () => {
+    var skills = SkillTestService.getAll();
+    setSkills(skills);
+  };
+
+  const resfresh = () => {
+    retrieveSkills()
+    forceUpdate()
+  }
+
+  const remove = (e, data) => {
+    e.preventDefault();
+    var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
+    if (r) {
+      showMessage('Confirmation', skillMessage.delete, 'success')
+      SkillTestService.remove(data)
+      //removeOne(data)
+      resfresh()
+    }
+
+  }
+
+  const update = (e, data) => {
+    e.preventDefault();
+    setUpdatedItem(data)
+    resfresh()
+  }
 
 
   return (
@@ -34,26 +88,40 @@ const Skill = () => {
             </tr>
           </thead>
           <tbody>
+
+
+            {skills.map(item =>
+              <tr>
+                <td>{item.skills}</td>
+                <td>{item.category_id}</td>
+                <td><button type="button" data-toggle="modal" data-target="#viewSkill" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
+                  <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editSkill" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                  <button onClick={e => remove(e, skills.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+              </tr>
+            )}
+
+
+
             <tr>
               <td>Java</td>
               <td>Développement</td>
               <td><button type="button" data-toggle="modal" data-target="#viewSkill" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
                 <button type="button" data-toggle="modal" data-target="#editSkill" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-sm" onClick={deleteSkill}><i class="fas fa-trash-alt"></i></button></td>
+                <button type="button" class="btn btn-danger btn-sm" ><i class="fas fa-trash-alt"></i></button></td>
             </tr>
             <tr>
               <td>PHP</td>
               <td>Développement</td>
               <td><button type="button" data-toggle="modal" data-target="#viewSkill" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
                 <button type="button" data-toggle="modal" data-target="#editSkill" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-sm" onClick={deleteSkill}><i class="fas fa-trash-alt"></i></button></td>
+                <button type="button" class="btn btn-danger btn-sm" ><i class="fas fa-trash-alt"></i></button></td>
             </tr>
             <tr>
               <td>Python</td>
               <td>Développement</td>
               <td><button type="button" data-toggle="modal" data-target="#viewSkill" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
                 <button type="button" data-toggle="modal" data-target="#editSkill" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-sm" onClick={deleteSkill}><i class="fas fa-trash-alt"></i></button></td>
+                <button type="button" class="btn btn-danger btn-sm" ><i class="fas fa-trash-alt"></i></button></td>
             </tr>
 
           </tbody>
@@ -73,7 +141,7 @@ const Skill = () => {
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button onClick={resfresh} type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
@@ -81,7 +149,7 @@ const Skill = () => {
                 <AddSkill />
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button onClick={resfresh} type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                 
               </div>
             </div>
