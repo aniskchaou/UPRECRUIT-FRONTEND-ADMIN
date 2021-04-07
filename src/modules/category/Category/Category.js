@@ -70,7 +70,7 @@ const Category = () => {
       //removeOne(data)
       resfresh()
     }
-      
+
   }
 
   const update = (e, data) => {
@@ -81,85 +81,87 @@ const Category = () => {
 
 
 
-    return (
-       
-  <div className="card">
-    
-  <div className="card-header">
-    <strong className="card-title">Catégories d'emplois</strong>
-  </div>
-  <div className="card-body">
+  return (
 
-    <table id="example1" className="table table-striped table-bordered">
-      <thead>
-        <tr>
-          <th>Nom</th>
-          <th>Remarque</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-              {categorys.map(item => (
-          <tr>
-                  <td>{item.category}</td>
-                  <td>{item.category}</td>
-          <td>
-                    <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editCategory" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                    <button onClick={e => remove(e, categorys.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+    <div className="card">
+
+      <div className="card-header">
+        <strong className="card-title">Catégories d'emplois</strong>
+      </div>
+      <div className="card-body">
+
+        <table id="example1" className="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {categorys.map(item => (
+              <tr>
+                <td>{item.category}</td>
+                <td>
+                  <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editCategory" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                  <button onClick={e => remove(e, categorys.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+              </tr>))}
 
 
-                </tr>))}
-            
-            
-            </tbody>
-    </table>
-          <button type="button" data-toggle="modal" data-target="#addCategory" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>Nom</th>
+              <th>Actions</th>
+            </tr>
+          </tfoot>
+        </table>
+        <button type="button" data-toggle="modal" data-target="#addCategory" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
  Ajouter</button>
 
-    <div className="modal fade" id="editCategory" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
-            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div className="modal-body">
-                  <EditCategory category={updatedItem} />
-          </div>
-          <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" className="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div   className="modal fade" id="addCategory" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div className="modal-content">
-          <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalLongTitle">Nouveau</h5>
-                  <button onClick={resfresh} type="button" className="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div className="modal-body">
-             <AddCategory/>
-          </div>
-          <div className="modal-footer">
-                  <button onClick={resfresh} type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
-           
+        <div className="modal fade" id="editCategory" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <EditCategory category={updatedItem} />
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" className="btn btn-primary">Save changes</button>
+              </div>
+            </div>
           </div>
         </div>
+
+        <div className="modal fade" id="addCategory" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLongTitle">Nouveau</h5>
+                <button onClick={resfresh} type="button" className="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <AddCategory />
+              </div>
+              <div className="modal-footer">
+                <button onClick={resfresh} type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
-
-  </div>
-</div>
-    )
-  }
+  )
+}
 
 
 export default Category;

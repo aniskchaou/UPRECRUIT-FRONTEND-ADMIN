@@ -8,40 +8,35 @@ import { BrowserRouter as Router, Route } from "react-router-dom"
 import Footer from '../Footer/Footer';
 import Path from '../Path/Path';
 import Login from '../Login/Login';
-
+import User from '../../config/user'
 class Root extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { connected: User.CONNECTED_USER };
   }
+  rerender = () => {
+    this.forceUpdate();
+  };
+  forceUpdate = () => {
+    this.setState((state) => ({
+      connected: User.CONNECTED_USER
+    }));
+  };
   render() {
-   
+
     return (
-      <div>
+      <div className="root-content">
         <Router>
-        <Navigation />
-        <Header/>
-        
-        
-        <div id="right-panel" className="right-panel">
-          
+          <Navigation />
+          <Header rerender={this.rerender} />
 
-          <div className="content">
-            <div className="animated fadeIn">
-              <div className="row">
+          <div id="right-panel" className="right-panel">
+            <Content />
 
-                <Content/>
-
-
-              </div>
-            </div>
+            <div className="clearfix"></div>
+            <Footer />
           </div>
-
-          <div className="clearfix"></div>
-          <Footer/>
-          
-
-        </div>
+          <Login rerender={this.rerender} />
         </Router>
       </div>
     );

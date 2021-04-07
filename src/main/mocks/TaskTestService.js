@@ -1,4 +1,4 @@
-const _tasks = []
+const _tasks = [{ "id": 1, "title": "Task 1", "status": "en cours" }]
 
 const getAll = () => {
     return _tasks;

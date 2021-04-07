@@ -99,39 +99,14 @@ const Skill = () => {
                   <button onClick={e => remove(e, skills.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
-
-
-
-            <tr>
-              <td>Java</td>
-              <td>Développement</td>
-              <td><button type="button" data-toggle="modal" data-target="#viewSkill" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
-                <button type="button" data-toggle="modal" data-target="#editSkill" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-sm" ><i class="fas fa-trash-alt"></i></button></td>
-            </tr>
-            <tr>
-              <td>PHP</td>
-              <td>Développement</td>
-              <td><button type="button" data-toggle="modal" data-target="#viewSkill" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
-                <button type="button" data-toggle="modal" data-target="#editSkill" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-sm" ><i class="fas fa-trash-alt"></i></button></td>
-            </tr>
-            <tr>
-              <td>Python</td>
-              <td>Développement</td>
-              <td><button type="button" data-toggle="modal" data-target="#viewSkill" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
-                <button type="button" data-toggle="modal" data-target="#editSkill" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-sm" ><i class="fas fa-trash-alt"></i></button></td>
-            </tr>
-
           </tbody>
           <tfoot>
-                  <tr>
-                    <th>Compétences</th>
-                    <th>Catégories</th>
-                    <th>Actions</th>
-                  </tr>
-                  </tfoot>
+            <tr>
+              <th>Compétences</th>
+              <th>Catégories</th>
+              <th>Actions</th>
+            </tr>
+          </tfoot>
         </table>
         <button type="button" data-toggle="modal" data-target="#addSkill" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
  Ajouter</button>
@@ -150,7 +125,7 @@ const Skill = () => {
               </div>
               <div class="modal-footer">
                 <button onClick={resfresh} type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                
+
               </div>
             </div>
           </div>
@@ -170,7 +145,7 @@ const Skill = () => {
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                
+
               </div>
             </div>
           </div>
@@ -190,7 +165,7 @@ const Skill = () => {
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                
+
               </div>
             </div>
           </div>

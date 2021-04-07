@@ -1,4 +1,4 @@
-const _applyJob = []
+const _applyJob = [{ "full_name": "Martine Clavette", "email": "matine@gmail.com", "phone": "06 23 44 56 33" }]
 
 const getAll = () => {
     return _applyJob;

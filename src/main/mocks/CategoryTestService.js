@@ -1,4 +1,4 @@
-const _categories = []
+const _categories = [{ "category": "informatique" }]
 
 const getAll = () => {
     return _categories;

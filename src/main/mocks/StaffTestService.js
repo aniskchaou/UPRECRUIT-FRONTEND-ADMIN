@@ -1,4 +1,4 @@
-const _staff = []
+const _staff = [{ "email": "GregoireMoquin@armyspy.com", "full_name": "recruteur" }]
 
 const getAll = () => {
     return _staff;

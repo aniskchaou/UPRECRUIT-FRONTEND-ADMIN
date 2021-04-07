@@ -85,7 +85,6 @@ const Staff = () => {
               <th>Email</th>
               <th>Role</th>
               <th>Actions</th>
-
             </tr>
           </thead>
           <tbody>
@@ -98,24 +97,14 @@ const Staff = () => {
                   <button onClick={e => remove(e, staffs.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
-
+          </tbody>
+          <tfoot>
             <tr>
-              <td>GregoireMoquin@armyspy.com</td>
-              <td>recruteur</td>
-              <td>
-                <button type="button" data-toggle="modal" data-target="#editTask" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-sm" ><i class="fas fa-trash-alt"></i></button></td>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Actions</th>
             </tr>
-
-
-            <tr>
-              <td>GAviceRouze@teleworm.us</td>
-              <td>assistant</td>
-              <td>
-                <button type="button" data-toggle="modal" data-target="#editTask" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-sm" Edit><i class="fas fa-trash-alt"></i></button></td>
-            </tr>
-            </tbody>
+          </tfoot>
         </table>
         <button type="button" data-toggle="modal" data-target="#addStaff" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
  Ajouter</button>
@@ -135,7 +124,7 @@ const Staff = () => {
               </div>
               <div class="modal-footer">
                 <button onClick={resfresh} type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                
+
               </div>
             </div>
           </div>
@@ -156,7 +145,7 @@ const Staff = () => {
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                
+
               </div>
             </div>
           </div>
@@ -177,7 +166,7 @@ const Staff = () => {
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                
+
               </div>
             </div>
           </div>

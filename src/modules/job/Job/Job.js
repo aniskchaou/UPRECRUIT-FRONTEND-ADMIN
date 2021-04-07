@@ -10,7 +10,7 @@ import JobTestService from '../../../main/mocks/JobTestService';
 import HTTPService from '../../../main/services/HTTPService';
 
 const Job = () => {
-  
+
   const [jobs, setJobs] = useState([]);
   const [updatedItem, setUpdatedItem] = useState({});
   const forceUpdate = useForceUpdate();
@@ -38,7 +38,7 @@ const Job = () => {
 
       })
       .catch(e => {
-      
+
       });
   }
 
@@ -61,9 +61,9 @@ const Job = () => {
       showMessage('Confirmation', jobMessage.delete, 'success')
       JobTestService.remove(data)
       //removeOne(data)
-    resfresh()
+      resfresh()
     }
-      
+
   }
 
   const update = (e, data) => {
@@ -98,28 +98,12 @@ const Job = () => {
                 <td>{item.location}</td>
                 <td>{item.start}</td>
                 <td>{item.end}</td>
-                <td class="badge badge-success">{item.state}</td>
-
+                <td><span class="badge badge-success" >{item.state}</span></td>
                 <td>
                   <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editJob" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
                   <button onClick={e => remove(e, jobs.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
-
-
               </tr>
-
-
             )}
-            <tr>
-              <td>Développeur Web</td>
-              <td>Paris</td>
-              <td>11/10/2020</td>
-              <td>11/11/2020</td>
-              <td class="badge badge-success">Actif</td>
-
-              <td>
-                <button type="button" data-toggle="modal" data-target="#editJob" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
-            </tr>
 
           </tbody>
           <tfoot>

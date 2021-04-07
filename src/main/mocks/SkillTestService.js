@@ -1,4 +1,4 @@
-const _skills = []
+const _skills = [{ "skills": "PHP", "category_id": "Développement" }]
 
 const getAll = () => {
     return _skills;

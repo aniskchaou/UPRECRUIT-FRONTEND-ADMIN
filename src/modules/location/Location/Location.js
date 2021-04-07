@@ -99,18 +99,6 @@ const Location = () => {
                   <button onClick={e => remove(e, locations.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
-
-
-
-            <tr>
-              <td>Paris</td>
-              <td>France</td>
-              <td>
-                <button type="button" data-toggle="modal" data-target="#editLocation" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-sm" ><i class="fas fa-trash-alt"></i></button></td>
-            </tr>
-
-
           </tbody>
           <tfoot>
             <tr>

@@ -89,9 +89,7 @@ const Interview = () => {
             <tr>
               <th>Nom de l'applicant</th>
               <th>Date</th>
-              <th>Statut</th>
               <th>Actions</th>
-
             </tr>
           </thead>
           <tbody>
@@ -99,33 +97,16 @@ const Interview = () => {
               <tr>
                 <td>{item.candidates}</td>
                 <td>{item.scheduleDate}</td>
-                <td><span class="badge badge-success">Accepté</span></td>
                 <td>
                   <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editInterview" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
                   <button onClick={e => remove(e, interviews.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
-
-
-            <tr>
-              <td>Anis</td>
-              <td>12/11/2020</td>
-              <td><span class="badge badge-success">Accepté</span></td>
-              <td>
-                <button type="button" data-toggle="modal" data-target="#editInterview" className="btn btn-warning btn-sm"><i className="fas fa-edit"></i></button>
-                <button type="button" className="btn btn-danger btn-sm" ><i className="fas fa-trash-alt"></i></button></td>
-            </tr>
-
-
-          
-          
           </tbody>  <tfoot>
             <tr>
               <th>Nom de l'applicant</th>
               <th>Date</th>
-              <th>Statut</th>
               <th>Actions</th>
-
             </tr>
           </tfoot>
         </table>
@@ -140,13 +121,11 @@ const Interview = () => {
             initialView="dayGridMonth"
             weekends={false}
             events={[
-              { title: 'Entretien developpeur mobile', date: '2021-01-19' },
+              { title: 'Entretien developpeur mobile', date: '2021-03-19' },
               { title: 'event 2', date: '2019-04-02' }
             ]}
           />
         </div>
-
-        
         <div className="modal fade" id="addInterview" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div className="modal-content">
@@ -189,7 +168,7 @@ const Interview = () => {
           </div>
         </div>
 
-       
+
 
 
         <div className="modal fade" id="viewInterview" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

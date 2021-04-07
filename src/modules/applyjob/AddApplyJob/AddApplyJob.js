@@ -61,7 +61,6 @@ const AddApplyJob = () => {
               <label className="control-label required"><font   ><font   >Nom</font></font></label>
               <input ref={register({ required: true })} className="form-control" value={job.full_name}
                 onChange={handleInputChange} type="text" name="full_name" placeholder="Nom" />
-
               <div className="error text-danger">
                 {errors.full_name && applyJobValidation.full_name}
               </div>

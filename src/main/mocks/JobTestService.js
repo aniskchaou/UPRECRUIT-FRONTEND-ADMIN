@@ -1,4 +1,7 @@
-const _jobs = []
+const _jobs = [{
+    "post": "Développeur Web", "location": "Paris",
+    "start": "11/10/2020", "end": "11/11/2020", "state": "Active"
+}]
 
 const getAll = () => {
     return _jobs;

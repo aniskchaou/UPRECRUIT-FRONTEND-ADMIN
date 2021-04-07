@@ -1,4 +1,4 @@
-const _interview = []
+const _interview = [{ "candidates": "Jack Doe", "scheduleDate": "12/10/2021" }]
 
 const getAll = () => {
     return _interview;

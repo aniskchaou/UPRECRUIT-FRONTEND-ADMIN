@@ -89,9 +89,8 @@ const ApplyJob = () => {
           <thead>
             <tr>
               <th>Nom de demandeur</th>
-              <th>Emplois</th>
-              <th>Lieu</th>
-              <th>Statut</th>
+              <th>Email</th>
+              <th>Mobile</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -99,44 +98,19 @@ const ApplyJob = () => {
             {applyJobs.map(item =>
               <tr>
                 <td>{item.full_name}</td>
-                <td>développeur mobile</td>
-                <td>Paris</td>
-                <td className="badge badge-success">Acceptée</td>
+                <td>{item.email}</td>
+                <td>{item.phone}</td>
                 <td>
                   <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editApplyJob" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
                   <button onClick={e => remove(e, applyJobs.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
-
-
-
               </tr>
             )}
-
-
-
-
-            <tr>
-              <td>Martine Clavette</td>
-              <td>développeur wrb</td>
-              <td>Paris</td>
-              <td className="badge badge-success">Acceptée</td>
-              <td>
-                <button type="button" data-toggle="modal" data-target="#viewCandidate" class="btn btn-info btn-sm"><i class="fas fa-user"></i></button>
-                <button type="button" data-toggle="modal" data-target="#editApplyJob" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger btn-sm" ><i class="fas fa-trash-alt"></i></button></td>
-
-
-
-            </tr>
-          
-          
-          
           </tbody>
           <tfoot>
             <tr>
               <th>Nom de demandeur</th>
-              <th>Emplois</th>
-              <th>Lieu</th>
-              <th>Statut</th>
+              <th>Email</th>
+              <th>Mobile</th>
               <th>Actions</th>
             </tr>
           </tfoot>
