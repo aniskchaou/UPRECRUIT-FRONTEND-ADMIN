@@ -10,6 +10,9 @@ import HTTPService from '../../../main/services/HTTPService';
 import ApplyJobTestService from "../../../main/mocks/ApplyJobTestService";
 import ViewApplyJob from '../ViewApplyJob/ViewApplyJob'
 import ViewCandidate from '../../candidate/ViewCandidate/ViewCandidate'
+import langJsonFr from "../../../main/local/fr/apply_job.json";
+import langJsonEn from "../../../main/local/en/apply_job.json";
+import User from '../../../main/config/user';
 
 const ApplyJob = () => {
 
@@ -17,9 +20,26 @@ const ApplyJob = () => {
   const [applyJobs, setJobs] = useState([]);
   const [updatedItem, setUpdatedItem] = useState({});
   const forceUpdate = useForceUpdate();
+  const [fields, setFields] = useState([]);
+
+  const loadFields = (lang) => {
+
+    switch (lang) {
+      case "fr":
+        setFields(langJsonFr)
+        break;
+      case "en":
+        setFields(langJsonEn)
+        break;
+    }
+
+
+  }
 
 
   useEffect(() => {
+    loadFields(User.USER_LANG)
+    console.log(fields)
     LoadJS()
     retrieveJobs()
   }, []);
@@ -88,10 +108,10 @@ const ApplyJob = () => {
         <table id="example1" className="table table-striped table-bordered">
           <thead>
             <tr>
-              <th>Nom de demandeur</th>
-              <th>Email</th>
-              <th>Mobile</th>
-              <th>Actions</th>
+              <th>{fields.field1}</th>
+              <th>{fields.field2}</th>
+              <th>{fields.field3}</th>
+              <th>{fields.field4}</th>
             </tr>
           </thead>
           <tbody>
