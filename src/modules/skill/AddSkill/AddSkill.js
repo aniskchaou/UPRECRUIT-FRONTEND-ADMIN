@@ -6,13 +6,14 @@ import skillValidation from '../../../main/validations/skillValidation'
 import SkillTestService from '../../../main/mocks/SkillTestService';
 import HTTPService from '../../../main/services/HTTPService';
 import { useForm } from 'react-hook-form';
+import skillHTTPService from '../../../main/services/skillHTTPService';
 
 
 const AddSkill = () => {
 
     const initialState = {
-        category_id: "",
-        skills: "",
+        name: "",
+
     };
 
     const { register, handleSubmit, errors } = useForm()
@@ -20,22 +21,12 @@ const AddSkill = () => {
 
     const onSubmit = (data) => {
         //saveskill(data)
-        SkillTestService.create(data)
-        setSkill(initialState)
-        showMessage('Confirmation', skillMessage.add, 'success')
+        skillHTTPService.createSkill(data).then(data => {
+            setSkill(initialState)
+            showMessage('Confirmation', skillMessage.add, 'success')
+        })
+
     }
-
-    const saveskill = (data) => {
-
-        HTTPService.create(data)
-            .then(response => {
-                setSkill(initialState)
-            })
-            .catch(e => {
-                console.log(e);
-            });
-
-    };
 
 
     const handleInputChange = event => {
@@ -52,48 +43,24 @@ const AddSkill = () => {
 
                         <div className="form-group">
                             <label for="address"><font   ><font   >Catégories d'emplois</font></font></label>
-                            <select onChange={handleInputChange}
-                                value={skill.category_id}
+                            <input onChange={handleInputChange}
+                                value={skill.name}
                                 ref={register({ required: true })}
-                                name="category_id" id="category_id"
-                                className="form-control select2 custom-select select2-hidden-accessible"
-                                tabindex="-1" aria-hidden="true">
-
-                                <option value="1">Design</option>
-                                <option value="2">Développement</option>
-
-                            </select>
+                                name="name" id="name"
+                                className="form-control"
+                            />
                             <div className="error text-danger">
-                                {errors.category_id && skillValidation.category_id}
+                                {errors.name && skillValidation.name}
                             </div>
                         </div>
 
                     </div>
                 </div>
 
-                <div id="education_fields">
-                    <div className="row">
-                        <div className="col-sm-9 nopadding">
 
-                            <div className="form-group">
-                                <div className="input-group">
-                                    <input onChange={handleInputChange}
-                                        value={skill.skills}
-                                        ref={register({ required: true })}
-                                        type="text" name="skills" className="form-control"
-                                        placeholder="Nom des compétences" />
-                                    
-                                </div>
-                                <div className="error text-danger">
-                                    {errors.skills && skillValidation.skills}
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <button type="submit" id="save-form" className="btn btn-success">
-                    <i className="fa fa-check"></i><font ><font  > Sauvegarder</font></font></button>
+                    <i className="fa fa-check"></i><font ><font  > Save</font></font></button>
 
             </form>
         </div>

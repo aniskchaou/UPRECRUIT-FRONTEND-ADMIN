@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import JobTestService from '../../../main/mocks/JobTestService';
 import showMessage from '../../../libraries/messages/messages';
 import jobMessage from '../../../main/messages/jobMessage';
+import jobHTTPService from '../../../main/services/jobHTTPService';
 
 const EditJob = (props) => {
   const { register, handleSubmit, errors } = useForm() // initialise the hook
@@ -16,8 +17,11 @@ const EditJob = (props) => {
 
   const onSubmit = (data) => {
 
-    JobTestService.update(props.job, data)
-    showMessage('Confirmation', jobMessage.edit, 'success')
+    //JobTestService.update(props.job, data)
+    jobHTTPService.editJob(props.job.id, data).then(data => {
+      showMessage('Confirmation', jobMessage.edit, 'success')
+    })
+
   }
 
   return (

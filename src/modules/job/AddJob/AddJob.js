@@ -6,6 +6,7 @@ import jobMessage from '../../../main/messages/jobMessage'
 import jobValidation from '../../../main/validations/jobValidations'
 import JobTestService from '../../../main/mocks/JobTestService';
 import HTTPService from '../../../main/services/HTTPService';
+import jobHTTPService from '../../../main/services/jobHTTPService';
 const AddJob = () => {
 
 
@@ -24,11 +25,13 @@ const AddJob = () => {
 
   const onSubmit = (data) => {
     //saveJob(data)
-    JobTestService.create(data)
-    setJob(initialState)
-    showMessage('Confirmation', jobMessage.add, 'success')
+    jobHTTPService.createJob(data).then(data => {
+      setJob(initialState)
+      showMessage('Confirmation', jobMessage.add, 'success')
+    })
+
   }
-  
+
   const saveJob = (data) => {
 
     HTTPService.create(data)
@@ -100,7 +103,7 @@ const AddJob = () => {
               {errors.location && jobValidation.location}
             </div>
           </div>
-         
+
         </div>
 
 
@@ -170,6 +173,8 @@ const AddJob = () => {
           </div>
 
         </div>
+        Required Degree Level
+
 
         <div class="form-group row">
           <div class="offset-4 col-8">

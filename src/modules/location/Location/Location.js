@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Location.css';
 import { LoadJS } from '../../../libraries/datatables/datatables';
 import EditLocation from '../EditLocation/EditLocation';
@@ -8,83 +8,83 @@ import showMessage from '../../../libraries/messages/messages';
 import locationMessage from '../../../main/messages/locationMessage';
 import LocationTestService from '../../../main/mocks/LocationTestService';
 import HTTPService from '../../../main/services/HTTPService';
-
+import locationHTTPService from "../../../main/services/locationHTTPService"
 const Location = () => {
 
   const [locations, setLocations] = useState([]);
   const [updatedItem, setUpdatedItem] = useState({});
   const forceUpdate = useForceUpdate();
+  const closeButtonEdit = useRef(null);
+  const closeButtonAdd = useRef(null);
+  const [loading, setLoading] = useState(true);
 
 
   useEffect(() => {
     LoadJS()
-    retrieveLocations()
+    getAllPatient()
   }, []);
 
 
-  const getAll = () => {
-    HTTPService.getAll()
+  const getAllPatient = () => {
+    setLoading(true);
+    locationHTTPService.getAllLocation()
       .then(response => {
         setLocations(response.data);
+        setLoading(false);
       })
       .catch(e => {
-        console.log(e);
+        showMessage('Confirmation', e, 'info')
       });
   };
 
-  const removeOne = (data) => {
-    HTTPService.remove(data)
-      .then(response => {
-
-      })
-      .catch(e => {
-
-      });
-  }
-
-
-
-  const retrieveLocations = () => {
-    var locations = LocationTestService.getAll();
-    setLocations(locations);
-  };
 
   const resfresh = () => {
-    retrieveLocations()
-    forceUpdate()
+    getAllPatient()
+    //forceUpdate()
   }
 
-  const remove = (e, data) => {
+  const removePatientAction = (e, data) => {
     e.preventDefault();
     var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
     if (r) {
-      showMessage('Confirmation', locationMessage.delete, 'success')
-      LocationTestService.remove(data)
-      //removeOne(data)
-      resfresh()
+      showMessage('Confirmation', 'patientMessage.delete', 'success')
+      locationHTTPService.removeLocation(data).then(data => {
+        resfresh()
+      }).catch(e => {
+        showMessage('Confirmation', e, 'warning')
+      });
     }
-
   }
 
-  const update = (e, data) => {
+  const updatePatientAction = (e, data) => {
     e.preventDefault();
     setUpdatedItem(data)
     resfresh()
   }
 
+  const closeModalEdit = (data) => {
+    resfresh()
+    closeButtonEdit.current.click()
+  }
+
+  const closeModalAdd = (data) => {
+    resfresh()
+    closeButtonAdd.current.click()
+  }
 
   return (
     <div className="card">
       <div className="card-header">
-        <strong className="card-title">Lieux de travail</strong>
+        <strong className="card-title">Locations</strong>
       </div>
       <div className="card-body">
-
+        <button type="button" data-toggle="modal" data-target="#addLocation" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
+          Create</button>
         <table id="example1" className="table table-striped table-bordered">
           <thead>
             <tr>
-              <th>Lieu</th>
-              <th>Pays</th>
+              <th>City</th>
+              <th>Country</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -92,24 +92,16 @@ const Location = () => {
 
             {locations.map(item =>
               <tr>
-                <td>Paris</td>
-                <td>France</td>
+                <td>{item.country}</td>
+                <td>{item.city}</td>
                 <td>
-                  <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editLocation" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => remove(e, locations.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => updatePatientAction(e, item)} type="button" data-toggle="modal" data-target="#editLocation" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                  <button onClick={e => removePatientAction(e, item.id)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
           </tbody>
-          <tfoot>
-            <tr>
-              <th>Lieu</th>
-              <th>Pays</th>
-              <th>Actions</th>
-            </tr>
-          </tfoot>
         </table>
-        <button type="button" data-toggle="modal" data-target="#addLocation" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
- Ajouter</button>
+
 
 
         <div class="modal fade" id="addLocation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

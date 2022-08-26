@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Skill.css';
 import { LoadJS } from '../../../libraries/datatables/datatables';
 import AddSkill from '../AddSkill/AddSkill';
@@ -6,84 +6,83 @@ import useForceUpdate from 'use-force-update';
 import showMessage from '../../../libraries/messages/messages';
 import skillMessage from '../../../main/messages/skillMessage';
 import SkillTestService from '../../../main/mocks/SkillTestService';
-import HTTPService from '../../../main/services/HTTPService';
-
+import skillHTTPService from '../../../main/services/skillHTTPService';
+import EditSkill from '../../../components/EditSkill/EditSkill'
 const Skill = () => {
 
   const [skills, setSkills] = useState([]);
   const [updatedItem, setUpdatedItem] = useState({});
   const forceUpdate = useForceUpdate();
+  const closeButtonEdit = useRef(null);
+  const closeButtonAdd = useRef(null);
+  const [loading, setLoading] = useState(true);
 
 
   useEffect(() => {
     LoadJS()
-    retrieveSkills()
+    getAllPatient()
   }, []);
 
 
-  const getAll = () => {
-    HTTPService.getAll()
+  const getAllPatient = () => {
+    setLoading(true);
+    skillHTTPService.getAllSkill()
       .then(response => {
         setSkills(response.data);
+        setLoading(false);
       })
       .catch(e => {
-        console.log(e);
+        showMessage('Confirmation', e, 'info')
       });
   };
 
-  const removeOne = (data) => {
-    HTTPService.remove(data)
-      .then(response => {
-
-      })
-      .catch(e => {
-
-      });
-  }
-
-
-
-  const retrieveSkills = () => {
-    var skills = SkillTestService.getAll();
-    setSkills(skills);
-  };
 
   const resfresh = () => {
-    retrieveSkills()
+    getAllPatient()
     forceUpdate()
   }
 
-  const remove = (e, data) => {
+  const removePatientAction = (e, data) => {
     e.preventDefault();
     var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
     if (r) {
-      showMessage('Confirmation', skillMessage.delete, 'success')
-      SkillTestService.remove(data)
-      //removeOne(data)
-      resfresh()
+      showMessage('Confirmation', 'patientMessage.delete', 'success')
+      skillHTTPService.removeSkill(data).then(data => {
+        resfresh()
+      }).catch(e => {
+        showMessage('Confirmation', e, 'warning')
+      });
     }
-
   }
 
-  const update = (e, data) => {
+  const updatePatientAction = (e, data) => {
     e.preventDefault();
     setUpdatedItem(data)
     resfresh()
   }
 
+  const closeModalEdit = (data) => {
+    resfresh()
+    closeButtonEdit.current.click()
+  }
+
+  const closeModalAdd = (data) => {
+    resfresh()
+    closeButtonAdd.current.click()
+  }
 
   return (
     <div className="card">
       <div className="card-header">
-        <strong className="card-title">Compétences</strong>
+        <strong className="card-title">Skills</strong>
       </div>
       <div className="card-body">
-
+        <button type="button" data-toggle="modal" data-target="#addSkill" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
+          Create</button>
         <table id="example1" className="table table-striped table-bordered">
           <thead>
             <tr>
-              <th>Compétences</th>
-              <th>Catégories</th>
+              <th>Skill</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -92,24 +91,16 @@ const Skill = () => {
 
             {skills.map(item =>
               <tr>
-                <td>{item.skills}</td>
-                <td>{item.category_id}</td>
-                <td><button type="button" data-toggle="modal" data-target="#viewSkill" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
-                  <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editSkill" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => remove(e, skills.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                <td>{item.name}</td>
+                <td>
+                  <button onClick={e => updatePatientAction(e, item)} type="button" data-toggle="modal" data-target="#editSkill" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                  <button onClick={e => updatePatientAction(e, item)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
           </tbody>
-          <tfoot>
-            <tr>
-              <th>Compétences</th>
-              <th>Catégories</th>
-              <th>Actions</th>
-            </tr>
-          </tfoot>
+
         </table>
-        <button type="button" data-toggle="modal" data-target="#addSkill" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
- Ajouter</button>
+
 
         <div class="modal fade" id="addSkill" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -141,7 +132,7 @@ const Skill = () => {
                 </button>
               </div>
               <div class="modal-body">
-
+                <EditSkill skill={updatedItem} />
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>

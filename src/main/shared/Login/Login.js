@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Login.css';
-import User from '../../config/user';
+import UserSettings from '../../config/user';
 import { useHistory } from 'react-router';
 import { useForm } from 'react-hook-form';
 
@@ -12,13 +12,13 @@ const Login = (props) => {
 
   const onSubmit = (data) => {
     props.rerender();
-    User.CONNECTED_USER = true
+    UserSettings.CONNECTED_USER = true
     history.push("/dashboard")
   }
 
   return (
 
-    <div className="login-content" id="login-block" style={{ display: (!User.CONNECTED_USER ? 'block' : 'none') }}  >
+    <div className="login-content" id="login-block" style={{ display: (!UserSettings.CONNECTED_USER ? 'block' : 'none') }}  >
       <div className="login-logo">
         <a href="index.html">
           <img className="align-content" src="images/logo.png" alt="" />

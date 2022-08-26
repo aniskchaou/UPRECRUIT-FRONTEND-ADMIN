@@ -6,6 +6,7 @@ import InterviewTestService from '../../../main/mocks/InterviewTestService';
 import showMessage from '../../../libraries/messages/messages';
 import interviewMessage from '../../../main/messages/interviewMessage';
 import interviewValidation from '../../../main/validations/interviewValidation';
+import interviewHTTPService from '../../../main/services/interviewHTTPService'
 const EditInterview = (props) => {
 
     const { register, handleSubmit, errors } = useForm() // initialise the hook
@@ -18,8 +19,11 @@ const EditInterview = (props) => {
 
     const onSubmit = (data) => {
 
-        InterviewTestService.update(props.interview, data)
-        showMessage('Confirmation', interviewMessage.edit, 'success')
+        // InterviewTestService.update(props.interview, data)
+        interviewHTTPService.editInterview(props.interview.id, data).then(data => {
+            showMessage('Confirmation', interviewMessage.edit, 'success')
+        })
+
     }
 
     const handleInputChange = event => {
@@ -46,9 +50,7 @@ const EditInterview = (props) => {
                                     <option value="2">Rozella Mann PhD</option>
 
                                 </select>
-                                <div className="error text-danger">
-                                    {errors.candidates && interviewValidation.candidates}
-                                </div>
+
                             </div>
 
 
@@ -64,9 +66,7 @@ const EditInterview = (props) => {
                                     <option value="2">Admin (VOUS)</option>
 
                                 </select>
-                                <div className="error text-danger">
-                                    {errors.employees && interviewValidation.employees}
-                                </div>
+
                             </div>
 
 
@@ -83,9 +83,7 @@ const EditInterview = (props) => {
                                     type="date" name="scheduleDate" id="scheduleDate" class="form-control"
 
                                 />
-                                <div className="error text-danger">
-                                    {errors.scheduleDate && interviewValidation.scheduleDate}
-                                </div>
+
                             </div>
                         </div>
 
@@ -95,9 +93,7 @@ const EditInterview = (props) => {
                                 <input onChange={handleInputChange} value={interview.scheduleTime} ref={register({ required: true })}
                                     type="time" name="scheduleTime" id="scheduleTime" class="form-control" />
                             </div>
-                            <div className="error text-danger">
-                                {errors.scheduleTime && interviewValidation.scheduleTime}
-                            </div>
+
                         </div>
 
                     </div>
@@ -110,9 +106,7 @@ const EditInterview = (props) => {
                                     type="text" name="comment" id="comment" placeholder="Commentaire" class="form-control">
                                 </textarea>
                             </div>
-                            <div className="error text-danger">
-                                {errors.comment && interviewValidation.comment}
-                            </div>
+
                         </div>
                     </div>
 

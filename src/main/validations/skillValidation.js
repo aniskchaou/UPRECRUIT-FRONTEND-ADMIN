@@ -1,6 +1,6 @@
 
 const skillValidation = {
-    category_id: 'la category doit etre definie',
-    skills: 'les compétences doit etre definie',
+    name: 'la category doit etre definie',
+
 }
 export default skillValidation;

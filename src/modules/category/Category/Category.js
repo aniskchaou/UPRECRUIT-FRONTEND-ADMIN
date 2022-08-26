@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Category.css';
 import { LoadJS } from '../../../libraries/datatables/datatables';
 import EditCategory from '../EditCategory/EditCategory';
@@ -7,7 +7,7 @@ import useForceUpdate from 'use-force-update';
 import showMessage from '../../../libraries/messages/messages';
 import categoryMessage from '../../../main/messages/categoryMessage';
 import CategoryTestService from '../../../main/mocks/CategoryTestService';
-import HTTPService from '../../../main/services/HTTPService';
+import categoryHTTPService from '../../../main/services/categoryHTTPService';
 
 
 
@@ -18,105 +18,98 @@ const Category = () => {
 
 
 
-  const [categorys, setCategorys] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [updatedItem, setUpdatedItem] = useState({});
   const forceUpdate = useForceUpdate();
+  const closeButtonEdit = useRef(null);
+  const closeButtonAdd = useRef(null);
+  const [loading, setLoading] = useState(true);
 
 
   useEffect(() => {
     LoadJS()
-    retrieveCategorys()
+    getAllPatient()
   }, []);
 
 
-  const getAll = () => {
-    HTTPService.getAll()
+  const getAllPatient = () => {
+    setLoading(true);
+    categoryHTTPService.getAllCategory()
       .then(response => {
-        setCategorys(response.data);
+        setCategories(response.data);
+        setLoading(false);
       })
       .catch(e => {
-        console.log(e);
+        showMessage('Confirmation', e, 'info')
       });
   };
 
-  const removeOne = (data) => {
-    HTTPService.remove(data)
-      .then(response => {
-
-      })
-      .catch(e => {
-
-      });
-  }
-
-
-
-  const retrieveCategorys = () => {
-    var categorys = CategoryTestService.getAll();
-    setCategorys(categorys);
-  };
 
   const resfresh = () => {
-    retrieveCategorys()
+    getAllPatient()
     forceUpdate()
   }
 
-  const remove = (e, data) => {
+  const removePatientAction = (e, data) => {
     e.preventDefault();
     var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
     if (r) {
-      showMessage('Confirmation', categoryMessage.delete, 'success')
-      CategoryTestService.remove(data)
-      //removeOne(data)
-      resfresh()
+      showMessage('Confirmation', ' patientMessage.delete', 'success')
+      categoryHTTPService.removeCategory(data).then(data => {
+        resfresh()
+      }).catch(e => {
+        showMessage('Confirmation', e, 'warning')
+      });
     }
-
   }
 
-  const update = (e, data) => {
+  const updatePatientAction = (e, data) => {
     e.preventDefault();
     setUpdatedItem(data)
     resfresh()
   }
 
+  const closeModalEdit = (data) => {
+    resfresh()
+    closeButtonEdit.current.click()
+  }
 
+  const closeModalAdd = (data) => {
+    resfresh()
+    closeButtonAdd.current.click()
+  }
 
   return (
 
     <div className="card">
 
       <div className="card-header">
-        <strong className="card-title">Catégories d'emplois</strong>
+        <strong className="card-title">Job Categories</strong>
       </div>
       <div className="card-body">
-
+        <button type="button" data-toggle="modal" data-target="#addCategory" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
+          Create</button>
         <table id="example1" className="table table-striped table-bordered">
           <thead>
             <tr>
-              <th>Nom</th>
+              <th>Name</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {categorys.map(item => (
+            {categories.map(item => (
               <tr>
                 <td>{item.category}</td>
                 <td>
-                  <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editCategory" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => remove(e, categorys.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => updatePatientAction(e, item)} type="button" data-toggle="modal" data-target="#editCategory" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                  <button onClick={e => updatePatientAction(e, item)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>))}
 
 
           </tbody>
-          <tfoot>
-            <tr>
-              <th>Nom</th>
-              <th>Actions</th>
-            </tr>
-          </tfoot>
+
         </table>
-        <button type="button" data-toggle="modal" data-target="#addCategory" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
- Ajouter</button>
+
 
         <div className="modal fade" id="editCategory" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div className="modal-dialog modal-dialog-centered modal-lg" role="document">

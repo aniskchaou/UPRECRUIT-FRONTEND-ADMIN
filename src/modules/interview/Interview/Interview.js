@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Interview.css';
 import { LoadJS } from '../../../libraries/datatables/datatables';
 import EditInterview from '../EditInterview/EditInterview';
@@ -11,83 +11,82 @@ import HTTPService from '../../../main/services/HTTPService';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import ViewInterview from './../ViewInterview/ViewInterview';
-
+import interviewHTTPService from "../../../main/services/interviewHTTPService";
 const Interview = () => {
 
   const [interviews, setInterviews] = useState([]);
-  const [hidden, setHidden] = useState(false);
   const [updatedItem, setUpdatedItem] = useState({});
   const forceUpdate = useForceUpdate();
+  const closeButtonEdit = useRef(null);
+  const closeButtonAdd = useRef(null);
+  const [loading, setLoading] = useState(true);
 
 
   useEffect(() => {
     LoadJS()
-    retrieveInterviews()
+    getAllPatient()
   }, []);
 
 
-  const getAll = () => {
-    HTTPService.getAll()
+  const getAllPatient = () => {
+    setLoading(true);
+    interviewHTTPService.getAllInterview()
       .then(response => {
         setInterviews(response.data);
+        setLoading(false);
       })
       .catch(e => {
-        console.log(e);
+        showMessage('Confirmation', e, 'info')
       });
   };
 
-  const removeOne = (data) => {
-    HTTPService.remove(data)
-      .then(response => {
-
-      })
-      .catch(e => {
-
-      });
-  }
-
-
-
-  const retrieveInterviews = () => {
-    var interviews = InterviewTestService.getAll();
-    setInterviews(interviews);
-  };
 
   const resfresh = () => {
-    retrieveInterviews()
+    getAllPatient()
     forceUpdate()
   }
 
-  const remove = (e, data) => {
+  const removeInterviewAction = (e, data) => {
     e.preventDefault();
     var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
     if (r) {
-      showMessage('Confirmation', interviewMessage.delete, 'success')
-      InterviewTestService.remove(data)
-      //removeOne(data)
-      resfresh()
+      showMessage('Confirmation', 'patientMessage.delet', 'success')
+      interviewHTTPService.removeInterview(data).then(data => {
+        resfresh()
+      }).catch(e => {
+        showMessage('Confirmation', e, 'warning')
+      });
     }
-
   }
 
-  const update = (e, data) => {
+  const updateInterviewAction = (e, data) => {
     e.preventDefault();
     setUpdatedItem(data)
     resfresh()
+  }
+
+  const closeModalEdit = (data) => {
+    resfresh()
+    closeButtonEdit.current.click()
+  }
+
+  const closeModalAdd = (data) => {
+    resfresh()
+    closeButtonAdd.current.click()
   }
 
 
   return (
     <div className="card">
       <div className="card-header">
-        <strong className="card-title">Entretiens</strong>
+        <strong className="card-title">Interviews</strong>
       </div>
       <div className="card-body">
-
+        <button type="button" data-toggle="modal" data-target="#addInterview" className="btn btn-success btn-sm"><i class="fas fa-plus"></i> Create </button>
         <table id="example1" className="table table-striped table-bordered">
           <thead>
             <tr>
-              <th>Nom de l'applicant</th>
+              <th>Fullname</th>
               <th>Date</th>
               <th>Actions</th>
             </tr>
@@ -98,8 +97,8 @@ const Interview = () => {
                 <td>{item.candidates}</td>
                 <td>{item.scheduleDate}</td>
                 <td>
-                  <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editInterview" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => remove(e, interviews.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => updateInterviewAction(e, item)} type="button" data-toggle="modal" data-target="#editInterview" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                  <button onClick={e => removeInterviewAction(e, item.id)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
           </tbody>  <tfoot>
@@ -110,10 +109,10 @@ const Interview = () => {
             </tr>
           </tfoot>
         </table>
-        <button type="button" data-toggle="modal" data-target="#addInterview" className="btn btn-success btn-sm"><i class="fas fa-plus"></i> Ajouter </button>
-        <button type="button" onClick={() => setHidden(!hidden)} className="btn btn-info btn-sm"><i class="fas fa-calendar-alt"></i> Voir les entretiens</button>
+
+
         <br />
-        <div hidden={hidden}>
+        <div>
 
           <FullCalendar
 
@@ -121,7 +120,7 @@ const Interview = () => {
             initialView="dayGridMonth"
             weekends={false}
             events={[
-              { title: 'Entretien developpeur mobile', date: '2021-03-19' },
+              { title: 'Entretien developpeur mobile', date: '2022-07-27' },
               { title: 'event 2', date: '2019-04-02' }
             ]}
           />

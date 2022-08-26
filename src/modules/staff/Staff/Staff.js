@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Staff.css';
 import { LoadJS } from '../../../libraries/datatables/datatables';
 import EditStaff from '../EditStaff/EditStaff';
@@ -7,76 +7,75 @@ import useForceUpdate from 'use-force-update';
 import showMessage from '../../../libraries/messages/messages';
 import staffMessage from '../../../main/messages/staffMessage';
 import StaffTestService from '../../../main/mocks/StaffTestService';
-import HTTPService from '../../../main/services/HTTPService';
+import staffHTTPService from '../../../main/services/staffHTTPService';
 
 const Staff = () => {
-
   const [staffs, setStaffs] = useState([]);
   const [updatedItem, setUpdatedItem] = useState({});
   const forceUpdate = useForceUpdate();
+  const closeButtonEdit = useRef(null);
+  const closeButtonAdd = useRef(null);
+  const [loading, setLoading] = useState(true);
 
 
   useEffect(() => {
     LoadJS()
-    retrieveStaffs()
+    getAllPatient()
   }, []);
 
 
-  const getAll = () => {
-    HTTPService.getAll()
+  const getAllPatient = () => {
+    setLoading(true);
+    staffHTTPService.getAllStaff()
       .then(response => {
         setStaffs(response.data);
+        setLoading(false);
       })
       .catch(e => {
-        console.log(e);
+        showMessage('Confirmation', e, 'info')
       });
   };
 
-  const removeOne = (data) => {
-    HTTPService.remove(data)
-      .then(response => {
-
-      })
-      .catch(e => {
-
-      });
-  }
-
-
-
-  const retrieveStaffs = () => {
-    var staffs = StaffTestService.getAll();
-    setStaffs(staffs);
-  };
 
   const resfresh = () => {
-    retrieveStaffs()
+    getAllPatient()
     forceUpdate()
   }
 
-  const remove = (e, data) => {
+  const removePatientAction = (e, data) => {
     e.preventDefault();
     var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
     if (r) {
-      showMessage('Confirmation', staffMessage.delete, 'success')
-      StaffTestService.remove(data)
-      //removeOne(data)
-      resfresh()
+      showMessage('Confirmation', 'patientMessage.delete', 'success')
+      staffHTTPService.removeStaff(data).then(data => {
+        resfresh()
+      }).catch(e => {
+        showMessage('Confirmation', e, 'warning')
+      });
     }
-
   }
 
-  const update = (e, data) => {
+  const updatePatientAction = (e, data) => {
     e.preventDefault();
     setUpdatedItem(data)
     resfresh()
+  }
+
+  const closeModalEdit = (data) => {
+    resfresh()
+    closeButtonEdit.current.click()
+  }
+
+  const closeModalAdd = (data) => {
+    resfresh()
+    closeButtonAdd.current.click()
   }
 
 
   return (
     <div className="card">
       <div className="card-header">
-        <strong className="card-title">Equipes</strong>
+        <strong className="card-title">Staffs</strong>
       </div>
       <div className="card-body">
         <table id="example1" className="table table-striped table-bordered">
@@ -93,8 +92,8 @@ const Staff = () => {
                 <td>{item.email}</td>
                 <td>{item.full_name}</td>
                 <td>
-                  <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editStaff" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => remove(e, staffs.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => updatePatientAction(e, item)} type="button" data-toggle="modal" data-target="#editStaff" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                  <button onClick={e => updatePatientAction(e, staffs.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
           </tbody>
@@ -107,7 +106,7 @@ const Staff = () => {
           </tfoot>
         </table>
         <button type="button" data-toggle="modal" data-target="#addStaff" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
- Ajouter</button>
+          Ajouter</button>
 
 
         <div class="modal fade" id="addStaff" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -115,7 +114,7 @@ const Staff = () => {
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Nouveau</h5>
-                <button onClick={resfresh} type="button" onClick={resfresh} class="close" data-dismiss="modal" aria-label="Close">
+                <button onClick={resfresh} type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
@@ -135,7 +134,7 @@ const Staff = () => {
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Edit</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Editt</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>

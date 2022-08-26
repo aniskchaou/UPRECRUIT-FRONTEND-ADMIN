@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './Header.css';
 import { NavLink, useHistory } from 'react-router-dom';
-import User from '../../config/user';
+import UserSettings from '../../config/user';
 import TaskTestService from '../../mocks/TaskTestService';
 
 const Header = (props) => {
@@ -11,7 +11,7 @@ const Header = (props) => {
 
     const logout = () => {
         props.rerender();
-        User.CONNECTED_USER = false
+        UserSettings.CONNECTED_USER = false
         history.push("/login")
     }
 
@@ -26,7 +26,7 @@ const Header = (props) => {
 
 
     return (
-        <div style={{ display: (User.CONNECTED_USER ? 'block' : 'none') }} id="right-panel" className="right-panel">
+        <div style={{ display: (UserSettings.CONNECTED_USER ? 'block' : 'none') }} id="right-panel" className="right-panel">
             <header id="header" className="header">
                 <div className="top-left">
                     <div className="navbar-header">
@@ -51,18 +51,18 @@ const Header = (props) => {
                                     <i class="fas fa-puzzle-piece"></i>
                                 </button>
                                 <div className="dropdown-menu" aria-labelledby="notification">
-                                    <p className="red">Accés rapide</p>
+                                    <p className="red">Shortcuts</p>
                                     <NavLink to="/add-job" className="dropdown-item media" >
                                         <i class="fas fa-plus-circle"></i>
-                                        <p>Ajouter une offre d'emploi</p>
+                                        <p>Add Offer</p>
                                     </NavLink>
                                     <NavLink to="/add-interview" className="dropdown-item media" >
                                         <i class="fas fa-plus-circle"></i>
-                                        <p>Ajouter un entretien</p>
+                                        <p>Add interview</p>
                                     </NavLink>
                                     <NavLink to="/add-task" className="dropdown-item media">
                                         <i class="fas fa-plus-circle"></i>
-                                        <p>Ajouter une tache</p>
+                                        <p>Add task</p>
                                     </NavLink>
                                 </div>
                             </div>
@@ -73,14 +73,14 @@ const Header = (props) => {
                                     <span className="count bg-primary">4</span>
                                 </button>
                                 <div className="dropdown-menu" aria-labelledby="message">
-                                    <p className="red">Taches</p>
+                                    <p className="red">Tasks</p>
 
                                     {tasks.map(item =>
                                         <NavLink className="dropdown-item media" to="/task">
 
                                             <div className="message media-body">
                                                 <span className="name float-left">{item.title}</span>
-                                                <span className="time float-right">En cours</span>
+                                                <span className="time float-right">in progress</span>
 
                                             </div>
                                         </NavLink>
@@ -98,11 +98,11 @@ const Header = (props) => {
                             </a>
 
                             <div className="user-menu dropdown-menu">
-                                <NavLink className="nav-link" to="/profile"><i className="fa fa-user"></i>Mon Profile</NavLink>
+                                <NavLink className="nav-link" to="/profile"><i className="fa fa-user"></i>My Profil</NavLink>
 
-                                <NavLink className="nav-link" to="/configuration"><i className="fa fa-cog"></i>Paramètres</NavLink>
+                                <NavLink className="nav-link" to="/configuration"><i className="fa fa-cog"></i>Settings</NavLink>
 
-                                <NavLink onClick={logout} className="nav-link" to="/"><i className="fa fa-power-off"></i>Déconnexion</NavLink>
+                                <NavLink onClick={logout} className="nav-link" to="/"><i className="fa fa-power-off"></i>Log out</NavLink>
                             </div>
                         </div>
                     </div>

@@ -5,6 +5,7 @@ import CategoryTestService from '../../../main/mocks/CategoryTestService';
 import showMessage from '../../../libraries/messages/messages';
 import categoryMessage from '../../../main/messages/categoryMessage';
 import categoryValidation from '../../../main/validations/categoryValidation';
+import categoryHTTPService from '../../../main/services/categoryHTTPService';
 const EditCategory = (props) => {
   const { register, handleSubmit, errors } = useForm() // initialise the hook
   const [category, setCategory] = useState(props.category);
@@ -16,8 +17,11 @@ const EditCategory = (props) => {
 
   const onSubmit = (data) => {
 
-    CategoryTestService.update(props.category, data)
-    showMessage('Confirmation', categoryMessage.edit, 'success')
+    // CategoryTestService.update(props.category, data)
+    categoryHTTPService.editCategory(props.category.id, data).then(data => {
+      showMessage('Confirmation', categoryMessage.edit, 'success')
+    })
+
   }
   const handleInputChange = event => {
     const { name, value } = event.target;
@@ -37,9 +41,7 @@ const EditCategory = (props) => {
                 <div className="input-group">
                   <input type="text" onChange={handleInputChange} value={category.category} name="category" className="form-control" ref={register({ required: true })} placeholder="Nom des catégories d'emplois" />
                 </div>
-                <div className="error text-danger">
-                  {errors.category && categoryValidation.category}
-                </div>
+
 
 
               </div>

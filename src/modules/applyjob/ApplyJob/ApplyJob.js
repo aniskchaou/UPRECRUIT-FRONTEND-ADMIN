@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './ApplyJob.css';
 import { LoadJS } from '../../../libraries/datatables/datatables';
 import EditApplyJob from '../EditApplyJob/EditApplyJob';
@@ -6,93 +6,76 @@ import AddApplyJob from '../AddApplyJob/AddApplyJob';
 import useForceUpdate from 'use-force-update';
 import showMessage from '../../../libraries/messages/messages';
 import applyJobMessage from '../../../main/messages/applyJobMessage';
-import HTTPService from '../../../main/services/HTTPService';
+import applyHTTPService from '../../../main/services/applyHTTPService';
 import ApplyJobTestService from "../../../main/mocks/ApplyJobTestService";
 import ViewApplyJob from '../ViewApplyJob/ViewApplyJob'
 import ViewCandidate from '../../candidate/ViewCandidate/ViewCandidate'
 import langJsonFr from "../../../main/local/fr/apply_job.json";
 import langJsonEn from "../../../main/local/en/apply_job.json";
-import User from '../../../main/config/user';
+import UserSettings from '../../../main/config/user';
 
 const ApplyJob = () => {
 
 
-  const [applyJobs, setJobs] = useState([]);
+  const [applyJobs, setApplyJobs] = useState([]);
   const [updatedItem, setUpdatedItem] = useState({});
   const forceUpdate = useForceUpdate();
-  const [fields, setFields] = useState([]);
-
-  const loadFields = (lang) => {
-
-    switch (lang) {
-      case "fr":
-        setFields(langJsonFr)
-        break;
-      case "en":
-        setFields(langJsonEn)
-        break;
-    }
-
-
-  }
+  const closeButtonEdit = useRef(null);
+  const closeButtonAdd = useRef(null);
+  const [loading, setLoading] = useState(true);
 
 
   useEffect(() => {
-    loadFields(User.USER_LANG)
-    console.log(fields)
     LoadJS()
-    retrieveJobs()
+    getAllPatient()
   }, []);
 
 
-  const getAll = () => {
-    HTTPService.getAll()
+  const getAllPatient = () => {
+    setLoading(true);
+    applyHTTPService.getAllApply()
       .then(response => {
-        setJobs(response.data);
+        setApplyJobs(response.data);
+        setLoading(false);
       })
       .catch(e => {
-        console.log(e);
+        showMessage('Confirmation', e, 'info')
       });
   };
 
-  const removeOne = (data) => {
-    HTTPService.remove(data)
-      .then(response => {
-
-      })
-      .catch(e => {
-
-      });
-  }
-
-
-
-  const retrieveJobs = () => {
-    var applyJobs = ApplyJobTestService.getAll();
-    setJobs(applyJobs);
-  };
 
   const resfresh = () => {
-    retrieveJobs()
+    getAllPatient()
     forceUpdate()
   }
 
-  const remove = (e, data) => {
+  const removeApplyAction = (e, data) => {
     e.preventDefault();
     var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
     if (r) {
-      showMessage('Confirmation', applyJobMessage.delete, 'success')
-      ApplyJobTestService.remove(data)
-      //removeOne(data)
-      resfresh()
+      showMessage('Confirmation', 'patientMessage.delete', 'success')
+      applyHTTPService.removeApply(data).then(data => {
+        resfresh()
+      }).catch(e => {
+        showMessage('Confirmation', e, 'warning')
+      });
     }
+  }
+
+  const updateApplyAction = (e, data) => {
+    e.preventDefault();
+    setUpdatedItem(data)
 
   }
 
-  const update = (e, data) => {
-    e.preventDefault();
-    setUpdatedItem(data)
+  const closeModalEdit = (data) => {
     resfresh()
+    closeButtonEdit.current.click()
+  }
+
+  const closeModalAdd = (data) => {
+    resfresh()
+    closeButtonAdd.current.click()
   }
 
 
@@ -101,42 +84,37 @@ const ApplyJob = () => {
   return (
     <div className="card">
       <div className="card-header">
-        <strong className="card-title">Demande d'emplois</strong>
+        <strong className="card-title">Job Applications</strong>
       </div>
       <div className="card-body">
-
+        <button type="button" data-toggle="modal" data-target="#addApplyJob" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
+          Create</button>
         <table id="example1" className="table table-striped table-bordered">
           <thead>
             <tr>
-              <th>{fields.field1}</th>
-              <th>{fields.field2}</th>
-              <th>{fields.field3}</th>
-              <th>{fields.field4}</th>
+              <th>Full Name</th>
+              <th>Job offer</th>
+              <th>Date </th>
+              <th>Status</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {applyJobs.map(item =>
               <tr>
-                <td>{item.full_name}</td>
-                <td>{item.email}</td>
-                <td>{item.phone}</td>
+                <td>{item.condidate}</td>
+                <td>{item.jobOffer}</td>
+                <td>{item.dateApplication}</td>
+                <td>{item.status}</td>
                 <td>
-                  <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editApplyJob" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => remove(e, applyJobs.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+
+                  <button onClick={e => removeApplyAction(e, applyJobs.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
           </tbody>
-          <tfoot>
-            <tr>
-              <th>Nom de demandeur</th>
-              <th>Email</th>
-              <th>Mobile</th>
-              <th>Actions</th>
-            </tr>
-          </tfoot>
+
         </table>
-        <button type="button" data-toggle="modal" data-target="#addApplyJob" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
- Ajouter</button>
+
 
         <div class="modal fade" id="addApplyJob" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">

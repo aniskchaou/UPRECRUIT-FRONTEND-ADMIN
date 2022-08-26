@@ -1,98 +1,132 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import './User.css';
 import EditUser from './../EditUser/EditUser';
 import ViewUser from './../ViewUser/ViewUser';
 import { LoadJS } from './../../../libraries/datatables/datatables';
-const deleteUser=()=>{
+import userHTTPService from '../../../main/services/userHTTPService'
+import showMessage from '../../../libraries/messages/messages';
+const User = () => {
 
-    return  window.confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?")
-}
-const User = () =>{
+  const [users, setUsers] = useState([]);
+  const [updatedItem, setUpdatedItem] = useState({});
+  // const forceUpdate = useForceUpdate();
+  const closeButtonEdit = useRef(null);
+  const closeButtonAdd = useRef(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Runs ONCE after initial rendering
-    LoadJS()
-    console.log('hello')
+    // LoadJS()
+    getAllPatient()
   }, []);
 
 
- return(
-  <div className="card">
-  <div className="card-header">
-      <strong className="card-title">Utilisateurs</strong>
-  </div>
-  <div className="card-body">
-      <table id="bootstrap-data-table" className="table table-striped table-bordered">
+  const getAllPatient = () => {
+    setLoading(true);
+    userHTTPService.getAllUser()
+      .then(response => {
+        setUsers(response.data);
+        setLoading(false);
+      })
+      .catch(e => {
+        showMessage('Confirmation', e, 'info')
+      });
+  };
+
+  const removePatientAction = (e, data) => {
+    e.preventDefault();
+    var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
+    if (r) {
+      showMessage('Confirmation', 'patientMessage.delete', 'success')
+      userHTTPService.removeUser(data).then(data => {
+        getAllPatient()
+      }).catch(e => {
+        showMessage('Confirmation', e, 'warning')
+      });
+    }
+  }
+
+  const updatePatientAction = (e, data) => {
+    e.preventDefault();
+    setUpdatedItem(data)
+    //resfresh()
+  }
+
+
+
+  return (
+    <div className="card">
+      <div className="card-header">
+        <strong className="card-title">Teams</strong>
+      </div>
+      <div className="card-body">
+        <table id="bootstrap-data-table" className="table table-striped table-bordered">
           <thead>
-              <tr>
-                  <th>Nom</th>
-                  <th>Email</th>
-                  <th>Téléphone</th>
-                  <th>Actions</th>
-              </tr>
+            <tr>
+              <th>Name</th></tr>
           </thead>
           <tbody>
+            {users.map(item =>
               <tr>
-                  <td>Tiger Nixon</td>
-                  <td>tiger@gmail.com</td>
-                  <td>355355353</td>
-                  <td><button type="button" data-toggle="modal" data-target="#viewUser" class="btn btn-primary btn-sm"><i class="fas fa-address-book"></i></button>
-              <button type="button" data-toggle="modal" data-target="#editUser"class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-              <button type="button" class="btn btn-danger btn-sm" onClick={deleteUser}><i class="fas fa-trash-alt"></i></button></td>
+                <td>{item.username}</td>
+                <td>
+
+                  <button onClick={e => removePatientAction(e, item.id)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>
-             
+            )}
+
           </tbody>
-      </table>
-     
-      
-
-      <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <EditUser />
-            </div>
-            <div class="modal-footer">
-               <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-              
-            </div>
-          </div>
-        </div>
-      </div>
+        </table>
 
 
-      <div class="modal fade" id="viewUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <ViewUser/>
-            </div>
-            <div class="modal-footer">
-               <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-              
+
+        <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <EditUser />
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+
+              </div>
             </div>
           </div>
         </div>
+
+
+        <div class="modal fade" id="viewUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <ViewUser />
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
       </div>
-
-
-
-  </div>
-</div>
-)};
+    </div>
+  )
+};
 
 User.propTypes = {};
 

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Profile.css';
 import { useHistory } from 'react-router';
-import User from '../../../main/config/user';
+import UserSettings from '../../../main/config/user';
 
 const Profile = () => {
 

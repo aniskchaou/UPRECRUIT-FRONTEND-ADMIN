@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Job.css';
 import { LoadJS } from '../../../libraries/datatables/datatables';
 import EditJob from '../EditJob/EditJob';
@@ -8,86 +8,85 @@ import showMessage from '../../../libraries/messages/messages';
 import jobMessage from '../../../main/messages/jobMessage';
 import JobTestService from '../../../main/mocks/JobTestService';
 import HTTPService from '../../../main/services/HTTPService';
-
+import jobHTTPService from '../../../main/services/jobHTTPService'
 const Job = () => {
 
   const [jobs, setJobs] = useState([]);
   const [updatedItem, setUpdatedItem] = useState({});
   const forceUpdate = useForceUpdate();
+  const closeButtonEdit = useRef(null);
+  const closeButtonAdd = useRef(null);
+  const [loading, setLoading] = useState(true);
 
 
   useEffect(() => {
     LoadJS()
-    retrieveJobs()
+    getAllPatient()
   }, []);
 
 
-  const getAll = () => {
-    HTTPService.getAll()
+  const getAllPatient = () => {
+    setLoading(true);
+    jobHTTPService.getAllJob()
       .then(response => {
         setJobs(response.data);
+        setLoading(false);
       })
       .catch(e => {
-        console.log(e);
+        showMessage('Confirmation', e, 'info')
       });
   };
 
-  const removeOne = (data) => {
-    HTTPService.remove(data)
-      .then(response => {
-
-      })
-      .catch(e => {
-
-      });
-  }
-
-
-
-  const retrieveJobs = () => {
-    var jobs = JobTestService.getAll();
-    setJobs(jobs);
-  };
 
   const resfresh = () => {
-    retrieveJobs()
+    getAllPatient()
     forceUpdate()
   }
 
-  const remove = (e, data) => {
+  const removePatientAction = (e, data) => {
     e.preventDefault();
     var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
     if (r) {
-      showMessage('Confirmation', jobMessage.delete, 'success')
-      JobTestService.remove(data)
-      //removeOne(data)
-      resfresh()
+      showMessage('Confirmation', 'patientMessage.delete', 'success')
+      jobHTTPService.removeJob(data).then(data => {
+        resfresh()
+      }).catch(e => {
+        showMessage('Confirmation', e, 'warning')
+      });
     }
-
   }
 
-  const update = (e, data) => {
+  const updatePatientAction = (e, data) => {
     e.preventDefault();
     setUpdatedItem(data)
     resfresh()
   }
 
+  const closeModalEdit = (data) => {
+    resfresh()
+    closeButtonEdit.current.click()
+  }
 
+  const closeModalAdd = (data) => {
+    resfresh()
+    closeButtonAdd.current.click()
+  }
   return (
     <div className="card">
       <div className="card-header">
-        <strong className="card-title">Offres d'emploi</strong>
+        <strong className="card-title">Jobs</strong>
       </div>
       <div className="card-body">
-
+        <button type="button" className="btn btn-success btn-sm" data-toggle="modal" data-target="#addJob"><i class="fas fa-plus"></i>
+          Create</button>
         <table id="example1" className="table table-striped table-bordered">
           <thead>
             <tr>
-              <th>Poste</th>
-              <th>Lieu</th>
-              <th>Date début</th>
-              <th>Date fin</th>
-              <th>Statut</th>
+              <th>Job</th>
+              <th>Location</th>
+              <th>Start</th>
+              <th>End</th>
+              <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -100,26 +99,15 @@ const Job = () => {
                 <td>{item.end}</td>
                 <td><span class="badge badge-success" >{item.state}</span></td>
                 <td>
-                  <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editJob" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => remove(e, jobs.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => updatePatientAction(e, item)} type="button" data-toggle="modal" data-target="#editJob" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                  <button onClick={e => removePatientAction(e, item.id)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
 
           </tbody>
-          <tfoot>
-            <tr>
-              <th>Poste</th>
-              <th>Lieu</th>
-              <th>Date début</th>
-              <th>Date fin</th>
-              <th>Statut</th>
-              <th>Actions</th>
 
-            </tr>
-          </tfoot>
         </table>
-        <button type="button" className="btn btn-success btn-sm" data-toggle="modal" data-target="#addJob"><i class="fas fa-plus"></i>
- Ajouter</button>
+
 
         <div class="modal fade" id="addJob" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">

@@ -7,13 +7,13 @@ import categoryMessage from '../../../main/messages/categoryMessage'
 import categoryValidation from '../../../main/validations/categoryValidation'
 import CategoryTestService from '../../../main/mocks/CategoryTestService';
 import HTTPService from '../../../main/services/HTTPService';
-
+import categoryHTTPService from '../../../main/services/categoryHTTPService'
 
 const AddCategory = () => {
 
     const initialState = {
         category: "",
-   
+
     };
     const { register, handleSubmit, errors } = useForm() // initialise the hook
     const [category, setCategory] = useState(initialState);
@@ -22,22 +22,16 @@ const AddCategory = () => {
 
     const onSubmit = (data) => {
         //saveCategory(data)
-        CategoryTestService.create(data)
-        setCategory(initialState)
-        showMessage('Confirmation', categoryMessage.add, 'success')
+        // CategoryTestService.create(data)
+        categoryHTTPService.createCategory(data).then(data => {
+            setCategory(initialState)
+            showMessage('Confirmation', 'categoryMessage.add', 'success')
+        })
+
     }
 
-    const saveCategory = (data) => {
 
-        HTTPService.create(data)
-            .then(response => {
-                setCategory(initialState)
-            })
-            .catch(e => {
-                console.log(e);
-            });
 
-    };
 
 
     const handleInputChange = event => {
@@ -47,8 +41,8 @@ const AddCategory = () => {
 
     return (
         <div className="AddCategory">
-        
-        
+
+
             <form className="ajax-form" onSubmit={handleSubmit(onSubmit)} id="createForm" >
 
                 <div id="education_fields">

@@ -5,6 +5,7 @@ import LocationTestService from '../../../main/mocks/LocationTestService';
 import showMessage from '../../../libraries/messages/messages';
 import locationMessage from '../../../main/messages/locationMessage';
 import locationValidation from '../../../main/validations/locationValidation';
+import locationHTTPService from '../../../main/services/locationHTTPService';
 const EditLocation = (props) => {
 
     const { register, handleSubmit, errors } = useForm() // initialise the hook
@@ -17,8 +18,11 @@ const EditLocation = (props) => {
 
     const onSubmit = (data) => {
 
-        LocationTestService.update(props.location, data)
-        showMessage('Confirmation', locationMessage.edit, 'success')
+        //  LocationTestService.update(props.location, data)
+        locationHTTPService.editLocation(props.location.id, data).then(data => {
+            showMessage('Confirmation', locationMessage.edit, 'success')
+        })
+
     }
 
     const handleInputChange = event => {
@@ -29,14 +33,14 @@ const EditLocation = (props) => {
 
     return (
         <div className="EditLocation">
-            <form className="ajax-form" method="POST" id="createForm">
+            <form onSubmit={handleSubmit(onSubmit)} className="ajax-form" method="POST" id="createForm">
                 <input type="hidden" name="_token" value="GFhIBXJaQlJA2etgCbg2afSudq4Ocos9cALIdMhB" />
                 <div className="row">
                     <div className="col-md-9">
 
                         <div className="form-group">
                             <label for="address">Pays</label><br />
-                            <select name="country_id" id="country_id" className="form-control select2 custom-select select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                            <select ref={register({ required: true })} onChange={handleInputChange} value={location.country} name="country" id="country_id" className="form-control select2 custom-select select2-hidden-accessible" tabindex="-1" aria-hidden="true">
                                 <option value="1">Afghanistan</option>
                                 <option value="2">Albania</option>
                                 <option value="3">Algeria</option>
@@ -293,7 +297,7 @@ const EditLocation = (props) => {
                         <div className="col-sm-9 nopadding">
                             <div className="form-group">
                                 <div className="input-group">
-                                    <input type="text" name="locations[]" className="form-control" placeholder="lieu" />
+                                    <input onChange={handleInputChange} ref={register({ required: true })} value={location.city} type="text" name="city" className="form-control" placeholder="lieu" />
 
                                 </div>
                             </div>
@@ -301,7 +305,7 @@ const EditLocation = (props) => {
                     </div>
                 </div>
 
-                <button type="button" id="save-form" className="btn btn-success"><i className="fa fa-check"></i> Sauvegarder</button>
+                <button type="submit" id="save-form" className="btn btn-success"><i className="fa fa-check"></i> Sauvegarder</button>
 
             </form>
         </div>

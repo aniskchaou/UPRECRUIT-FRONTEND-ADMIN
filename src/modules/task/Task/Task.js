@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import './Task.css';
 import AddTask from '../AddTask/AddTask';
@@ -9,7 +9,7 @@ import TaskTestService from '../../../main/mocks/TaskTestService';
 import showMessage from '../../../libraries/messages/messages';
 import jobMessage from '../../../main/messages/jobMessage';
 import useForceUpdate from 'use-force-update';
-
+import taskHTTPService from "../../../main/services/taskHTTPService";
 const deleteTask = () => {
   return window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?")
 }
@@ -17,61 +17,71 @@ const deleteTask = () => {
 
 const Task = () => {
 
-  const [tasks, setTask] = useState([]);
+  const [tasks, setTasks] = useState([]);
   const [updatedItem, setUpdatedItem] = useState({});
   const forceUpdate = useForceUpdate();
+  const closeButtonEdit = useRef(null);
+  const closeButtonAdd = useRef(null);
+  const [loading, setLoading] = useState(true);
 
 
   useEffect(() => {
     LoadJS()
-    retrievetasks()
+    getAllPatient()
   }, []);
 
 
-  const getAll = () => {
-    TaskTestService.getAll()
+  const getAllPatient = () => {
+    setLoading(true);
+    taskHTTPService.getAllTask()
       .then(response => {
-        setTask(response.data);
+        setTasks(response.data);
+        setLoading(false);
       })
       .catch(e => {
-        console.log(e);
+        showMessage('Confirmation', e, 'info')
       });
   };
 
 
-
-  const retrievetasks = () => {
-    var tasks = TaskTestService.getAll();
-    setTask(tasks);
-  };
-
   const resfresh = () => {
-    retrievetasks()
+    getAllPatient()
     forceUpdate()
   }
 
-  const remove = (e, data) => {
+  const removePatientAction = (e, data) => {
     e.preventDefault();
     var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
     if (r) {
-      showMessage('Confirmation', jobMessage.delete, 'success')
-      TaskTestService.remove(data)
-      resfresh()
+      showMessage('Confirmation', 'patientMessage.delete', 'success')
+      taskHTTPService.removeTask(data).then(data => {
+        resfresh()
+      }).catch(e => {
+        showMessage('Confirmation', e, 'warning')
+      });
     }
-
   }
 
-  const update = (e, data) => {
+  const updatePatientAction = (e, data) => {
     e.preventDefault();
     setUpdatedItem(data)
     resfresh()
   }
 
+  const closeModalEdit = (data) => {
+    resfresh()
+    closeButtonEdit.current.click()
+  }
+
+  const closeModalAdd = (data) => {
+    resfresh()
+    closeButtonAdd.current.click()
+  }
 
   return (
     <div className="card">
       <div className="card-header">
-        <strong className="card-title">Taches</strong>
+        <strong className="card-title">Tasks</strong>
       </div>
       <div className="card-body">
 
@@ -90,8 +100,8 @@ const Task = () => {
                 <td>{item.title}</td>
                 <td><span class="badge badge-success">en cours</span></td>
                 <td>
-                  <button onClick={e => update(e, item)} type="button" data-toggle="modal" data-target="#editTask" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => remove(e, tasks.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => updatePatientAction(e, item)} type="button" data-toggle="modal" data-target="#editTask" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                  <button onClick={e => updatePatientAction(e, tasks.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
           </tbody>
@@ -105,7 +115,7 @@ const Task = () => {
           </tfoot>
         </table>
         <button type="button" className="btn btn-success btn-sm" data-toggle="modal" data-target="#addTask"><i class="fas fa-plus"></i>
-  Ajouter</button>
+          Ajouter</button>
 
         <div class="modal fade" id="addTask" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">

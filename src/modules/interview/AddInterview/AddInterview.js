@@ -7,6 +7,7 @@ import interviewValidation from '../../../main/validations/interviewValidation'
 import InterviewTestService from '../../../main/mocks/InterviewTestService';
 import HTTPService from '../../../main/services/HTTPService';
 import { useForm } from 'react-hook-form';
+import interviewHTTPService from '../../../main/services/interviewHTTPService';
 
 const AddInterview = () => {
     const initialState = {
@@ -22,9 +23,12 @@ const AddInterview = () => {
 
     const onSubmit = (data) => {
         //saveInterview(data)
-        InterviewTestService.create(data)
-        setInterview(initialState)
-        showMessage('Confirmation', interviewMessage.add, 'success')
+        // InterviewTestService.create(data)
+        interviewHTTPService.createInterview(data).then(data => {
+            setInterview(initialState)
+            showMessage('Confirmation', interviewMessage.add, 'success')
+        })
+
     }
 
     const saveInterview = (data) => {
@@ -60,7 +64,7 @@ const AddInterview = () => {
                                 <select onChange={handleInputChange} value={interview.candidates}
                                     ref={register({ required: true })}
                                     class="select2 m-b-10 form-control select2-multiple select2-hidden-accessible" multiple=""
-                                    data-placeholder="Choose Candidate" name="candidates[]" tabindex="-1" aria-hidden="true">
+                                    data-placeholder="Choose Candidate" name="candidates" tabindex="-1" aria-hidden="true">
                                     <option value="Lorenzo Hackett">Lorenzo Hackett</option>
                                     <option value="Rozella Mann PhD">Rozella Mann </option>
 
