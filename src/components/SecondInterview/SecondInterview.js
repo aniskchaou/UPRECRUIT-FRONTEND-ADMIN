@@ -5,6 +5,7 @@ import applyHTTPService from '../../main/services/applyHTTPService';
 import showMessage from '../../libraries/messages/messages';
 import ViewCandidate from '../../modules/candidate/ViewCandidate/ViewCandidate';
 import ViewApplyJob from '../../modules/applyjob/ViewApplyJob/ViewApplyJob';
+import { LoadJS } from '../../libraries/datatables/datatables';
 
 const SecondInterview = () => {
 
@@ -17,7 +18,7 @@ const SecondInterview = () => {
 
 
   useEffect(() => {
-    //LoadJS()
+    LoadJS()
     getAllPatient()
   }, []);
 
@@ -101,6 +102,15 @@ const SecondInterview = () => {
               </tr>
             )}
           </tbody>
+          <tfoot>
+            <tr>
+              <th>Full Name</th>
+              <th>Job offer</th>
+              <th>Date </th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </tfoot>
 
         </table>
 

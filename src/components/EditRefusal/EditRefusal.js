@@ -20,7 +20,7 @@ const EditRefusal = (props) => {
     // GroupeTestService.update(props.refusal, data)
     // showMessage('Confirmation', groupeMessage.edit, 'success')
     refusalHTTPService.editRefusal(props.refusal.id, data).then(data => {
-
+      props.closeModal()
     })
   }
 

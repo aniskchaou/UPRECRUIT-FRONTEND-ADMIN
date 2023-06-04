@@ -39,15 +39,15 @@ const Skill = () => {
 
   const resfresh = () => {
     getAllPatient()
-    forceUpdate()
+    //forceUpdate()
   }
 
   const removePatientAction = (e, data) => {
     e.preventDefault();
-    var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
+    var r = window.confirm("Are you sure?");
     if (r) {
       showMessage('Confirmation', 'patientMessage.delete', 'success')
-      skillHTTPService.removeSkill(data).then(data => {
+      skillHTTPService.removeSkill(data.id).then(data => {
         resfresh()
       }).catch(e => {
         showMessage('Confirmation', e, 'warning')
@@ -58,7 +58,7 @@ const Skill = () => {
   const updatePatientAction = (e, data) => {
     e.preventDefault();
     setUpdatedItem(data)
-    resfresh()
+    //resfresh()
   }
 
   const closeModalEdit = (data) => {
@@ -94,7 +94,7 @@ const Skill = () => {
                 <td>{item.name}</td>
                 <td>
                   <button onClick={e => updatePatientAction(e, item)} type="button" data-toggle="modal" data-target="#editSkill" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => updatePatientAction(e, item)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => removePatientAction(e, item)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
           </tbody>
@@ -106,16 +106,16 @@ const Skill = () => {
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">New</h5>
                 <button onClick={resfresh} type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <AddSkill />
+                <AddSkill closeModal={closeModalAdd} />
               </div>
               <div class="modal-footer">
-                <button onClick={resfresh} type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button ref={closeButtonAdd} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
               </div>
             </div>
@@ -126,16 +126,16 @@ const Skill = () => {
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <EditSkill skill={updatedItem} />
+                <EditSkill skill={updatedItem} closeModal={closeModalEdit} />
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button ref={closeButtonEdit} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
               </div>
             </div>

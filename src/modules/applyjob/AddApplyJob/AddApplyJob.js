@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './AddApplyJob.css';
 import { useForm } from 'react-hook-form';
 import showMessage from '../../../libraries/messages/messages'
@@ -7,8 +7,10 @@ import applyJobValidation from '../../../main/validations/applyJobValidation'
 import ApplyJobTestService from '../../../main/mocks/ApplyJobTestService';
 import HTTPService from '../../../main/services/HTTPService';
 import applyHTTPService from '../../../main/services/applyHTTPService'
+import candidateHTTPService from '../../../main/services/candidateHTTPService'
+import jobHTTPService from '../../../main/services/jobHTTPService';
 
-const AddApplyJob = () => {
+const AddApplyJob = (props) => {
 
   const initialState = {
     condidate: '',
@@ -19,14 +21,28 @@ const AddApplyJob = () => {
   };
   const [job, setJob] = useState(initialState);
   const { register, handleSubmit, errors } = useForm()
+  const [candidates, setCandidates] = useState([]);
+  const [jobOffers, setJobOffers] = useState([]);
+
+  useEffect(() => {
+    candidateHTTPService.getAllCandidate().then(data => {
+      setCandidates(data.data)
+    })
+
+    jobHTTPService.getAllJob().then(data => {
+      setJobOffers(data.data)
+    })
+  }, [])
 
 
   const onSubmit = (data) => {
+    console.log(data)
     //saveJob(data)
     //ApplyJobTestService.create(data)
     applyHTTPService.createApply(data).then(data => {
       setJob(initialState)
       showMessage('Confirmation', applyJobMessage.add, 'success')
+      props.closeModal()
     })
 
   }
@@ -60,11 +76,15 @@ const AddApplyJob = () => {
 
         <div className="row">
 
-          <div className="col-md-8">
+          <div className="col-md-12">
             <div className="form-group">
               <label className="control-label required"><font   ><font   >Candidate</font></font></label>
-              <input ref={register({ required: true })} className="form-control" value={job.candidate}
-                onChange={handleInputChange} type="text" name="candidate" placeholder="Nom" />
+              <select ref={register({ required: true })} className="form-control" value={job.candidate}
+                onChange={handleInputChange} type="text" name="candidate" placeholder="Nom" >
+                {candidates.map(item =>
+                  <option value={item.firstName + ' ' + item.lastName}>{item.firstName + ' ' + item.lastName}</option>
+                )}
+              </select>
               <div className="error text-danger">
                 {errors.candidate && applyJobValidation.candidate}
               </div>
@@ -72,18 +92,22 @@ const AddApplyJob = () => {
             </div>
 
             <div className="form-group">
-              <label className="control-label required"><font   ><font   >job Offer</font></font></label>
-              <input className="form-control" value={job.jobOffer} ref={register({ required: true })}
-                onChange={handleInputChange} type="text" name="jobOffer" placeholder="Email" />
+              <label className="control-label required"><font   ><font   >Job Offer</font></font></label>
+              <select className="form-control" value={job.jobOffer} ref={register({ required: true })}
+                onChange={handleInputChange} type="text" name="jobOffer" placeholder="Email" >
+                {jobOffers.map(item =>
+                  <option value={item.post}>{item.post}</option>
+                )}
+              </select>
               <div className="error text-danger">
                 {errors.jobOffer && applyJobValidation.jobOffer}
               </div>
             </div>
 
             <div className="form-group">
-              <label className="control-label required"><font   ><font   >date Application</font></font></label>
+              <label className="control-label required"><font   ><font   >Application Date</font></font></label>
               <input className="form-control" value={job.dateApplication} ref={register({ required: true })}
-                onChange={handleInputChange} type="tel" name="dateApplication" />
+                onChange={handleInputChange} type="date" name="dateApplication" />
               <div className="error text-danger">
                 {errors.dateApplication && applyJobValidation.dateApplication}
               </div>
@@ -91,9 +115,12 @@ const AddApplyJob = () => {
 
 
             <div className="form-group">
-              <label className="control-label required"><font   ><font   >status</font></font></label>
-              <input className="form-control" value={job.status} ref={register({ required: true })}
-                onChange={handleInputChange} type="tel" name="status" placeholder="Téléphone" />
+              <label className="control-label required"><font   ><font   >Status</font></font></label>
+              <select className="form-control" value={job.status} ref={register({ required: true })}
+                onChange={handleInputChange} type="tel" name="status" placeholder="Status" >
+                <option value="Accepted">Accepted</option>
+                <option value="Refused">Refused</option>
+              </select>
               <div className="error text-danger">
                 {errors.status && applyJobValidation.status}
               </div>
@@ -101,9 +128,12 @@ const AddApplyJob = () => {
 
 
             <div className="form-group">
-              <label className="control-label required"><font   ><font   >appreciation</font></font></label>
-              <input className="form-control" value={job.appreciation} ref={register({ required: true })}
-                onChange={handleInputChange} type="tel" name="appreciation" placeholder="Téléphone" />
+              <label className="control-label required"><font   ><font   >Appreciation</font></font></label>
+              <select className="form-control" value={job.appreciation} ref={register({ required: true })}
+                onChange={handleInputChange} type="tel" name="appreciation" placeholder="Téléphone">
+                <option value="Good">Good</option>
+                <option value="Bad">Bad</option>
+              </select>
               <div className="error text-danger">
                 {errors.appreciation && applyJobValidation.appreciation}
               </div>
@@ -121,7 +151,7 @@ const AddApplyJob = () => {
         <br />
         <button type="submit" id="save-form" className="btn btn-success">
           <i className="fa fa-check"></i>
-          <font   ><font   > Sauvegarder</font></font></button>
+          <font   ><font   > Save</font></font></button>
 
       </form>
     </div>

@@ -32,11 +32,11 @@ const Task = () => {
 
 
   const getAllPatient = () => {
-    setLoading(true);
+    // setLoading(true);
     taskHTTPService.getAllTask()
       .then(response => {
         setTasks(response.data);
-        setLoading(false);
+        // setLoading(false);
       })
       .catch(e => {
         showMessage('Confirmation', e, 'info')
@@ -46,15 +46,15 @@ const Task = () => {
 
   const resfresh = () => {
     getAllPatient()
-    forceUpdate()
+    //forceUpdate()
   }
 
   const removePatientAction = (e, data) => {
     e.preventDefault();
-    var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
+    var r = window.confirm("Are you sure ?");
     if (r) {
-      showMessage('Confirmation', 'patientMessage.delete', 'success')
-      taskHTTPService.removeTask(data).then(data => {
+      //showMessage('Confirmation', 'patientMessage.delete', 'success')
+      taskHTTPService.removeTask(data.id).then(data => {
         resfresh()
       }).catch(e => {
         showMessage('Confirmation', e, 'warning')
@@ -84,53 +84,51 @@ const Task = () => {
         <strong className="card-title">Tasks</strong>
       </div>
       <div className="card-body">
-
+        <button type="button" className="btn btn-success btn-sm" data-toggle="modal" data-target="#addTask"><i class="fas fa-plus"></i>
+          Create</button>
         <table id="example1" className="table table-striped table-bordered">
           <thead>
             <tr>
-              <th>Titre</th>
-              <th>Statut</th>
+              <th>Task</th>
+              <th>Status</th>
               <th>Actions</th>
-
             </tr>
           </thead>
           <tbody>
             {tasks.map(item =>
               <tr>
-                <td>{item.title}</td>
-                <td><span class="badge badge-success">en cours</span></td>
+                <td>{item.task}</td>
+                <td><span class="badge badge-success">{item.status}</span></td>
                 <td>
                   <button onClick={e => updatePatientAction(e, item)} type="button" data-toggle="modal" data-target="#editTask" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => updatePatientAction(e, tasks.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => removePatientAction(e, item)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
           </tbody>
           <tfoot>
             <tr>
-              <th>Titre</th>
-              <th>Statut</th>
+              <th>Task</th>
+              <th>Status</th>
               <th>Actions</th>
-
             </tr>
           </tfoot>
         </table>
-        <button type="button" className="btn btn-success btn-sm" data-toggle="modal" data-target="#addTask"><i class="fas fa-plus"></i>
-          Ajouter</button>
+
 
         <div class="modal fade" id="addTask" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Nouveau</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">New</h5>
                 <button onClick={resfresh} type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <AddTask />
+                <AddTask closeModal={closeModalAdd} />
               </div>
               <div class="modal-footer">
-                <button onClick={resfresh} type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button ref={closeButtonAdd} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
             </div>
           </div>
@@ -147,35 +145,17 @@ const Task = () => {
                 </button>
               </div>
               <div class="modal-body">
-                <EditTask task={updatedItem} />
+                <EditTask task={updatedItem} closeModal={closeModalEdit} />
               </div>
               <div class="modal-footer">
-                <button onClick={resfresh} type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button ref={closeButtonEdit} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
             </div>
           </div>
         </div>
 
 
-        <div class="modal fade" id="viewTask" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <ViewTask />
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
 
-              </div>
-            </div>
-          </div>
-        </div>
 
 
 

@@ -5,7 +5,7 @@ import locationHTTPService from '../../../main/services/locationHTTPService';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import showMessage from '../../../libraries/messages/messages';
-const AddLocation = () => {
+const AddLocation = (props) => {
 
     const initialState = {
         country: "",
@@ -24,6 +24,7 @@ const AddLocation = () => {
         locationHTTPService.createLocation(data).then(data => {
             setCategory(initialState)
             showMessage('Confirmation', 'categoryMessage.add', 'success')
+            props.closeModal()
         })
 
     }
@@ -45,10 +46,10 @@ const AddLocation = () => {
             <form onSubmit={handleSubmit(onSubmit)} className="ajax-form" method="POST" id="createForm">
                 <input type="hidden" name="_token" value="GFhIBXJaQlJA2etgCbg2afSudq4Ocos9cALIdMhB" />
                 <div className="row">
-                    <div className="col-md-9">
+                    <div className="col-md-12">
 
                         <div className="form-group">
-                            <label for="address">Pays</label><br />
+                            <label for="address">Country</label>
                             <select ref={register({ required: true })} onChange={handleInputChange} value={category.country} name="country" id="country_id" className="form-control select2 custom-select select2-hidden-accessible" tabindex="-1" aria-hidden="true">
                                 <option value="1">Afghanistan</option>
                                 <option value="2">Albania</option>
@@ -303,9 +304,11 @@ const AddLocation = () => {
 
                 <div id="education_fields">
                     <div className="row">
-                        <div className="col-sm-9 nopadding">
+                        <div className="col-md-12">
                             <div className="form-group">
+                                <label for="address">City</label><br />
                                 <div className="input-group">
+
                                     <input onChange={handleInputChange} ref={register({ required: true })} value={category.city} type="text" name="city" className="form-control" placeholder="lieu" />
 
                                 </div>
@@ -314,7 +317,7 @@ const AddLocation = () => {
                     </div>
                 </div>
 
-                <button type="submit" id="save-form" className="btn btn-success"><i className="fa fa-check"></i> Sauvegarder</button>
+                <button type="submit" id="save-form" className="btn btn-success"><i className="fa fa-check"></i> Save</button>
 
             </form>
         </div>

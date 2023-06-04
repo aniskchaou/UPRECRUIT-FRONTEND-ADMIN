@@ -40,7 +40,7 @@ const Language = () => {
 
   const removePatientAction = (e, data) => {
     e.preventDefault();
-    var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
+    var r = window.confirm("Are You Sure ?");
     if (r) {
       // showMessage('Confirmation', ' patientMessage.delete', 'success')
       languageHTTPService.removeLanguage(data).then(data => {
@@ -80,7 +80,7 @@ const Language = () => {
         <table id="example1" className="table table-striped table-bordered">
           <thead>
             <tr>
-              <th>language</th>
+              <th>Language</th>
               <th>Level</th>
               <th>Actions</th>
             </tr>
@@ -105,17 +105,16 @@ const Language = () => {
           <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <h5 className="modal-title" id="exampleModalLongTitle">Edit</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div className="modal-body">
-                <EditLanguage language={updatedItem} />
+                <EditLanguage language={updatedItem} closeModal={closeModalEdit} />
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" className="btn btn-primary">Save changes</button>
+                <button ref={closeButtonEdit} type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
             </div>
           </div>
@@ -125,16 +124,16 @@ const Language = () => {
           <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLongTitle">Nouveau</h5>
+                <h5 className="modal-title" id="exampleModalLongTitle">New</h5>
                 <button onClick={resfresh} type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div className="modal-body">
-                <AddLanguage />
+                <AddLanguage closeModal={closeModalAdd} />
               </div>
               <div className="modal-footer">
-                <button onClick={resfresh} type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button ref={closeButtonAdd} type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
 
               </div>
             </div>

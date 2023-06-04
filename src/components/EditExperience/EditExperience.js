@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
 import './EditExperience.css';
-
-import experienceHTTPService from '../../main/services/experienceHTTPService'
+import experienceHTTPService from '../../main/services/experienceHTTPService';
+import experienceValidation from '../../main/validations/experienceValidation';
 const EditExperience = (props) => {
 
   const { register, handleSubmit, errors } = useForm() // initialise the hook
@@ -19,7 +19,7 @@ const EditExperience = (props) => {
     //  GroupeTestService.update(props.experience, data)
     //showMessage('Confirmation', groupeMessage.edit, 'success')
     experienceHTTPService.editExperience(props.experience.id, data).then(data => {
-
+      props.closeModal()
     })
   }
 
@@ -31,64 +31,75 @@ const EditExperience = (props) => {
 
   return (
     <div className="EditGroupe">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="form-group">
-          <label className="control-label required"><font   ><font   >title</font></font></label>
-          <input className="form-control" value={experience.title} ref={register({ required: true })}
-            onChange={handleInputChange} type="text" name="title" placeholder="Email" />
+      <form className="ajax-form" onSubmit={handleSubmit(onSubmit)} id="createForm" >
 
-        </div>
-
-        <div className="form-group">
-          <label className="control-label required"><font   ><font   >company</font></font></label>
-          <input className="form-control" value={experience.company} ref={register({ required: true })}
-            onChange={handleInputChange} type="text" name="company" placeholder="Email" />
-
-        </div>
-
-        <div className="form-group">
-          <label className="control-label required"><font   ><font   >location</font></font></label>
-          <input className="form-control" value={experience.location} ref={register({ required: true })}
-            onChange={handleInputChange} type="text" name="location" placeholder="Email" />
-
-        </div>
-
-        <div className="form-group">
-          <label className="control-label required"><font   ><font   >startDate</font></font></label>
-          <input className="form-control" value={experience.startDate} ref={register({ required: true })}
-            onChange={handleInputChange} type="text" name="startDate" placeholder="Email" />
-
-        </div>
-
-        <div className="form-group">
-          <label className="control-label required"><font   ><font   >endDate</font></font></label>
-          <input className="form-control" value={experience.endDate} ref={register({ required: true })}
-            onChange={handleInputChange} type="text" name="endDate" placeholder="Email" />
-
-        </div>
-
-        <div className="form-group">
-          <label className="control-label required"><font   ><font   >status</font></font></label>
-          <input className="form-control" value={experience.status} ref={register({ required: true })}
-            onChange={handleInputChange} type="text" name="status" placeholder="Email" />
-
-        </div>
-
-        <div className="form-group">
-          <label className="control-label required"><font   ><font   >description</font></font></label>
-          <input className="form-control" value={experience.description} ref={register({ required: true })}
-            onChange={handleInputChange} type="text" name="description" placeholder="Email" />
-
-        </div>
+        <div id="education_fields">
+          <div className="row">
+            <div className="col-md-12">
 
 
+              <div className="form-group">
+                <label className="control-label required"><font   ><font   >Title</font></font></label>
+                <input className="form-control" value={experience.title} ref={register({ required: true })}
+                  onChange={handleInputChange} type="text" name="title" placeholder="Title" />
+                <div className="error text-danger">
+                  {errors.title && experienceValidation.title}
+                </div>
+              </div>
 
-        <div class="form-group row">
-          <div class="offset-4 col-8">
-            <button name="submit" type="submit" class="btn btn-primary"><i class="far fa-save"></i>Sauvegarder</button>
+              <div className="form-group">
+                <label className="control-label required"><font   ><font   >Company</font></font></label>
+                <input className="form-control" value={experience.company} ref={register({ required: true })}
+                  onChange={handleInputChange} type="text" name="company" placeholder="Company" />
+                <div className="error text-danger">
+                  {errors.company && experienceValidation.company}
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="control-label required"><font   ><font   >Location</font></font></label>
+                <input className="form-control" value={experience.location} ref={register({ required: true })}
+                  onChange={handleInputChange} type="text" name="location" placeholder="Location" />
+                <div className="error text-danger">
+                  {errors.location && experienceValidation.location}
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="control-label required"><font   ><font   >Start</font></font></label>
+                <input className="form-control" value={experience.startDate} ref={register({ required: true })}
+                  onChange={handleInputChange} type="date" name="startDate" placeholder="Start" />
+                <div className="error text-danger">
+                  {errors.startDate && experienceValidation.startDate}
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="control-label required"><font   ><font   >End</font></font></label>
+                <input className="form-control" value={experience.endDate} ref={register({ required: true })}
+                  onChange={handleInputChange} type="date" name="endDate" placeholder="End" />
+                <div className="error text-danger">
+                  {errors.endDate && experienceValidation.endDate}
+                </div>
+              </div>
+
+
+              <div className="form-group">
+                <label className="control-label required"><font   ><font   >Description</font></font></label>
+                <input className="form-control" value={experience.description} ref={register({ required: true })}
+                  onChange={handleInputChange} type="text" name="description" placeholder="Description" />
+                <div className="error text-danger">
+                  {errors.description && experienceValidation.description}
+                </div>
+              </div>
+
+
+
+            </div>
           </div>
         </div>
 
+        <button type="submit" id="save-form" className="btn btn-success"><i className="fa fa-check"></i><font ><font  > Save</font></font></button>
       </form>
     </div>
   )

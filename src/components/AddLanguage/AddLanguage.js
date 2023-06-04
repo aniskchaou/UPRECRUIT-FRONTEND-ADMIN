@@ -4,7 +4,7 @@ import './AddLanguage.css';
 import companyValidation from '../../main/validations/companyValidation';
 import { useForm } from 'react-hook-form';
 import LanguageHTTPService from '../../main/services/LanguageHTTPService';
-const AddLanguage = () => {
+const AddLanguage = (props) => {
   const initialState = {
     language: '',
     level: ''
@@ -24,6 +24,7 @@ const AddLanguage = () => {
      }) */
     LanguageHTTPService.createLanguage(data).then(data => {
       setCompany(initialState)
+      props.closeModal()
     })
   }
 
@@ -46,22 +47,22 @@ const AddLanguage = () => {
 
         <div id="education_fields">
           <div className="row">
-            <div className="col-sm-9 nopadding">
+            <div className="col-md-12">
 
 
               <div className="form-group">
-                <label className="control-label required"><font   ><font   >language</font></font></label>
+                <label className="control-label required"><font   ><font   >Language</font></font></label>
                 <input className="form-control" value={company.language} ref={register({ required: true })}
-                  onChange={handleInputChange} type="text" name="language" placeholder="Email" />
+                  onChange={handleInputChange} type="text" name="language" placeholder="Language" />
                 <div className="error text-danger">
                   {errors.language && companyValidation.language}
                 </div>
               </div>
 
               <div className="form-group">
-                <label className="control-label required"><font   ><font   >level</font></font></label>
+                <label className="control-label required"><font   ><font   >Level</font></font></label>
                 <input className="form-control" value={company.level} ref={register({ required: true })}
-                  onChange={handleInputChange} type="text" name="level" placeholder="Email" />
+                  onChange={handleInputChange} type="text" name="level" placeholder="Level" />
                 <div className="error text-danger">
                   {errors.level && companyValidation.level}
                 </div>
@@ -73,7 +74,7 @@ const AddLanguage = () => {
           </div>
         </div>
 
-        <button type="submit" id="save-form" className="btn btn-success"><i className="fa fa-check"></i><font ><font  > Sauvegarder</font></font></button>
+        <button type="submit" id="save-form" className="btn btn-success"><i className="fa fa-check"></i><font ><font  > Save</font></font></button>
       </form>
     </div>
   )

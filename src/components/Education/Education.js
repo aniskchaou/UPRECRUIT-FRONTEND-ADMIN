@@ -5,6 +5,7 @@ import AddEducation from '../AddEducation/AddEducation'
 import educationHTTPService from '../../main/services/educationHTTPService'
 import showMessage from '../../libraries/messages/messages';
 import EditEducation from '../../components/EditEducation/EditEducation'
+import { LoadJS } from '../../libraries/datatables/datatables';
 const Education = () => {
   const [educations, setEducations] = useState([]);
   const [updatedItem, setUpdatedItem] = useState({});
@@ -15,7 +16,7 @@ const Education = () => {
 
 
   useEffect(() => {
-    //LoadJS()
+    LoadJS()
     getAllPatient()
   }, []);
 
@@ -40,7 +41,7 @@ const Education = () => {
 
   const removePatientAction = (e, data) => {
     e.preventDefault();
-    var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
+    var r = window.confirm("Are You Sure?");
     if (r) {
       showMessage('Confirmation', ' patientMessage.delete', 'success')
       educationHTTPService.removeEducation(data).then(data => {
@@ -54,7 +55,7 @@ const Education = () => {
   const updatePatientAction = (e, data) => {
     e.preventDefault();
     setUpdatedItem(data)
-    resfresh()
+    //resfresh()
   }
 
   const closeModalEdit = (data) => {
@@ -81,9 +82,11 @@ const Education = () => {
 
           <thead>
             <tr>
-              <th>degree</th>
-              <th>university</th>
-              <th>result</th>
+              <th>Degree</th>
+              <th>University</th>
+              <th>Result</th>
+              <th>Start</th>
+              <th>End</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -93,13 +96,23 @@ const Education = () => {
                 <td>{item.degree}</td>
                 <td>{item.university}</td>
                 <td>{item.result}</td>
+                <td>{item.startDate}</td>
+                <td>{item.endDate}</td>
                 <td>
                   <button onClick={e => updatePatientAction(e, item)} type="button" data-toggle="modal" data-target="#editCategory" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => updatePatientAction(e, item.id)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => removePatientAction(e, item.id)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>))}
-
-
           </tbody>
+          <tfoot>
+            <tr>
+              <th>Degree</th>
+              <th>University</th>
+              <th>Result</th>
+              <th>Start</th>
+              <th>End</th>
+              <th>Actions</th>
+            </tr>
+          </tfoot>
 
         </table>
 
@@ -108,17 +121,16 @@ const Education = () => {
           <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <h5 className="modal-title" id="exampleModalLongTitle">Edit</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div className="modal-body">
-                <EditEducation education={updatedItem} />
+                {<EditEducation edu={updatedItem} closeModal={closeModalEdit} />}
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" className="btn btn-primary">Save changes</button>
+                <button ref={closeButtonEdit} type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
             </div>
           </div>
@@ -128,16 +140,16 @@ const Education = () => {
           <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLongTitle">Nouveau</h5>
+                <h5 className="modal-title" id="exampleModalLongTitle">New</h5>
                 <button onClick={resfresh} type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div className="modal-body">
-                <AddEducation />
+                <AddEducation closeModal={closeModalAdd} />
               </div>
               <div className="modal-footer">
-                <button onClick={resfresh} type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button ref={closeButtonAdd} type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
 
               </div>
             </div>

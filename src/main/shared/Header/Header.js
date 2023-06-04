@@ -46,7 +46,7 @@ const Header = (props) => {
                                 </form>
                             </div>
 
-                            <div className="dropdown for-notification">
+                            {/*     <div className="dropdown for-notification">
                                 <button className="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-puzzle-piece"></i>
                                 </button>
@@ -65,9 +65,9 @@ const Header = (props) => {
                                         <p>Add task</p>
                                     </NavLink>
                                 </div>
-                            </div>
+                            </div> */}
 
-                            <div className="dropdown for-message">
+                            {/*                             <div className="dropdown for-message">
                                 <button className="btn btn-secondary dropdown-toggle" type="button" id="message" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-tasks"></i>
                                     <span className="count bg-primary">4</span>
@@ -89,7 +89,7 @@ const Header = (props) => {
 
 
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
 
                         <div className="user-area dropdown float-right">

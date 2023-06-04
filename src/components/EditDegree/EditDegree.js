@@ -17,11 +17,12 @@ const EditDegree = (props) => {
 
 
   const onSubmit = (data) => {
+    console.log(data)
 
     //GroupeTestService.update(props.degree, data)
     //showMessage('Confirmation', groupeMessage.edit, 'success')
     degreeHTTPService.editDegree(props.degree.id, data).then(data => {
-
+      props.closeModal()
     })
   }
 
@@ -33,66 +34,66 @@ const EditDegree = (props) => {
 
   return (
     <div className="EditGroupe">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className="ajax-form" onSubmit={handleSubmit(onSubmit)} id="createForm" >
 
-        <div class="form-group row">
+        <div id="education_fields">
+          <div className="row">
+            <div className="col-md-12">
 
-          <div className="form-group">
-            <label className="control-label required"><font   ><font   >name</font></font></label>
-            <input className="form-control" value={company.name} ref={register({ required: true })}
-              onChange={handleInputChange} type="text" name="name" placeholder="Email" />
-            <div className="error text-danger">
-              {errors.name && degreeValidation.name}
-            </div>
-          </div>
+              <div className="form-group">
+                <label className="control-label required"><font   ><font   >Name</font></font></label>
+                <input className="form-control" value={company.name} ref={register({ required: true })}
+                  onChange={handleInputChange} type="text" name="name" placeholder="Name" />
+                <div className="error text-danger">
+                  {errors.name && degreeValidation.name}
+                </div>
+              </div>
 
-          <div className="form-group">
-            <label className="control-label required"><font   ><font   >type</font></font></label>
-            <input className="form-control" value={company.type} ref={register({ required: true })}
-              onChange={handleInputChange} type="text" name="type" placeholder="Email" />
-            <div className="error text-danger">
-              {errors.type && degreeValidation.type}
-            </div>
-          </div>
+              <div className="form-group">
+                <label className="control-label required"><font   ><font   >Type</font></font></label>
+                <input className="form-control" value={company.type} ref={register({ required: true })}
+                  onChange={handleInputChange} type="text" name="type" placeholder="Type" />
+                <div className="error text-danger">
+                  {errors.type && degreeValidation.type}
+                </div>
+              </div>
 
-          <div className="form-group">
-            <label className="control-label required"><font   ><font   >level</font></font></label>
-            <input className="form-control" value={company.level} ref={register({ required: true })}
-              onChange={handleInputChange} type="text" name="level" placeholder="Email" />
-            <div className="error text-danger">
-              {errors.level && degreeValidation.level}
-            </div>
-          </div>
+              <div className="form-group">
+                <label className="control-label required"><font   ><font   >Level</font></font></label>
+                <input className="form-control" value={company.level} ref={register({ required: true })}
+                  onChange={handleInputChange} type="text" name="level" placeholder="Level" />
+                <div className="error text-danger">
+                  {errors.level && degreeValidation.level}
+                </div>
+              </div>
 
-          <div className="form-group">
-            <label className="control-label required"><font   ><font   >university</font></font></label>
-            <input className="form-control" value={company.university} ref={register({ required: true })}
-              onChange={handleInputChange} type="text" name="university" placeholder="Email" />
-            <div className="error text-danger">
-              {errors.university && degreeValidation.university}
-            </div>
-          </div>
-
-
-
-          <div className="form-group">
-            <label className="control-label required"><font   ><font   >location</font></font></label>
-            <input className="form-control" value={company.location} ref={register({ required: true })}
-              onChange={handleInputChange} type="text" name="location" placeholder="Email" />
-            <div className="error text-danger">
-              {errors.location && degreeValidation.location}
-            </div>
-          </div>
+              <div className="form-group">
+                <label className="control-label required"><font   ><font   >University</font></font></label>
+                <input className="form-control" value={company.university} ref={register({ required: true })}
+                  onChange={handleInputChange} type="text" name="university" placeholder="University" />
+                <div className="error text-danger">
+                  {errors.university && degreeValidation.university}
+                </div>
+              </div>
 
 
 
+              <div className="form-group">
+                <label className="control-label required"><font   ><font   >Location</font></font></label>
+                <input className="form-control" value={company.location} ref={register({ required: true })}
+                  onChange={handleInputChange} type="text" name="location" placeholder="Location" />
+                <div className="error text-danger">
+                  {errors.location && degreeValidation.location}
+                </div>
+              </div>
 
-          <div class="form-group row">
-            <div class="offset-4 col-8">
-              <button name="submit" type="submit" class="btn btn-primary"><i class="far fa-save"></i>Sauvegarder</button>
+
+
             </div>
           </div>
         </div>
+
+        <button type="submit" id="save-form" className="btn btn-success"><i className="fa fa-check"></i><font ><font  > Save</font></font></button>
       </form>
 
     </div >

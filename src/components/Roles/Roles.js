@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import './Roles.css';
+import { LoadJS } from '../../libraries/datatables/datatables';
 
 const Roles = () => {
 
@@ -12,7 +13,7 @@ const Roles = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // LoadJS()
+    LoadJS()
     getAllPatient()
   }, []);
 
@@ -63,10 +64,14 @@ const Roles = () => {
             </tr>
           </thead>
           <tbody>
-            <tr><td></td></tr>
 
 
           </tbody>
+          <tfoot>
+            <tr>
+              <th>Name</th>
+            </tr>
+          </tfoot>
         </table>
 
 

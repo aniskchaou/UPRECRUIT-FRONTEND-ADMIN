@@ -25,6 +25,7 @@ const AddAcceptanceFeedBack = (props) => {
         showMessage('Confirmation', categoryMessage.add, 'success')
       }) */
     acceptanceHTTPService.createAcceptance(data).then(data => {
+      setCompany(initialState)
       props.closeModal()
     })
 
@@ -49,7 +50,7 @@ const AddAcceptanceFeedBack = (props) => {
 
         <div id="education_fields">
           <div className="row">
-            <div className="col-sm-9 nopadding">
+            <div className="col-md-12">
               <div className="form-group">
                 <label className="control-label required"><font   ><font   >name</font></font></label>
                 <input className="form-control" value={company.name} ref={register({ required: true })}

@@ -49,11 +49,11 @@ const AddRefusalFeedBack = (props) => {
 
         <div id="education_fields">
           <div className="row">
-            <div className="col-sm-9 nopadding">
+            <div className="col-md-12">
 
 
               <div className="form-group">
-                <label className="control-label required"><font   ><font   >name</font></font></label>
+                <label className="control-label required"><font   ><font   >Name</font></font></label>
                 <input className="form-control" value={refusalFeedBack.name} ref={register({ required: true })}
                   onChange={handleInputChange} type="text" name="name" placeholder="Email" />
                 <div className="error text-danger">
@@ -62,9 +62,9 @@ const AddRefusalFeedBack = (props) => {
               </div>
 
               <div className="form-group">
-                <label className="control-label required"><font   ><font   >description</font></font></label>
+                <label className="control-label required"><font   ><font   >Description</font></font></label>
                 <input className="form-control" value={refusalFeedBack.description} ref={register({ required: true })}
-                  onChange={handleInputChange} type="text" name="description" placeholder="Email" />
+                  onChange={handleInputChange} type="text" name="description" placeholder="Description" />
                 <div className="error text-danger">
                   {errors.description && companyValidation.description}
                 </div>

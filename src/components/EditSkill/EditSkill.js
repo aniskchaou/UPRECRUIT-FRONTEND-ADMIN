@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import './EditSkill.css';
 
 import skillHTTPService from '../../main/services/skillHTTPService'
+import skillValidation from '../../main/validations/skillValidation';
 const EditSkill = (props) => {
 
   const { register, handleSubmit, errors } = useForm() // initialise the hook
@@ -18,7 +19,9 @@ const EditSkill = (props) => {
 
     // GroupeTestService.update(props.skill, data)
     // showMessage('Confirmation', groupeMessage.edit, 'success')
-    skillHTTPService.editSkill(props.skill.id, data)
+    skillHTTPService.editSkill(props.skill.id, data).then(() => {
+      props.closeModal()
+    })
   }
 
   const handleInputChange = event => {
@@ -29,23 +32,31 @@ const EditSkill = (props) => {
 
   return (
     <div className="EditGroupe">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className="ajax-form" id="createForm" onSubmit={handleSubmit(onSubmit)}>
 
-        <div class="form-group row">
-          <label for="text" class="col-4 col-form-label">Nom du groupe</label>
-          <div class="col-8">
-            <input onChange={handleInputChange} value={skill?.name} ref={register({ required: true })}
-              id="text" name="name" type="text" class="form-control" />
+        <div className="row">
+          <div className="col-md-9">
+
+            <div className="form-group">
+              <label for="address"><font   ><font   >Skill</font></font></label>
+              <input onChange={handleInputChange}
+                value={skill.name}
+                ref={register({ required: true })}
+                name="name" id="name"
+                className="form-control"
+              />
+              <div className="error text-danger">
+                {errors.name && skillValidation.name}
+              </div>
+            </div>
 
           </div>
         </div>
 
 
-        <div class="form-group row">
-          <div class="offset-4 col-8">
-            <button name="submit" type="submit" class="btn btn-primary"><i class="far fa-save"></i>Sauvegarder</button>
-          </div>
-        </div>
+
+        <button type="submit" id="save-form" className="btn btn-success">
+          <i className="fa fa-check"></i><font ><font  > Save</font></font></button>
 
       </form>
     </div>

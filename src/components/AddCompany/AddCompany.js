@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import showMessage from '../../libraries/messages/messages';
 import categoryMessage from '../../main/messages/categoryMessage';
 import companyValidation from '../../main/validations/companyValidation';
-const AddCompany = () => {
+const AddCompany = (props) => {
   const initialState = {
     name: '',
     email: '',
@@ -28,6 +28,7 @@ const AddCompany = () => {
     //CategoryTestService.create(data)
     companyHTTPService.createCompany(data).then(data => {
       setCompany(initialState)
+      props.closeModal()
       // showMessage('Confirmation', categoryMessage.add, 'success')
     })
 
@@ -52,20 +53,20 @@ const AddCompany = () => {
 
         <div id="education_fields">
           <div className="row">
-            <div className="col-sm-9 nopadding">
+            <div className="col-md-12">
 
 
               <div className="form-group">
-                <label className="control-label required"><font   ><font   >name</font></font></label>
+                <label className="control-label required"><font   ><font   >Name</font></font></label>
                 <input className="form-control" value={company.name} ref={register({ required: true })}
-                  onChange={handleInputChange} type="text" name="name" placeholder="Email" />
+                  onChange={handleInputChange} type="text" name="name" placeholder="Name" />
                 <div className="error text-danger">
                   {errors.name && companyValidation.name}
                 </div>
               </div>
 
               <div className="form-group">
-                <label className="control-label required"><font   ><font   >email</font></font></label>
+                <label className="control-label required"><font   ><font   >Email</font></font></label>
                 <input className="form-control" value={company.email} ref={register({ required: true })}
                   onChange={handleInputChange} type="text" name="email" placeholder="Email" />
                 <div className="error text-danger">
@@ -74,45 +75,45 @@ const AddCompany = () => {
               </div>
 
               <div className="form-group">
-                <label className="control-label required"><font   ><font   >category</font></font></label>
+                <label className="control-label required"><font   ><font   >Category</font></font></label>
                 <input className="form-control" value={company.category} ref={register({ required: true })}
-                  onChange={handleInputChange} type="text" name="category" placeholder="Email" />
+                  onChange={handleInputChange} type="text" name="category" placeholder="Category" />
                 <div className="error text-danger">
                   {errors.category && companyValidation.category}
                 </div>
               </div>
 
               <div className="form-group">
-                <label className="control-label required"><font   ><font   >telephone</font></font></label>
+                <label className="control-label required"><font   ><font   >Telephone</font></font></label>
                 <input className="form-control" value={company.telephone} ref={register({ required: true })}
-                  onChange={handleInputChange} type="text" name="telephone" placeholder="Email" />
+                  onChange={handleInputChange} type="text" name="telephone" placeholder="Telephone" />
                 <div className="error text-danger">
                   {errors.telephone && companyValidation.telephone}
                 </div>
               </div>
 
               <div className="form-group">
-                <label className="control-label required"><font   ><font   >address</font></font></label>
+                <label className="control-label required"><font   ><font   >Address</font></font></label>
                 <input className="form-control" value={company.address} ref={register({ required: true })}
-                  onChange={handleInputChange} type="text" name="address" placeholder="Email" />
+                  onChange={handleInputChange} type="text" name="address" placeholder="Address" />
                 <div className="error text-danger">
                   {errors.address && companyValidation.address}
                 </div>
               </div>
 
               <div className="form-group">
-                <label className="control-label required"><font   ><font   >website</font></font></label>
+                <label className="control-label required"><font   ><font   >Website</font></font></label>
                 <input className="form-control" value={company.website} ref={register({ required: true })}
-                  onChange={handleInputChange} type="text" name="website" placeholder="Email" />
+                  onChange={handleInputChange} type="text" name="website" placeholder="Website" />
                 <div className="error text-danger">
                   {errors.website && companyValidation.website}
                 </div>
               </div>
 
               <div className="form-group">
-                <label className="control-label required"><font   ><font   >size</font></font></label>
+                <label className="control-label required"><font   ><font   >Size</font></font></label>
                 <input className="form-control" value={company.size} ref={register({ required: true })}
-                  onChange={handleInputChange} type="text" name="size" placeholder="Email" />
+                  onChange={handleInputChange} type="text" name="size" placeholder="Size" />
                 <div className="error text-danger">
                   {errors.size && companyValidation.size}
                 </div>
@@ -124,7 +125,7 @@ const AddCompany = () => {
           </div>
         </div>
 
-        <button type="submit" id="save-form" className="btn btn-success"><i className="fa fa-check"></i><font ><font  > Sauvegarder</font></font></button>
+        <button type="submit" id="save-form" className="btn btn-success"><i className="fa fa-check"></i><font ><font  > Save</font></font></button>
       </form>
     </div>
   )

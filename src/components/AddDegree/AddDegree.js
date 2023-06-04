@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import degreeHTTPService from '../../main/services/degreeHTTPService';
 import showMessage from '../../libraries/messages/messages';
 
-const AddDegree = () => {
+const AddDegree = (props) => {
   const initialState = {
     name: '',
     type: '',
@@ -26,6 +26,7 @@ const AddDegree = () => {
     degreeHTTPService.createDegree(data).then(data => {
       setCompany(initialState)
       showMessage('Confirmation', 'categoryMessage.add', 'success')
+      props.closeModal()
     })
 
   }
@@ -49,40 +50,40 @@ const AddDegree = () => {
 
         <div id="education_fields">
           <div className="row">
-            <div className="col-sm-9 nopadding">
+            <div className="col-md-12">
 
 
               <div className="form-group">
-                <label className="control-label required"><font   ><font   >name</font></font></label>
+                <label className="control-label required"><font   ><font   >Name</font></font></label>
                 <input className="form-control" value={company.name} ref={register({ required: true })}
-                  onChange={handleInputChange} type="text" name="name" placeholder="Email" />
+                  onChange={handleInputChange} type="text" name="name" placeholder="Name" />
                 <div className="error text-danger">
                   {errors.name && degreeValidation.name}
                 </div>
               </div>
 
               <div className="form-group">
-                <label className="control-label required"><font   ><font   >type</font></font></label>
+                <label className="control-label required"><font   ><font   >Type</font></font></label>
                 <input className="form-control" value={company.type} ref={register({ required: true })}
-                  onChange={handleInputChange} type="text" name="type" placeholder="Email" />
+                  onChange={handleInputChange} type="text" name="type" placeholder="Type" />
                 <div className="error text-danger">
                   {errors.type && degreeValidation.type}
                 </div>
               </div>
 
               <div className="form-group">
-                <label className="control-label required"><font   ><font   >level</font></font></label>
+                <label className="control-label required"><font   ><font   >Level</font></font></label>
                 <input className="form-control" value={company.level} ref={register({ required: true })}
-                  onChange={handleInputChange} type="text" name="level" placeholder="Email" />
+                  onChange={handleInputChange} type="text" name="level" placeholder="Level" />
                 <div className="error text-danger">
                   {errors.level && degreeValidation.level}
                 </div>
               </div>
 
               <div className="form-group">
-                <label className="control-label required"><font   ><font   >university</font></font></label>
+                <label className="control-label required"><font   ><font   >University</font></font></label>
                 <input className="form-control" value={company.university} ref={register({ required: true })}
-                  onChange={handleInputChange} type="text" name="university" placeholder="Email" />
+                  onChange={handleInputChange} type="text" name="university" placeholder="University" />
                 <div className="error text-danger">
                   {errors.university && degreeValidation.university}
                 </div>
@@ -91,9 +92,9 @@ const AddDegree = () => {
 
 
               <div className="form-group">
-                <label className="control-label required"><font   ><font   >location</font></font></label>
+                <label className="control-label required"><font   ><font   >Location</font></font></label>
                 <input className="form-control" value={company.location} ref={register({ required: true })}
-                  onChange={handleInputChange} type="text" name="location" placeholder="Email" />
+                  onChange={handleInputChange} type="text" name="location" placeholder="Location" />
                 <div className="error text-danger">
                   {errors.location && degreeValidation.location}
                 </div>
@@ -105,7 +106,7 @@ const AddDegree = () => {
           </div>
         </div>
 
-        <button type="submit" id="save-form" className="btn btn-success"><i className="fa fa-check"></i><font ><font  > Sauvegarder</font></font></button>
+        <button type="submit" id="save-form" className="btn btn-success"><i className="fa fa-check"></i><font ><font  > Save</font></font></button>
       </form>
     </div>
   )

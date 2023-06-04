@@ -8,6 +8,7 @@ import ViewCandidate from '../../modules/candidate/ViewCandidate/ViewCandidate';
 import ViewApplyJob from '../../modules/applyjob/ViewApplyJob/ViewApplyJob';
 import AddContract from '../../components/AddContract/AddContract'
 import EditContract from '../../components/EditContract/EditContract'
+import { LoadJS } from '../../libraries/datatables/datatables';
 const ContractSigned = () => {
 
   const [applyJobs, setApplyJobs] = useState([]);
@@ -19,7 +20,7 @@ const ContractSigned = () => {
 
 
   useEffect(() => {
-    //LoadJS()
+    LoadJS()
     getAllPatient()
   }, []);
 
@@ -28,6 +29,7 @@ const ContractSigned = () => {
     setLoading(true);
     applyHTTPService.getAllContractSigned()
       .then(response => {
+        console.log(response.data)
         setApplyJobs(response.data);
         setLoading(false);
       })
@@ -103,6 +105,16 @@ const ContractSigned = () => {
               </tr>
             )}
           </tbody>
+          <tfoot>
+            <tr>
+              <th>Full Name</th>
+              <th>Job offer</th>
+              <th>Date </th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+
+          </tfoot>
 
         </table>
 

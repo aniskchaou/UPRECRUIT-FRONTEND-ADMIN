@@ -7,27 +7,30 @@ import taskValidation from '../../../main/validations/taskValidation'
 import TaskTestService from '../../../main/mocks/TaskTestService';
 import HTTPService from '../../../main/services/HTTPService';
 import { useForm } from 'react-hook-form';
-const AddTask = () => {
+import taskHTTPService from '../../../main/services/taskHTTPService';
+const AddTask = (props) => {
 
     const initialState = {
-        title: "",
+        task: "",
+        status: ""
     };
 
     const { register, handleSubmit, errors } = useForm()
     const [task, setTask] = useState(initialState);
 
     const onSubmit = (data) => {
-        //saveTask(data)
-        TaskTestService.create(data)
-        setTask(initialState)
-        showMessage('Confirmation', taskMessage.add, 'success')
+        saveTask(data)
+        /*  TaskTestService.create(data)
+         setTask(initialState)
+         showMessage('Confirmation', taskMessage.add, 'success') */
     }
 
-    const saveTzsk = (data) => {
+    const saveTask = (data) => {
 
-        HTTPService.create(data)
+        taskHTTPService.createTask(data)
             .then(response => {
                 setTask(initialState)
+                props.closeModal()
             })
             .catch(e => {
                 console.log(e);
@@ -47,16 +50,27 @@ const AddTask = () => {
 
                 <div class="form-body">
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-md-12">
                             <div class="form-group">
-                                <label>Titre de Tache</label>
+                                <label>Task</label>
                                 <input onChange={handleInputChange}
-                                    value={task.title}
+                                    value={task.task}
                                     ref={register({ required: true })}
-                                    type="text" class="form-control form-control-lg" id="title" name="title" />
+                                    type="text" class="form-control" id="title" name="task" />
+                            </div>
+                            <div class="form-group">
+                                <label>Satus</label>
+                                <select onChange={handleInputChange}
+                                    value={task.status}
+                                    ref={register({ required: true })}
+                                    type="text" class="form-control" id="title" name="status" >
+                                    <option value="toDo">To do</option>
+                                    <option value="Doing" >Doing</option>
+                                    <option value="Done">Done</option>
+                                </select>
                             </div>
                             <div className="error text-danger">
-                                {errors.title && taskValidation.title}
+                                {errors.status && taskValidation.status}
                             </div>
                         </div>
                     </div>
@@ -65,7 +79,7 @@ const AddTask = () => {
 
                 <div class="form-actions">
                     <button type="submit" id="create-todo-item" class="btn btn-success"><i className="fa fa-check"></i>
-                        <font ><font  > Sauvegarder</font></font></button>
+                        <font ><font  > Save</font></font></button>
                 </div>
             </form>
         </div>

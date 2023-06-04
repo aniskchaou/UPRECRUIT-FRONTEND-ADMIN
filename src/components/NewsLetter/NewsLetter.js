@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import './NewsLetter.css';
+import { LoadJS } from '../../libraries/datatables/datatables';
 
 const NewsLetter = () => {
 
@@ -12,7 +13,7 @@ const NewsLetter = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // LoadJS()
+    LoadJS()
     getAllPatient()
   }, []);
 
@@ -63,7 +64,7 @@ const NewsLetter = () => {
             </tr>
           </thead>
           <tbody>
-            <tr><td></td></tr>
+
 
 
           </tbody>

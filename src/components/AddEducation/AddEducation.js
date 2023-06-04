@@ -5,7 +5,7 @@ import educationValidation from '../../main/validations/educationValidation';
 import { useForm } from 'react-hook-form';
 import educationHTTPService from '../../main/services/educationHTTPService';
 import showMessage from '../../libraries/messages/messages';
-const AddEducation = () => {
+const AddEducation = (props) => {
   const initialState = {
     degree: '',
     university: '',
@@ -15,7 +15,7 @@ const AddEducation = () => {
     status: ''
   };
   const { register, handleSubmit, errors } = useForm() // initialise the hook
-  const [company, setCompany] = useState(initialState);
+  const [education, setEducation] = useState(initialState);
 
 
 
@@ -23,8 +23,9 @@ const AddEducation = () => {
     //saveCategory(data)
     //CategoryTestService.create(data)
     educationHTTPService.createEducation(data).then(data => {
-      setCompany(initialState)
+      setEducation(initialState)
       showMessage('Confirmation', 'categoryMessage.add,', 'success')
+      props.closeModal()
     })
 
   }
@@ -37,7 +38,7 @@ const AddEducation = () => {
 
   const handleInputChange = event => {
     const { name, value } = event.target;
-    setCompany({ ...company, [name]: value });
+    setEducation({ ...education, [name]: value });
   };
 
   return (
@@ -52,68 +53,51 @@ const AddEducation = () => {
 
 
               <div className="form-group">
-                <label className="control-label required"><font   ><font   >degree</font></font></label>
-                <input className="form-control" value={company.degree} ref={register({ required: true })}
-                  onChange={handleInputChange} type="text" name="degree" placeholder="Email" />
-                <div className="error text-danger">
-                  {errors.degree && educationValidation.degree}
-                </div>
+                <label className="control-label required"><font   ><font   >Degree</font></font></label>
+                <input className="form-control" value={education.degree} ref={register({ required: true })}
+                  onChange={handleInputChange} type="text" name="degree" placeholder="Degree" />
+
               </div>
 
               <div className="form-group">
-                <label className="control-label required"><font   ><font   >university</font></font></label>
-                <input className="form-control" value={company.university} ref={register({ required: true })}
-                  onChange={handleInputChange} type="text" name="university" placeholder="Email" />
-                <div className="error text-danger">
-                  {errors.university && educationValidation.university}
-                </div>
+                <label className="control-label required"><font   ><font   >University</font></font></label>
+                <input className="form-control" value={education.university} ref={register({ required: true })}
+                  onChange={handleInputChange} type="text" name="university" placeholder="University" />
+
               </div>
 
               <div className="form-group">
-                <label className="control-label required"><font   ><font   >result</font></font></label>
-                <input className="form-control" value={company.result} ref={register({ required: true })}
-                  onChange={handleInputChange} type="text" name="result" placeholder="Email" />
-                <div className="error text-danger">
-                  {errors.result && educationValidation.result}
-                </div>
+                <label className="control-label required"><font   ><font   >Result</font></font></label>
+                <input className="form-control" value={education.result} ref={register({ required: true })}
+                  onChange={handleInputChange} type="text" name="result" placeholder="Result" />
+
               </div>
 
               <div className="form-group">
-                <label className="control-label required"><font   ><font   >startDate</font></font></label>
-                <input className="form-control" value={company.startDate} ref={register({ required: true })}
-                  onChange={handleInputChange} type="text" name="startDate" placeholder="Email" />
-                <div className="error text-danger">
-                  {errors.startDate && educationValidation.startDate}
-                </div>
+                <label className="control-label required"><font   ><font   >Start</font></font></label>
+                <input className="form-control" value={education.startDate} ref={register({ required: true })}
+                  onChange={handleInputChange} type="date" name="startDate" placeholder="Start" />
+
               </div>
 
               <div className="form-group">
-                <label className="control-label required"><font   ><font   >endDate</font></font></label>
-                <input className="form-control" value={company.endDate} ref={register({ required: true })}
-                  onChange={handleInputChange} type="text" name="endDate" placeholder="Email" />
-                <div className="error text-danger">
-                  {errors.endDate && educationValidation.endDate}
-                </div>
+                <label className="control-label required"><font   ><font   >End</font></font></label>
+                <input className="form-control" value={education.endDate} ref={register({ required: true })}
+                  onChange={handleInputChange} type="date" name="endDate" placeholder="End" />
+
               </div>
 
               <div className="form-group">
-                <label className="control-label required"><font   ><font   >status</font></font></label>
-                <input className="form-control" value={company.status} ref={register({ required: true })}
-                  onChange={handleInputChange} type="text" name="status" placeholder="Email" />
-                <div className="error text-danger">
-                  {errors.status && educationValidation.status}
-                </div>
+                <label className="control-label required"><font   ><font   >Status</font></font></label>
+                <input className="form-control" value={education.status} ref={register({ required: true })}
+                  onChange={handleInputChange} type="text" name="status" placeholder="Status" />
+
               </div>
-
-
-
-
-
             </div>
           </div>
         </div>
 
-        <button type="submit" id="save-form" className="btn btn-success"><i className="fa fa-check"></i><font ><font  > Sauvegarder</font></font></button>
+        <button type="submit" id="save-form" className="btn btn-success"><i className="fa fa-check"></i><font ><font  > Save</font></font></button>
       </form>
     </div>
   )

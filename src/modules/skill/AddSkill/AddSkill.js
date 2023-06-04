@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import skillHTTPService from '../../../main/services/skillHTTPService';
 
 
-const AddSkill = () => {
+const AddSkill = (props) => {
 
     const initialState = {
         name: "",
@@ -24,6 +24,7 @@ const AddSkill = () => {
         skillHTTPService.createSkill(data).then(data => {
             setSkill(initialState)
             showMessage('Confirmation', skillMessage.add, 'success')
+            props.closeModal()
         })
 
     }
@@ -42,7 +43,7 @@ const AddSkill = () => {
                     <div className="col-md-9">
 
                         <div className="form-group">
-                            <label for="address"><font   ><font   >Catégories d'emplois</font></font></label>
+                            <label for="address"><font   ><font   >Skill</font></font></label>
                             <input onChange={handleInputChange}
                                 value={skill.name}
                                 ref={register({ required: true })}

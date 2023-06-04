@@ -16,7 +16,7 @@ const User = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // LoadJS()
+    LoadJS()
     getAllPatient()
   }, []);
 
@@ -37,8 +37,8 @@ const User = () => {
     e.preventDefault();
     var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
     if (r) {
-      showMessage('Confirmation', 'patientMessage.delete', 'success')
-      userHTTPService.removeUser(data).then(data => {
+      //showMessage('Confirmation', 'patientMessage.delete', 'success')
+      userHTTPService.removeUser(data.id).then(data => {
         getAllPatient()
       }).catch(e => {
         showMessage('Confirmation', e, 'warning')
@@ -57,13 +57,15 @@ const User = () => {
   return (
     <div className="card">
       <div className="card-header">
-        <strong className="card-title">Teams</strong>
+        <strong className="card-title">Users</strong>
       </div>
       <div className="card-body">
         <table id="bootstrap-data-table" className="table table-striped table-bordered">
           <thead>
             <tr>
-              <th>Name</th></tr>
+              <th>Username</th>
+              <th>Actions</th>
+            </tr>
           </thead>
           <tbody>
             {users.map(item =>
@@ -71,11 +73,17 @@ const User = () => {
                 <td>{item.username}</td>
                 <td>
 
-                  <button onClick={e => removePatientAction(e, item.id)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => removePatientAction(e, item)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
 
           </tbody>
+          <tfoot>
+            <tr>
+              <th>Name</th>
+              <th>Actions</th>
+            </tr>
+          </tfoot>
         </table>
 
 

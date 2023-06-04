@@ -80,7 +80,7 @@ const Content = (props) => (
           <Route exact path="/initial-qualification" component={InitialQualification} />
           <Route exact path="/contract-proposal" component={ContractProposal} />
           <Route exact path="/contract-signed" component={ContractSigned} />
-          <Route exact path="/todo" component={ToDo} />
+          <Route exact path="/todo" component={Task} />
           <Route exact path="/language" component={Language} />
           <Route exact path="/degree" component={Degree} />
           <Route exact path="/experience" component={Experience} />

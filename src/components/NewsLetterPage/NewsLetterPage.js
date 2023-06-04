@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import './NewsLetterPage.css';
 import EditNewsLetterPage from '../../components/EditNewsLetterPage/EditNewsLetterPage'
 import frontOfficeHTTPService from '../../main/services/frontOfficeHTTPService';
+import { LoadJS } from '../../libraries/datatables/datatables';
 const NewsLetterPage = () => {
   const [frontOffice, setFrontOffice] = useState({});
 
   useEffect(() => {
+    LoadJS()
     retrieveEvents()
   }, []);
 

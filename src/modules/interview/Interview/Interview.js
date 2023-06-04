@@ -43,14 +43,14 @@ const Interview = () => {
 
   const resfresh = () => {
     getAllPatient()
-    forceUpdate()
+    // forceUpdate()
   }
 
   const removeInterviewAction = (e, data) => {
     e.preventDefault();
     var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
     if (r) {
-      showMessage('Confirmation', 'patientMessage.delet', 'success')
+      //  showMessage('Confirmation', 'patientMessage.delet', 'success')
       interviewHTTPService.removeInterview(data).then(data => {
         resfresh()
       }).catch(e => {
@@ -86,8 +86,11 @@ const Interview = () => {
         <table id="example1" className="table table-striped table-bordered">
           <thead>
             <tr>
-              <th>Fullname</th>
+              <th>Candidate</th>
               <th>Date</th>
+              <th>Interviewer</th>
+              <th>Time</th>
+              <th>Comment</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -96,15 +99,21 @@ const Interview = () => {
               <tr>
                 <td>{item.candidates}</td>
                 <td>{item.scheduleDate}</td>
+                <td>{item.employees}</td>
+                <td>{item.scheduleTime}</td>
+                <td>{item.comment}</td>
                 <td>
-                  <button onClick={e => updateInterviewAction(e, item)} type="button" data-toggle="modal" data-target="#editInterview" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                  {/*  <button onClick={e => updateInterviewAction(e, item)} type="button" data-toggle="modal" data-target="#editInterview" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button> */}
                   <button onClick={e => removeInterviewAction(e, item.id)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
           </tbody>  <tfoot>
             <tr>
-              <th>Nom de l'applicant</th>
+              <th>Candidate</th>
               <th>Date</th>
+              <th>Interviewer</th>
+              <th>Time</th>
+              <th>Comment</th>
               <th>Actions</th>
             </tr>
           </tfoot>
@@ -129,16 +138,16 @@ const Interview = () => {
           <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLongTitle">Nouveau</h5>
+                <h5 className="modal-title" id="exampleModalLongTitle">New</h5>
                 <button onClick={resfresh} type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div className="modal-body">
-                <AddInterview />
+                <AddInterview closeModal={closeModalAdd} />
               </div>
               <div className="modal-footer">
-                <button onClick={resfresh} type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button ref={closeButtonAdd} type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
 
               </div>
             </div>

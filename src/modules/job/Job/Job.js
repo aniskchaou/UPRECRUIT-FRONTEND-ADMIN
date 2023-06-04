@@ -26,11 +26,11 @@ const Job = () => {
 
 
   const getAllPatient = () => {
-    setLoading(true);
+    // setLoading(true);
     jobHTTPService.getAllJob()
       .then(response => {
         setJobs(response.data);
-        setLoading(false);
+        // setLoading(false);
       })
       .catch(e => {
         showMessage('Confirmation', e, 'info')
@@ -40,15 +40,15 @@ const Job = () => {
 
   const resfresh = () => {
     getAllPatient()
-    forceUpdate()
+    // forceUpdate()
   }
 
   const removePatientAction = (e, data) => {
     e.preventDefault();
-    var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
+    var r = window.confirm("Are you sure ?");
     if (r) {
-      showMessage('Confirmation', 'patientMessage.delete', 'success')
-      jobHTTPService.removeJob(data).then(data => {
+      //showMessage('Confirmation', 'patientMessage.delete', 'success')
+      jobHTTPService.removeJob(data.id).then(data => {
         resfresh()
       }).catch(e => {
         showMessage('Confirmation', e, 'warning')
@@ -97,10 +97,10 @@ const Job = () => {
                 <td>{item.location}</td>
                 <td>{item.start}</td>
                 <td>{item.end}</td>
-                <td><span class="badge badge-success" >{item.state}</span></td>
+                <td><span class="badge badge-success" >{item.active}</span></td>
                 <td>
                   <button onClick={e => updatePatientAction(e, item)} type="button" data-toggle="modal" data-target="#editJob" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => removePatientAction(e, item.id)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => removePatientAction(e, item)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
 
@@ -113,16 +113,16 @@ const Job = () => {
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fas fa-plus"></i> Nouveau</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fas fa-plus"></i> New</h5>
                 <button onClick={resfresh} type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <AddJob />
+                <AddJob closeModal={closeModalAdd} />
               </div>
               <div class="modal-footer">
-                <button onClick={resfresh} type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button ref={closeButtonAdd} type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
 
               </div>
             </div>
@@ -140,10 +140,10 @@ const Job = () => {
                 </button>
               </div>
               <div class="modal-body">
-                <EditJob job={updatedItem} />
+                <EditJob job={updatedItem} closeModal={closeModalEdit} />
               </div>
               <div class="modal-footer">
-                <button type="button" onClick={resfresh} class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button type="button" ref={closeButtonEdit} class="btn btn-secondary" data-dismiss="modal">Close</button>
 
               </div>
             </div>
@@ -151,25 +151,6 @@ const Job = () => {
         </div>
 
 
-        <div class="modal fade" id="viewTask" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-
-              </div>
-            </div>
-          </div>
-        </div>
 
 
 

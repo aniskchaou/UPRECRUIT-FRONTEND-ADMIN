@@ -18,6 +18,7 @@ const EditAcceptance = (props) => {
 
     acceptanceHTTPService.editAcceptance(props.acceptance.id, data).then(data => {
       // showMessage('Confirmation', 'groupeMessage.edit', 'success')
+      props.closeModal()
     })
 
   }
@@ -33,23 +34,23 @@ const EditAcceptance = (props) => {
       <form onSubmit={handleSubmit(onSubmit)}>
 
         <div className="form-group">
-          <label className="control-label required"><font   ><font   >name</font></font></label>
+          <label className="control-label required"><font   ><font   >Name</font></font></label>
           <input className="form-control" value={acceptance.name} ref={register({ required: true })}
-            onChange={handleInputChange} type="text" name="name" placeholder="Email" />
+            onChange={handleInputChange} type="text" name="name" placeholder="Name" />
 
         </div>
 
         <div className="form-group">
-          <label className="control-label required"><font   ><font   >description</font></font></label>
+          <label className="control-label required"><font   ><font   >Description</font></font></label>
           <input className="form-control" value={acceptance.description} ref={register({ required: true })}
-            onChange={handleInputChange} type="text" name="description" placeholder="Email" />
+            onChange={handleInputChange} type="text" name="description" placeholder="Description" />
 
         </div>
 
 
         <div class="form-group row">
-          <div class="offset-4 col-8">
-            <button name="submit" type="submit" class="btn btn-primary"><i class="far fa-save"></i>Sauvegarder</button>
+          <div class="col-8">
+            <button name="submit" type="submit" class="btn btn-primary"><i class="far fa-save"></i>Save</button>
           </div>
         </div>
 

@@ -21,6 +21,7 @@ const EditLocation = (props) => {
         //  LocationTestService.update(props.location, data)
         locationHTTPService.editLocation(props.location.id, data).then(data => {
             showMessage('Confirmation', locationMessage.edit, 'success')
+            props.closeModal()
         })
 
     }
@@ -305,7 +306,7 @@ const EditLocation = (props) => {
                     </div>
                 </div>
 
-                <button type="submit" id="save-form" className="btn btn-success"><i className="fa fa-check"></i> Sauvegarder</button>
+                <button type="submit" id="save-form" className="btn btn-success"><i className="fa fa-check"></i> Save</button>
 
             </form>
         </div>

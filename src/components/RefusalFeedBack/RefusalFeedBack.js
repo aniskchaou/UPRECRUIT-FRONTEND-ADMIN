@@ -5,6 +5,7 @@ import refusalHTTPService from '../../main/services/refusalHTTPService';
 import AddRefusalFeedBack from '../AddRefusalFeedBack/AddRefusalFeedBack'
 import EditRefusal from '../../components/EditRefusal/EditRefusal'
 import showMessage from '../../libraries/messages/messages';
+import { LoadJS } from '../../libraries/datatables/datatables';
 const RefusalFeedBack = () => {
   const [categories, setCategories] = useState([]);
   const [updatedItem, setUpdatedItem] = useState({});
@@ -15,17 +16,16 @@ const RefusalFeedBack = () => {
 
 
   useEffect(() => {
-    //LoadJS()
+    LoadJS()
     getAllPatient()
   }, []);
 
 
   const getAllPatient = () => {
-    setLoading(true);
     refusalHTTPService.getAllRefusal()
       .then(response => {
         setCategories(response.data);
-        setLoading(false);
+
       })
       .catch(e => {
         //showMessage('Confirmation', e, 'info')
@@ -40,11 +40,11 @@ const RefusalFeedBack = () => {
 
   const removePatientAction = (e, data) => {
     e.preventDefault();
-    var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
+    var r = window.confirm("Are you sure ?");
     if (r) {
-      showMessage('Confirmation', ' patientMessage.delete', 'success')
-      refusalHTTPService.removeRefusal(data).then(data => {
-        resfresh()
+      // showMessage('Confirmation', ' patientMessage.delete', 'success')
+      refusalHTTPService.removeRefusal(data.id).then(data => {
+        getAllPatient()
       }).catch(e => {
         showMessage('Confirmation', e, 'warning')
       });
@@ -75,7 +75,8 @@ const RefusalFeedBack = () => {
         <strong className="card-title">Refusal FeedBacks</strong>
       </div>
       <div className="card-body">
-
+        <button type="button" data-toggle="modal" data-target="#addCategory" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
+          Create</button>
         <table id="example1" className="table table-striped table-bordered">
           <thead>
             <tr>
@@ -89,21 +90,26 @@ const RefusalFeedBack = () => {
                 <td>{item.name}</td>
                 <td>
                   <button onClick={e => updatePatientAction(e, item)} type="button" data-toggle="modal" data-target="#editCategory" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => removePatientAction(e, item.id)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => removePatientAction(e, item)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>))}
 
 
           </tbody>
+          <tfoot>
+            <tr>
+              <th>Name</th>
+              <th>Actions</th>
+            </tr>
+          </tfoot>
 
         </table>
-        <button type="button" data-toggle="modal" data-target="#addCategory" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
-          Ajouter</button>
+
 
         <div className="modal fade" id="editCategory" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <h5 className="modal-title" id="exampleModalLongTitle">Edit</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -122,7 +128,7 @@ const RefusalFeedBack = () => {
           <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLongTitle">Nouveau</h5>
+                <h5 className="modal-title" id="exampleModalLongTitle">New</h5>
                 <button onClick={resfresh} type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -131,7 +137,7 @@ const RefusalFeedBack = () => {
                 <AddRefusalFeedBack closeModal={closeModalAdd} />
               </div>
               <div className="modal-footer">
-                <button onClick={resfresh} ref={closeButtonAdd} type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button onClick={resfresh} ref={closeButtonAdd} type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
 
               </div>
             </div>

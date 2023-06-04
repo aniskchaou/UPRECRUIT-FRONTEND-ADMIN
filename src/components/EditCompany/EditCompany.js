@@ -5,14 +5,15 @@ import './EditCompany.css';
 
 import companyHTTPService from '../../main/services/companyHTTPService'
 import showMessage from '../../libraries/messages/messages';
+import companyValidation from '../../main/validations/companyValidation';
 const EditCompany = (props) => {
 
   const { register, handleSubmit, errors } = useForm() // initialise the hook
-  const [company, setCompany] = useState(props.ccompany);
+  const [company, setCompany] = useState(props.company);
 
   useEffect(() => {
-    setCompany(props.ccompany)
-  }, [props.ccompany]);
+    setCompany(props.company)
+  }, [props.company]);
 
 
   const onSubmit = (data) => {
@@ -20,8 +21,9 @@ const EditCompany = (props) => {
     //GroupeTestService.update(props.ccompany, data)
     //showMessage('Confirmation', groupeMessage.edit, 'success')
     console.log(data)
-    companyHTTPService.editCompany(props.ccompany.id, data).then(data => {
+    companyHTTPService.editCompany(props.company.id, data).then(data => {
       showMessage('Confirmation', 'groupeMessage.edit', 'success')
+      props.closeModal()
     })
   }
 
@@ -33,64 +35,83 @@ const EditCompany = (props) => {
 
   return (
     <div className="EditGroupe">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className="ajax-form" onSubmit={handleSubmit(onSubmit)} id="createForm" >
 
-        <div class="form-group row">
-          <label for="text" class="col-4 col-form-label">Name</label>
-          <div class="col-8">
-            <input onChange={handleInputChange} value={company?.name} ref={register({ required: true })}
-              id="text" name="name" type="text" class="form-control" />
+        <div id="education_fields">
+          <div className="row">
+            <div className="col-md-12">
 
+
+              <div className="form-group">
+                <label className="control-label required"><font   ><font   >Name</font></font></label>
+                <input className="form-control" value={company.name} ref={register({ required: true })}
+                  onChange={handleInputChange} type="text" name="name" placeholder="Name" />
+                <div className="error text-danger">
+                  {errors.name && companyValidation.name}
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="control-label required"><font   ><font   >Email</font></font></label>
+                <input className="form-control" value={company.email} ref={register({ required: true })}
+                  onChange={handleInputChange} type="text" name="email" placeholder="Email" />
+                <div className="error text-danger">
+                  {errors.email && companyValidation.email}
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="control-label required"><font   ><font   >Category</font></font></label>
+                <input className="form-control" value={company.category} ref={register({ required: true })}
+                  onChange={handleInputChange} type="text" name="category" placeholder="Category" />
+                <div className="error text-danger">
+                  {errors.category && companyValidation.category}
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="control-label required"><font   ><font   >Telephone</font></font></label>
+                <input className="form-control" value={company.telephone} ref={register({ required: true })}
+                  onChange={handleInputChange} type="text" name="telephone" placeholder="Telephone" />
+                <div className="error text-danger">
+                  {errors.telephone && companyValidation.telephone}
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="control-label required"><font   ><font   >Address</font></font></label>
+                <input className="form-control" value={company.address} ref={register({ required: true })}
+                  onChange={handleInputChange} type="text" name="address" placeholder="Address" />
+                <div className="error text-danger">
+                  {errors.address && companyValidation.address}
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="control-label required"><font   ><font   >Website</font></font></label>
+                <input className="form-control" value={company.website} ref={register({ required: true })}
+                  onChange={handleInputChange} type="text" name="website" placeholder="Website" />
+                <div className="error text-danger">
+                  {errors.website && companyValidation.website}
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="control-label required"><font   ><font   >Size</font></font></label>
+                <input className="form-control" value={company.size} ref={register({ required: true })}
+                  onChange={handleInputChange} type="text" name="size" placeholder="Size" />
+                <div className="error text-danger">
+                  {errors.size && companyValidation.size}
+                </div>
+              </div>
+
+
+
+            </div>
           </div>
         </div>
-        <div class="form-group row">
-          <label for="text" class="col-4 col-form-label">Email</label>
-          <div class="col-8">
-            <input onChange={handleInputChange} value={company?.email} ref={register({ required: true })}
-              id="text" name="email" type="text" class="form-control" />
 
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="text" class="col-4 col-form-label">Category</label>
-          <div class="col-8">
-            <input onChange={handleInputChange} value={company?.category} ref={register({ required: true })}
-              id="text" name="category" type="text" class="form-control" />
-
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="text" class="col-4 col-form-label">Address</label>
-          <div class="col-8">
-            <input onChange={handleInputChange} value={company?.address} ref={register({ required: true })}
-              id="text" name="address" type="text" class="form-control" />
-
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="text" class="col-4 col-form-label">Website</label>
-          <div class="col-8">
-            <input onChange={handleInputChange} value={company?.website} ref={register({ required: true })}
-              id="text" name="website" type="text" class="form-control" />
-
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="text" class="col-4 col-form-label">Size</label>
-          <div class="col-8">
-            <input onChange={handleInputChange} value={company?.size} ref={register({ required: true })}
-              id="text" name="size" type="text" class="form-control" />
-
-          </div>
-        </div>
-
-
-        <div class="form-group row">
-          <div class="offset-4 col-8">
-            <button name="submit" type="submit" class="btn btn-primary"><i class="far fa-save"></i> Save</button>
-          </div>
-        </div>
-
+        <button type="submit" id="save-form" className="btn btn-success"><i className="fa fa-check"></i><font ><font  > Save</font></font></button>
       </form>
     </div>
   )

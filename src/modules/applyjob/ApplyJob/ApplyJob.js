@@ -25,6 +25,7 @@ const ApplyJob = () => {
   const [loading, setLoading] = useState(true);
 
 
+
   useEffect(() => {
     LoadJS()
     getAllPatient()
@@ -54,8 +55,8 @@ const ApplyJob = () => {
     var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
     if (r) {
       showMessage('Confirmation', 'patientMessage.delete', 'success')
-      applyHTTPService.removeApply(data).then(data => {
-        resfresh()
+      applyHTTPService.removeApply(data.id).then(data => {
+        getAllPatient()
       }).catch(e => {
         showMessage('Confirmation', e, 'warning')
       });
@@ -94,7 +95,8 @@ const ApplyJob = () => {
             <tr>
               <th>Full Name</th>
               <th>Job offer</th>
-              <th>Date </th>
+              <th>Application Date </th>
+              <th>Appreciation</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -105,13 +107,24 @@ const ApplyJob = () => {
                 <td>{item.condidate}</td>
                 <td>{item.jobOffer}</td>
                 <td>{item.dateApplication}</td>
+                <td>{item.appreciation}</td>
                 <td>{item.status}</td>
                 <td>
 
-                  <button onClick={e => removeApplyAction(e, applyJobs.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => removeApplyAction(e, item)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
           </tbody>
+          <tfoot>
+            <tr>
+              <th>Full Name</th>
+              <th>Job offer</th>
+              <th>Application Date </th>
+              <th>Appreciation</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </tfoot>
 
         </table>
 
@@ -120,16 +133,16 @@ const ApplyJob = () => {
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Nouveau</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">New</h5>
                 <button onClick={resfresh} type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <AddApplyJob />
+                <AddApplyJob closeModal={closeModalAdd} />
               </div>
               <div class="modal-footer">
-                <button onClick={resfresh} type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button ref={closeButtonAdd} type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 
               </div>
             </div>
@@ -147,10 +160,10 @@ const ApplyJob = () => {
                 </button>
               </div>
               <div class="modal-body">
-                <EditApplyJob applyJob={updatedItem} />
+                <EditApplyJob applyJob={updatedItem} closeModal={closeModalEdit} />
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button ref={closeButtonEdit} type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 
               </div>
             </div>

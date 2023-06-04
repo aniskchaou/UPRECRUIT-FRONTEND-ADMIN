@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './AddInterview.css';
 import showMessage from '../../../libraries/messages/messages'
@@ -8,8 +8,9 @@ import InterviewTestService from '../../../main/mocks/InterviewTestService';
 import HTTPService from '../../../main/services/HTTPService';
 import { useForm } from 'react-hook-form';
 import interviewHTTPService from '../../../main/services/interviewHTTPService';
+import candidateHTTPService from '../../../main/services/candidateHTTPService';
 
-const AddInterview = () => {
+const AddInterview = (props) => {
     const initialState = {
         candidates: "",
         employees: "",
@@ -17,6 +18,14 @@ const AddInterview = () => {
         scheduleTime: "",
         comment: "",
     };
+    const [candidates, setCandidates] = useState([]);
+
+    useEffect(() => {
+        candidateHTTPService.getAllCandidate().then(data => {
+            setCandidates(data.data)
+        })
+
+    }, [])
 
     const { register, handleSubmit, errors } = useForm()
     const [interview, setInterview] = useState(initialState);
@@ -27,6 +36,7 @@ const AddInterview = () => {
         interviewHTTPService.createInterview(data).then(data => {
             setInterview(initialState)
             showMessage('Confirmation', interviewMessage.add, 'success')
+            props.closeModal()
         })
 
     }
@@ -60,13 +70,14 @@ const AddInterview = () => {
 
 
                             <div class="form-group">
-                                <label class="d-block"><font  ><font  >Candidat</font></font></label>
+                                <label class="d-block"><font  ><font  >Candidate</font></font></label>
                                 <select onChange={handleInputChange} value={interview.candidates}
                                     ref={register({ required: true })}
                                     class="select2 m-b-10 form-control select2-multiple select2-hidden-accessible" multiple=""
                                     data-placeholder="Choose Candidate" name="candidates" tabindex="-1" aria-hidden="true">
-                                    <option value="Lorenzo Hackett">Lorenzo Hackett</option>
-                                    <option value="Rozella Mann PhD">Rozella Mann </option>
+                                    {candidates.map(item =>
+                                        <option value={item.firstName + ' ' + item.lastName}>{item.firstName + ' ' + item.lastName}</option>
+                                    )}
 
                                 </select>
                                 <div className="error text-danger">
@@ -80,11 +91,11 @@ const AddInterview = () => {
 
 
                             <div class="form-group">
-                                <label class="d-block"><font  ><font  >Employé</font></font></label>
+                                <label class="d-block"><font  ><font  >Interviewer</font></font></label>
                                 <select onChange={handleInputChange} value={interview.employees} ref={register({ required: true })}
                                     class="select2 m-b-10 form-control select2-multiple select2-hidden-accessible" multiple=""
                                     data-placeholder="Choose Employee" name="employees[]" tabindex="-1" aria-hidden="true">
-                                    <option value="2">Admin (VOUS)</option>
+                                    <option value="Admin">Admin</option>
 
                                 </select>
                                 <div className="error text-danger">
@@ -100,7 +111,7 @@ const AddInterview = () => {
 
                         <div class="col-xs-6 col-md-4 ">
                             <div class="form-group">
-                                <label><font  ><font  >Date du programme</font></font></label>
+                                <label><font  ><font  >Date</font></font></label>
                                 <input onChange={handleInputChange} value={interview.scheduleDate}
                                     ref={register({ required: true })}
                                     type="date" name="scheduleDate" id="scheduleDate" class="form-control"
@@ -114,7 +125,7 @@ const AddInterview = () => {
 
                         <div class="col-xs-5 col-md-4">
                             <div class="form-group chooseCandidate bootstrap-timepicker timepicker">
-                                <label><font  ><font  >Horaire</font></font></label>
+                                <label><font  ><font  >Hour</font></font></label>
                                 <input onChange={handleInputChange} value={interview.scheduleTime} ref={register({ required: true })}
                                     type="time" name="scheduleTime" id="scheduleTime" class="form-control" />
                             </div>
@@ -128,8 +139,8 @@ const AddInterview = () => {
                     <div class="row">
                         <div class="col-xs-12 col-md-12 ">
                             <div class="form-group">
-                                <label><font  ><font  >Commentaire</font></font></label>
-                                <textarea onChange={handleInputChange} value={interview.comment} ref={register({ required: true })}
+                                <label><font  ><font  >Comment</font></font></label>
+                                <textarea onChange={handleInputChange} value={interview.comment} ref={register({ required: false })}
                                     type="text" name="comment" id="comment" placeholder="Commentaire" class="form-control">
                                 </textarea>
                             </div>
@@ -139,7 +150,7 @@ const AddInterview = () => {
                         </div>
                     </div>
 
-                    <button className="btn btn-success"><i className="fa fa-check"></i><font ><font  > Sauvegarder</font></font></button>
+                    <button className="btn btn-success"><i className="fa fa-check"></i><font ><font  > Save</font></font></button>
                 </div>
             </form>
         </div>

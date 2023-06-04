@@ -85,9 +85,9 @@ const Navigation = (props) => {
                 <li >
                   <NavLink activeClassName="activeLink" to="/skill">Skills </NavLink>
                 </li>
-                <li >
+                {/*  <li >
                   <NavLink activeClassName="activeLink" to="/category">Category </NavLink>
-                </li>
+                </li> */}
 
                 <li >
                   <NavLink activeClassName="activeLink" to="/location">Locations </NavLink>
@@ -152,9 +152,9 @@ const Navigation = (props) => {
             <li class="menu-item-has-children dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-handshake"></i>Contracts</a>
               <ul class="sub-menu children dropdown-menu">
-                <li >
+                {/*  <li >
                   <NavLink activeClassName="activeLink" to="/type-contract"> contracts Types</NavLink>
-                </li>
+                </li> */}
                 <li >
                   <NavLink activeClassName="activeLink" to="/contract-signed">Contracts</NavLink>
                 </li>

@@ -5,6 +5,7 @@ import AddAcceptanceFeedBack from '../AddAcceptanceFeedBack/AddAcceptanceFeedBac
 import acceptanceHTTPService from '../../main/services/acceptanceHTTPService'
 import showMessage from '../../libraries/messages/messages';
 import EditAcceptance from '../../components/EditAcceptance/EditAcceptance'
+import { LoadJS } from '../../libraries/datatables/datatables';
 const AcceptanceFeedBack = () => {
   const [acceptances, setAcceptances] = useState([]);
   const [updatedItem, setUpdatedItem] = useState({});
@@ -15,7 +16,7 @@ const AcceptanceFeedBack = () => {
 
 
   useEffect(() => {
-    // LoadJS()
+    LoadJS()
     getAllPatient()
   }, []);
 
@@ -42,7 +43,7 @@ const AcceptanceFeedBack = () => {
     e.preventDefault();
     var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
     if (r) {
-      showMessage('Confirmation', ' patientMessage.delete', 'success')
+      //showMessage('Confirmation', ' patientMessage.delete', 'success')
       acceptanceHTTPService.removeAcceptance(data).then(data => {
         resfresh()
       }).catch(e => {
@@ -75,11 +76,13 @@ const AcceptanceFeedBack = () => {
         <strong className="card-title">Acceptance FeedBacks</strong>
       </div>
       <div className="card-body">
+        <button type="button" data-toggle="modal" data-target="#addCategory" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
+          Create</button>
 
         <table id="example1" className="table table-striped table-bordered">
           <thead>
             <tr>
-              <th>Nom</th>
+              <th>Name</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -96,19 +99,17 @@ const AcceptanceFeedBack = () => {
           </tbody>
           <tfoot>
             <tr>
-              <th>Nom</th>
+              <th>Name</th>
               <th>Actions</th>
             </tr>
           </tfoot>
         </table>
-        <button type="button" data-toggle="modal" data-target="#addCategory" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
-          Ajouter</button>
 
         <div className="modal fade" id="editCategory" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <h5 className="modal-title" id="exampleModalLongTitle">Edit</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -127,7 +128,7 @@ const AcceptanceFeedBack = () => {
           <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLongTitle">Nouveau</h5>
+                <h5 className="modal-title" id="exampleModalLongTitle">New</h5>
                 <button onClick={resfresh} type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -136,7 +137,7 @@ const AcceptanceFeedBack = () => {
                 <AddAcceptanceFeedBack closeModal={closeModalAdd} />
               </div>
               <div className="modal-footer">
-                <button onClick={resfresh} ref={closeButtonAdd} type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button onClick={resfresh} ref={closeButtonAdd} type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
 
               </div>
             </div>

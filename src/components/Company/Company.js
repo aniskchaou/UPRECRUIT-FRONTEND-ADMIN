@@ -5,6 +5,7 @@ import companyHTTPService from '../../main/services/companyHTTPService';
 import showMessage from '../../libraries/messages/messages';
 import AddCompany from '../AddCompany/AddCompany';
 import EditCompany from '../../components/EditCompany/EditCompany'
+import { LoadJS } from '../../libraries/datatables/datatables';
 const Company = () => {
 
   const [companies, setcompanies] = useState([]);
@@ -15,8 +16,10 @@ const Company = () => {
   const [loading, setLoading] = useState(true);
 
 
+
+
   useEffect(() => {
-    // LoadJS()
+    LoadJS()
     getAllPatient()
   }, []);
 
@@ -44,8 +47,8 @@ const Company = () => {
     var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
     if (r) {
       //showMessage('Confirmation', 'patientMessage.delete', 'success')
-      companyHTTPService.removeCompany(data).then(data => {
-        resfresh()
+      companyHTTPService.removeCompany(data.id).then(data => {
+        getAllPatient()
       }).catch(e => {
         showMessage('Confirmation', e, 'warning')
       });
@@ -78,11 +81,12 @@ const Company = () => {
         <table id="example1" className="table table-striped table-bordered">
           <thead>
             <tr>
-
+              <th>Name</th>
               <th>Email</th>
-              <th>category</th>
-              <th>telephone</th>
-              <th>address</th>
+              <th>Category</th>
+              <th>Telephone</th>
+              <th>Size</th>
+              <th>Address</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -93,14 +97,26 @@ const Company = () => {
                 <td>{item.email}</td>
                 <td>{item.category}</td>
                 <td>{item.telephone}</td>
+                <td>{item.size}</td>
                 <td><span class="badge badge-success" >{item.address}</span></td>
                 <td>
                   <button onClick={e => updatePatientAction(e, item)} type="button" data-toggle="modal" data-target="#editCompany" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => removePatientAction(e, item.id)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => removePatientAction(e, item)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
 
           </tbody>
+          <tfoot>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Category</th>
+              <th>Telephone</th>
+              <th>Size</th>
+              <th>Address</th>
+              <th>Actions</th>
+            </tr>
+          </tfoot>
 
         </table>
 
@@ -109,16 +125,16 @@ const Company = () => {
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fas fa-plus"></i> Nouveau</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fas fa-plus"></i> New</h5>
                 <button onClick={resfresh} type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <AddCompany />
+                <AddCompany closeModal={closeModalAdd} />
               </div>
               <div class="modal-footer">
-                <button onClick={resfresh} type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button ref={closeButtonAdd} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
               </div>
             </div>
@@ -136,10 +152,10 @@ const Company = () => {
                 </button>
               </div>
               <div class="modal-body">
-                <EditCompany ccompany={updatedItem} />
+                <EditCompany company={updatedItem} closeModal={closeModalEdit} />
               </div>
               <div class="modal-footer">
-                <button type="button" onClick={resfresh} class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button type="button" ref={closeButtonEdit} class="btn btn-secondary" data-dismiss="modal">Close</button>
 
               </div>
             </div>

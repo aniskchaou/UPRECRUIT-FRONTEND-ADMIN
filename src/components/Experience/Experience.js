@@ -5,6 +5,7 @@ import AddExperience from '../AddExperience/AddExperience'
 import experienceHTTPService from '../../main/services/experienceHTTPService'
 import showMessage from '../../libraries/messages/messages';
 import EditExperience from '../../components/EditExperience/EditExperience'
+import { LoadJS } from '../../libraries/datatables/datatables';
 const Experience = () => {
   const [experiences, setExperiences] = useState([]);
   const [updatedItem, setUpdatedItem] = useState({});
@@ -15,17 +16,17 @@ const Experience = () => {
 
 
   useEffect(() => {
-    //LoadJS()
+    LoadJS()
     getAllPatient()
   }, []);
 
 
   const getAllPatient = () => {
-    setLoading(true);
+    // setLoading(true);
     experienceHTTPService.getAllExperience()
       .then(response => {
         setExperiences(response.data);
-        setLoading(false);
+        // setLoading(false);
       })
       .catch(e => {
         showMessage('Confirmation', e, 'info')
@@ -42,8 +43,8 @@ const Experience = () => {
     e.preventDefault();
     var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
     if (r) {
-      showMessage('Confirmation', ' patientMessage.delete', 'success')
-      experienceHTTPService.removeExperience(data).then(data => {
+      //showMessage('Confirmation', ' patientMessage.delete', 'success')
+      experienceHTTPService.removeExperience(data.id).then(data => {
         resfresh()
       }).catch(e => {
         showMessage('Confirmation', e, 'warning')
@@ -54,7 +55,7 @@ const Experience = () => {
   const updatePatientAction = (e, data) => {
     e.preventDefault();
     setUpdatedItem(data)
-    resfresh()
+    // resfresh()
   }
 
   const closeModalEdit = (data) => {
@@ -80,29 +81,39 @@ const Experience = () => {
         <table id="example1" className="table table-striped table-bordered">
           <thead>
             <tr>
-              <th>Candidate</th>
-              <th>location</th>
-              <th>company</th>
-              <th>startDate</th>
-              <th>endDate</th>
+              <th>Title</th>
+              <th>Location</th>
+              <th>Company</th>
+              <th>Start</th>
+              <th>End</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {experiences.map(item => (
               <tr>
-                <td>{item.candidate}</td>
+                <td>{item.title}</td>
                 <td>{item.location}</td>
                 <td>{item.company}</td>
                 <td>{item.startDate}</td>
                 <td>{item.endDate}</td>
                 <td>
                   <button onClick={e => updatePatientAction(e, item)} type="button" data-toggle="modal" data-target="#editCategory" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => removePatientAction(e, item.id)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => removePatientAction(e, item)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
               </tr>))}
 
 
           </tbody>
+          <tfoot>
+            <tr>
+              <th>Title</th>
+              <th>Location</th>
+              <th>Company</th>
+              <th>Start</th>
+              <th>End</th>
+              <th>Actions</th>
+            </tr>
+          </tfoot>
         </table>
 
 
@@ -110,17 +121,16 @@ const Experience = () => {
           <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <h5 className="modal-title" id="exampleModalLongTitle">Edit</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div className="modal-body">
-                <EditExperience experience={updatedItem} />
+                <EditExperience experience={updatedItem} closeModal={closeModalEdit} />
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" className="btn btn-primary">Save changes</button>
+                <button ref={closeButtonEdit} type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
             </div>
           </div>
@@ -130,16 +140,16 @@ const Experience = () => {
           <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLongTitle">Nouveau</h5>
+                <h5 className="modal-title" id="exampleModalLongTitle">New</h5>
                 <button onClick={resfresh} type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div className="modal-body">
-                <AddExperience />
+                <AddExperience closeModal={closeModalAdd} />
               </div>
               <div className="modal-footer">
-                <button onClick={resfresh} type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button ref={closeButtonAdd} type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
 
               </div>
             </div>

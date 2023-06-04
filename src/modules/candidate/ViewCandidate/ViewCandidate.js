@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import './ViewCandidate.css';
 import { LoadJS } from '../../../libraries/datatables/datatables';
 
-const ViewCandidate = () => {
+const ViewCandidate = (props) => {
 
     return (
         <div className="ViewCandidate">
             <div className="slimscrollright" id="right-sidebar-content">
-         
+
                 <div className="r-panel-body p-3">
 
                     <div className="row font-12">
@@ -16,11 +16,11 @@ const ViewCandidate = () => {
                             <img src="/images/admin.png" className="img-circle img-fluid" />
 
 
-                            <p className="text-muted resume-button" id="resume-1">
+                            {/* <p className="text-muted resume-button" id="resume-1">
                                 <a href="javascript:;" id="view-application-details" data-application-id="1" className="btn btn-sm btn-primary"><i class="fas fa-eye"></i> View Details</a>
-                            </p>
+                            </p> */}
 
-                            <div className="stars stars-example-fontawesome text-center">
+                            {/*  <div className="stars stars-example-fontawesome text-center">
                                 <div className="br-wrapper br-theme-fontawesome-stars"><select id="example-fontawesome" name="rating" autocomplete="off" >
                                     <option value=""></option>
                                     <option value="1">1</option>
@@ -38,59 +38,82 @@ const ViewCandidate = () => {
                             <div className="text-muted resume-button">
                                 <a href="javascript:deleteApplication(1)" className="btn btn-sm btn-danger">
                                     <i class="fas fa-trash"></i> Supprimer la demande                    </a>
-                            </div>
+                            </div> */}
                         </div>
 
                         <div className="col-8 right-panel-box">
+
                             <div className="col-sm-12">
-                                <strong>Nom</strong><br />
-                                <p className="text-muted">Issac Fahey</p>
+                                <strong>FullName</strong><br />
+                                <p className="text-muted">{props.candidate.firstName + ' ' + props.candidate.lastName}</p>
                             </div>
 
                             <div className="col-sm-12">
-                                <strong>Position</strong><br />
-                                <p className="text-muted">Développeur Web (Paris)</p>
+                                <strong>Gender</strong><br />
+                                <p className="text-muted">{props.candidate.gender}</p>
                             </div>
 
                             <div className="col-sm-12">
                                 <strong>Email</strong><br />
-                                <p className="text-muted" id="email-1">xxxxxxxxxxxxx</p>
+                                <p className="text-muted">{props.candidate.email}</p>
                             </div>
 
                             <div className="col-sm-12">
-                                <strong>Phone</strong><br />
-                                <p className="text-muted" id="phone-1">xxxxxxxxxxxxx</p>
+                                <strong>Telephone</strong><br />
+                                <p className="text-muted" id="email-1">{props.candidate.phone}</p>
                             </div>
 
                             <div className="col-sm-12">
-                                <div className="row">
-                                </div>
+                                <strong>Address</strong><br />
+                                <p className="text-muted" id="email-1">{props.candidate.address}</p>
+                            </div>
+
+                            <div className="col-sm-12">
+                                <strong>Experience</strong><br />
+                                <p className="text-muted" id="email-1">{props.candidate.experience}</p>
+                            </div>
+
+                            <div className="col-sm-12">
+                                <strong>Date Of Birth</strong><br />
+                                <p className="text-muted" id="phone-1">{props.candidate.dateOfBirth}</p>
+                            </div>
+
+                            <div className="col-sm-12">
+                                <strong>Language</strong><br />
+                                <p className="text-muted" id="phone-1">{props.candidate.language}</p>
+                            </div>
+
+                            <div className="col-sm-12">
+                                <strong>City</strong><br />
+                                <p className="text-muted" id="phone-1">{props.candidate.city}</p>
                             </div>
 
 
+
+
                             <div className="col-sm-12">
-                                <strong>Postulé </strong><br />
+                                <strong>Salary </strong><br />
                                 <p className="text-muted">
-                                    26 Dec, 2020 18:30
-                                    </p>
+                                    {props.candidate.salary}
+                                </p>
                             </div>
-                            <div className="col-sm-12">
+                            {/*  <div className="col-sm-12">
                                 <h4>Details</h4>
                             </div>
 
                             <div className="col-sm-12">
                                 <p className="text-muted">
                                 </p>
-                            </div>
-                            <div className="row">
+                            </div> */}
+                            {/*  <div className="row">
                                 <div className="col-sm-6">
                                 
                                     <a className="btn btn-sm btn-primary"><i class="fas fa-calendar"></i> planifier un entretien</a>
                                 
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
-                        <div className="col-12" id="skills-container">
+                        {/*     <div className="col-12" id="skills-container">
                             <hr />
                             <div className="col-sm-12 mb-3">
                                 <h5>Compétences</h5>
@@ -106,8 +129,8 @@ const ViewCandidate = () => {
                             </div>
                             <a id="add-skills" className="btn btn-sm btn-success">
                                 <i class="fas fa-plus"></i> Add Skills                                    </a>
-                        </div>
-                        <div className="col-12">
+                        </div> */}
+                        {/*   <div className="col-12">
                             <hr />
                             <div className="col-sm-12 mb-3">
                                 <h5> Notes</h5>
@@ -125,7 +148,7 @@ const ViewCandidate = () => {
                                 <a id="add-note" className="btn btn-sm btn-primary"><i class="fas fa-plus"></i> Ajouter Note</a>
                             </div>
 
-                        </div>
+                        </div> */}
 
                     </div>
 
