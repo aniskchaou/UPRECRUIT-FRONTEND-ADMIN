@@ -5,13 +5,13 @@ import { NavLink, useHistory } from 'react-router-dom';
 import UserSettings from '../../config/user';
 import TaskTestService from '../../mocks/TaskTestService';
 
-const Header = (props) => {
+const Header = ({ connected, handleClick }) => {
     let history = useHistory()
     const [tasks, setTask] = useState([]);
 
     const logout = () => {
-        props.rerender();
-        UserSettings.CONNECTED_USER = false
+        handleClick(false)
+        localStorage.clear()
         history.push("/login")
     }
 
@@ -26,7 +26,7 @@ const Header = (props) => {
 
 
     return (
-        <div style={{ display: (UserSettings.CONNECTED_USER ? 'block' : 'none') }} id="right-panel" className="right-panel">
+        <div id="right-panel" className="right-panel">
             <header id="header" className="header">
                 <div className="top-left">
                     <div className="navbar-header">

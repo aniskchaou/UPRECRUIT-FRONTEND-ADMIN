@@ -82,7 +82,7 @@ const AddApplyJob = (props) => {
               <select ref={register({ required: true })} className="form-control" value={job.candidate}
                 onChange={handleInputChange} type="text" name="candidate" placeholder="Nom" >
                 {candidates.map(item =>
-                  <option value={item.firstName + ' ' + item.lastName}>{item.firstName + ' ' + item.lastName}</option>
+                  <option value={item.id}>{item.firstName + ' ' + item.lastName}</option>
                 )}
               </select>
               <div className="error text-danger">
@@ -96,7 +96,7 @@ const AddApplyJob = (props) => {
               <select className="form-control" value={job.jobOffer} ref={register({ required: true })}
                 onChange={handleInputChange} type="text" name="jobOffer" placeholder="Email" >
                 {jobOffers.map(item =>
-                  <option value={item.post}>{item.post}</option>
+                  <option value={item.id}>{item.post}</option>
                 )}
               </select>
               <div className="error text-danger">

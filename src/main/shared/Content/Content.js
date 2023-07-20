@@ -51,7 +51,7 @@ import CandidateAnalytics from '../../../components/CandidateAnalytics/Candidate
 import UserSettings from '../../config/user';
 import User from '../../../modules/user/User/User'
 const Content = (props) => (
-  <div className="content" style={{ display: (UserSettings.CONNECTED_USER ? 'block' : 'none') }} >
+  <div className="content"  >
     <div className="animated fadeIn">
       <div className="row">
         <div className="col-md-12">

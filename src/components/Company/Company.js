@@ -6,6 +6,7 @@ import showMessage from '../../libraries/messages/messages';
 import AddCompany from '../AddCompany/AddCompany';
 import EditCompany from '../../components/EditCompany/EditCompany'
 import { LoadJS } from '../../libraries/datatables/datatables';
+import BASE_URL from '../../main/urls/urls';
 const Company = () => {
 
   const [companies, setcompanies] = useState([]);
@@ -44,7 +45,7 @@ const Company = () => {
 
   const removePatientAction = (e, data) => {
     e.preventDefault();
-    var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
+    var r = window.confirm("Are you sure ?");
     if (r) {
       //showMessage('Confirmation', 'patientMessage.delete', 'success')
       companyHTTPService.removeCompany(data.id).then(data => {
@@ -81,24 +82,24 @@ const Company = () => {
         <table id="example1" className="table table-striped table-bordered">
           <thead>
             <tr>
+              <th>Logo</th>
               <th>Name</th>
               <th>Email</th>
               <th>Category</th>
               <th>Telephone</th>
               <th>Size</th>
-              <th>Address</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {companies.map(item =>
               <tr>
+                <td><img src={`${BASE_URL}/uploads/` + item.logo} height={50} width={50} /></td>
                 <td>{item.name}</td>
                 <td>{item.email}</td>
                 <td>{item.category}</td>
                 <td>{item.telephone}</td>
                 <td>{item.size}</td>
-                <td><span class="badge badge-success" >{item.address}</span></td>
                 <td>
                   <button onClick={e => updatePatientAction(e, item)} type="button" data-toggle="modal" data-target="#editCompany" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
                   <button onClick={e => removePatientAction(e, item)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
@@ -108,12 +109,12 @@ const Company = () => {
           </tbody>
           <tfoot>
             <tr>
+              <th>Logo</th>
               <th>Name</th>
               <th>Email</th>
               <th>Category</th>
               <th>Telephone</th>
               <th>Size</th>
-              <th>Address</th>
               <th>Actions</th>
             </tr>
           </tfoot>

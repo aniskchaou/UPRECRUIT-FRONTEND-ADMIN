@@ -30,7 +30,7 @@ export const options = {
     },
     title: {
       display: true,
-      text: 'Chart.js Bar Chart',
+      text: '',
     },
   },
 };

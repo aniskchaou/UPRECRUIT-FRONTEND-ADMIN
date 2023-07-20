@@ -6,5 +6,6 @@ const companyValidation = {
     address: 'aa',
     website: 'aa',
     size: 'aa',
+    logo: 'aa'
 }
 export default companyValidation;

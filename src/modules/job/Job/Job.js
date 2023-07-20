@@ -86,7 +86,7 @@ const Job = () => {
               <th>Location</th>
               <th>Start</th>
               <th>End</th>
-              <th>Status</th>
+              <th>Experience</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -97,7 +97,7 @@ const Job = () => {
                 <td>{item.location}</td>
                 <td>{item.start}</td>
                 <td>{item.end}</td>
-                <td><span class="badge badge-success" >{item.active}</span></td>
+                <td><span class="badge badge-success" >{item.experienceLevel}</span></td>
                 <td>
                   <button onClick={e => updatePatientAction(e, item)} type="button" data-toggle="modal" data-target="#editJob" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
                   <button onClick={e => removePatientAction(e, item)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>

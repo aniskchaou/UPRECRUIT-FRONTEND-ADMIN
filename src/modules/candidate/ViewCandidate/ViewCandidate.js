@@ -2,25 +2,40 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './ViewCandidate.css';
 import { LoadJS } from '../../../libraries/datatables/datatables';
+import BASE_URL from '../../../main/urls/urls';
 
 const ViewCandidate = (props) => {
-
+    useEffect(() => {
+        document.getElementById("home-tab").click()
+        //getAllPatient()
+    }, []);
     return (
         <div className="ViewCandidate">
+
             <div className="slimscrollright" id="right-sidebar-content">
 
                 <div className="r-panel-body p-3">
-
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a id="home-tab" data-toggle="tab" href="#home">Info</a></li>
+                        <li><a data-toggle="tab" href="#menu1">CV</a></li>
+                    </ul>
                     <div className="row font-12">
-                        <div className="col-4 text-center">
-                            <img src="/images/admin.png" className="img-circle img-fluid" />
 
 
-                            {/* <p className="text-muted resume-button" id="resume-1">
+                        <br />
+
+                        <div class="tab-content">
+                            <div id="home" class="tab-pane fade in active">
+
+                                <div className="col-4 text-center">
+                                    <img src="/images/admin.png" className="img-circle img-fluid" />
+
+
+                                    {/* <p className="text-muted resume-button" id="resume-1">
                                 <a href="javascript:;" id="view-application-details" data-application-id="1" className="btn btn-sm btn-primary"><i class="fas fa-eye"></i> View Details</a>
                             </p> */}
 
-                            {/*  <div className="stars stars-example-fontawesome text-center">
+                                    {/*  <div className="stars stars-example-fontawesome text-center">
                                 <div className="br-wrapper br-theme-fontawesome-stars"><select id="example-fontawesome" name="rating" autocomplete="off" >
                                     <option value=""></option>
                                     <option value="1">1</option>
@@ -39,65 +54,65 @@ const ViewCandidate = (props) => {
                                 <a href="javascript:deleteApplication(1)" className="btn btn-sm btn-danger">
                                     <i class="fas fa-trash"></i> Supprimer la demande                    </a>
                             </div> */}
-                        </div>
+                                </div>
 
-                        <div className="col-8 right-panel-box">
+                                <div className="col-8 right-panel-box">
 
-                            <div className="col-sm-12">
-                                <strong>FullName</strong><br />
-                                <p className="text-muted">{props.candidate.firstName + ' ' + props.candidate.lastName}</p>
-                            </div>
+                                    <div className="col-sm-12">
+                                        <strong>FullName</strong><br />
+                                        <p className="text-muted">{props.candidate?.firstName + ' ' + props.candidate?.lastName}</p>
+                                    </div>
 
-                            <div className="col-sm-12">
-                                <strong>Gender</strong><br />
-                                <p className="text-muted">{props.candidate.gender}</p>
-                            </div>
+                                    <div className="col-sm-12">
+                                        <strong>Gender</strong><br />
+                                        <p className="text-muted">{props.candidate?.gender}</p>
+                                    </div>
 
-                            <div className="col-sm-12">
-                                <strong>Email</strong><br />
-                                <p className="text-muted">{props.candidate.email}</p>
-                            </div>
+                                    <div className="col-sm-12">
+                                        <strong>Email</strong><br />
+                                        <p className="text-muted">{props.candidate?.email}</p>
+                                    </div>
 
-                            <div className="col-sm-12">
-                                <strong>Telephone</strong><br />
-                                <p className="text-muted" id="email-1">{props.candidate.phone}</p>
-                            </div>
+                                    <div className="col-sm-12">
+                                        <strong>Telephone</strong><br />
+                                        <p className="text-muted" id="email-1">{props.candidate?.phone}</p>
+                                    </div>
 
-                            <div className="col-sm-12">
-                                <strong>Address</strong><br />
-                                <p className="text-muted" id="email-1">{props.candidate.address}</p>
-                            </div>
+                                    <div className="col-sm-12">
+                                        <strong>Address</strong><br />
+                                        <p className="text-muted" id="email-1">{props.candidate?.address}</p>
+                                    </div>
 
-                            <div className="col-sm-12">
-                                <strong>Experience</strong><br />
-                                <p className="text-muted" id="email-1">{props.candidate.experience}</p>
-                            </div>
+                                    <div className="col-sm-12">
+                                        <strong>Experience</strong><br />
+                                        <p className="text-muted" id="email-1">{props.candidate?.experience}</p>
+                                    </div>
 
-                            <div className="col-sm-12">
-                                <strong>Date Of Birth</strong><br />
-                                <p className="text-muted" id="phone-1">{props.candidate.dateOfBirth}</p>
-                            </div>
+                                    <div className="col-sm-12">
+                                        <strong>Date Of Birth</strong><br />
+                                        <p className="text-muted" id="phone-1">{props.candidate?.dateOfBirth}</p>
+                                    </div>
 
-                            <div className="col-sm-12">
-                                <strong>Language</strong><br />
-                                <p className="text-muted" id="phone-1">{props.candidate.language}</p>
-                            </div>
+                                    <div className="col-sm-12">
+                                        <strong>Language</strong><br />
+                                        <p className="text-muted" id="phone-1">{props.candidate?.language}</p>
+                                    </div>
 
-                            <div className="col-sm-12">
-                                <strong>City</strong><br />
-                                <p className="text-muted" id="phone-1">{props.candidate.city}</p>
-                            </div>
-
-
+                                    <div className="col-sm-12">
+                                        <strong>City</strong><br />
+                                        <p className="text-muted" id="phone-1">{props.candidate?.city}</p>
+                                    </div>
 
 
-                            <div className="col-sm-12">
-                                <strong>Salary </strong><br />
-                                <p className="text-muted">
-                                    {props.candidate.salary}
-                                </p>
-                            </div>
-                            {/*  <div className="col-sm-12">
+
+
+                                    <div className="col-sm-12">
+                                        <strong>Salary </strong><br />
+                                        <p className="text-muted">
+                                            {props.candidate?.salary}
+                                        </p>
+                                    </div>
+                                    {/*  <div className="col-sm-12">
                                 <h4>Details</h4>
                             </div>
 
@@ -105,14 +120,25 @@ const ViewCandidate = (props) => {
                                 <p className="text-muted">
                                 </p>
                             </div> */}
-                            {/*  <div className="row">
+                                    {/*  <div className="row">
                                 <div className="col-sm-6">
                                 
                                     <a className="btn btn-sm btn-primary"><i class="fas fa-calendar"></i> planifier un entretien</a>
                                 
                                 </div>
                             </div> */}
+                                </div>
+                            </div>
+                            <div id="menu1" class="tab-pane fade">
+                                <embed src={`${BASE_URL}/uploads/` + props.candidate?.cv} type="application/pdf" height="700" width="720" />
+
+                            </div>
+
                         </div>
+
+
+
+
                         {/*     <div className="col-12" id="skills-container">
                             <hr />
                             <div className="col-sm-12 mb-3">
