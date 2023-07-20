@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './AddCompany.css';
 import { compose } from 'redux';
@@ -16,21 +16,54 @@ const AddCompany = (props) => {
     address: '',
     website: '',
     size: '',
+    logo: '',
+    file: null
 
   };
   const { register, handleSubmit, errors } = useForm() // initialise the hook
   const [company, setCompany] = useState(initialState);
+
+  useEffect(() => {
+    setCompany({ 'file': null });
+    //setService(initialState)
+  }, []);
 
 
 
   const onSubmit = (data) => {
     //saveCategory(data)
     //CategoryTestService.create(data)
-    companyHTTPService.createCompany(data).then(data => {
+
+    /* companyHTTPService.createCompany(data).then(data => {
       setCompany(initialState)
       props.closeModal()
       // showMessage('Confirmation', categoryMessage.add, 'success')
+    }) */
+
+
+    const formData = new FormData(document.getElementById("addCompany"));
+
+    // Update the formData object 
+    /* formData.append(
+      "file",
+      service.file,
+      'file'
+    ); */
+
+
+    //setService({ 'fileName': formData.get('file').name })
+
+    console.log(formData.get('file').name)
+
+    companyHTTPService.uploadFile(formData).then(data => { })
+    companyHTTPService.createCompany(formData.get('file').name, data).then(data => {
+      setCompany(initialState)
+      // showMessage('Confirmation', CurrentUser.CREATE_MSG, 'success')
+      //props.closeModal()
     })
+
+
+
 
   }
 
@@ -45,11 +78,17 @@ const AddCompany = (props) => {
     setCompany({ ...company, [name]: value });
   };
 
+  const handleFileChange = event => {
+
+    setCompany({ 'file': event.target.files[0] });
+    // setService({ 'fileName': event.target.files[0].name });
+  };
+
   return (
-    <div className="AddCategory">
+    <div className="AddCompany">
 
 
-      <form className="ajax-form" onSubmit={handleSubmit(onSubmit)} id="createForm" >
+      <form className="ajax-form" enctype="multipart/form-data" onSubmit={handleSubmit(onSubmit)} id="addCompany" >
 
         <div id="education_fields">
           <div className="row">
@@ -116,6 +155,16 @@ const AddCompany = (props) => {
                   onChange={handleInputChange} type="text" name="size" placeholder="Size" />
                 <div className="error text-danger">
                   {errors.size && companyValidation.size}
+                </div>
+              </div>
+
+
+              <div className="form-group">
+                <label className="control-label required"><font   ><font   >Logo</font></font></label>
+                <input className="form-control" value={company.logo} ref={register({ required: true })}
+                  onChange={handleFileChange} type="file" name="file" placeholder="Size" />
+                <div className="error text-danger">
+                  {errors.logo && companyValidation.logo}
                 </div>
               </div>
 

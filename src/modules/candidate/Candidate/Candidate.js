@@ -87,7 +87,8 @@ const Candidate = () => {
               <th>Firstname</th>
               <th>LastName</th>
               <th>Email</th>
-              <th>Telephone</th>
+              <th>Gender</th>
+              <th>City</th>
               <th>Actions</th>
 
             </tr>
@@ -99,7 +100,8 @@ const Candidate = () => {
                 <td>{item.firstName}</td>
                 <td>{item.lastName}</td>
                 <td>{item.email}</td>
-                <td>{item.phone}</td>
+                <td>{item.gender}</td>
+                <td>{item.city}</td>
                 <td>
                   <button onClick={e => viewCandidateAction(e, item)} type="button" data-toggle="modal" data-target="#viewCandidate" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></button>
                   <button onClick={e => updateCandidateAction(e, item)} type="button" data-toggle="modal" data-target="#editCandidate" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
@@ -112,7 +114,8 @@ const Candidate = () => {
               <th>Firstname</th>
               <th>LastName</th>
               <th>Email</th>
-              <th>Telephone</th>
+              <th>Gender</th>
+              <th>City</th>
               <th>Actions</th>
 
 

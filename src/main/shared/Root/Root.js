@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navigation from '../Navigation/Navigation';
 import Header from '../Header/Header';
 import Content from '../Content/Content';
@@ -9,38 +9,36 @@ import Footer from '../Footer/Footer';
 import Path from '../Path/Path';
 import Login from '../Login/Login';
 import User from '../../config/user'
-class Root extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { connected: User.CONNECTED_USER };
-  }
-  rerender = () => {
-    this.forceUpdate();
+const Root = () => {
+
+  const [connected, setConnected] = useState(false);
+
+
+
+  const handleClick = num => {
+    setConnected(num)
   };
-  forceUpdate = () => {
-    this.setState((state) => ({
-      connected: User.CONNECTED_USER
-    }));
-  };
-  render() {
 
-    return (
-      <div className="root-content">
-        <Router>
-          <Navigation />
-          <Header rerender={this.rerender} />
 
-          <div id="right-panel" className="right-panel">
-            <Content />
+  return (
+    <div className="root-content">
+      <Router>
+        {connected === true ?
+          <div>
+            <Navigation connected={connected} />
+            <Header handleClick={handleClick} />
 
-            <div className="clearfix"></div>
-            <Footer />
-          </div>
-          <Login rerender={this.rerender} />
-        </Router>
-      </div>
-    );
-  }
+            <div id="right-panel" className="right-panel">
+              <Content connected={connected} />
+
+              <div className="clearfix"></div>
+              <Footer connected={connected} />
+            </div>
+          </div> : <Login handleClick={handleClick} />}
+      </Router>
+    </div>
+  );
+
 }
 
 

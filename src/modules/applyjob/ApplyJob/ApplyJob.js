@@ -36,6 +36,7 @@ const ApplyJob = () => {
     setLoading(true);
     applyHTTPService.getAllApply()
       .then(response => {
+        console.log(response)
         setApplyJobs(response.data);
         setLoading(false);
       })
@@ -107,8 +108,8 @@ const ApplyJob = () => {
                 <td>{item.condidate}</td>
                 <td>{item.jobOffer}</td>
                 <td>{item.dateApplication}</td>
-                <td>{item.appreciation}</td>
-                <td>{item.status}</td>
+                <td><span class="badge badge-primary" >{item.appreciation}</span></td>
+                <td><span class="badge badge-info" > {item.status}</span></td>
                 <td>
 
                   <button onClick={e => removeApplyAction(e, item)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>

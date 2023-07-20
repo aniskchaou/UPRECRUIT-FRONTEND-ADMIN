@@ -7,7 +7,7 @@ const Navigation = (props) => {
 
 
   return (
-    <aside style={{ display: (User.CONNECTED_USER ? 'block' : 'none') }} id="left-panel" className="left-panel">
+    <aside id="left-panel" className="left-panel">
       <nav className="navbar navbar-expand-sm navbar-default">
 
         <div id="main-menu" className="main-menu collapse navbar-collapse">
@@ -16,10 +16,10 @@ const Navigation = (props) => {
               <NavLink activeClassName="activeLink" to="/dashboard"><i className="menu-icon fa fa-laptop"></i>Dashboard </NavLink>
             </li>
             <li class="menu-item-has-children dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bullseye"></i>Applications</a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bullseye"></i>Requests</a>
               <ul class="sub-menu children dropdown-menu">
                 <li >
-                  <NavLink activeClassName="activeLink" to="/apply">Job Application <span className="badge badge-primary">5</span> </NavLink>
+                  <NavLink activeClassName="activeLink" to="/apply">Job Application <span className="badge badge-primary">1</span> </NavLink>
                 </li>
                 <li >
                   <NavLink activeClassName="activeLink" to="/company">Companies</NavLink>
@@ -27,7 +27,7 @@ const Navigation = (props) => {
               </ul>
             </li>
 
-            <li class="menu-item-has-children dropdown">
+            {/*  <li class="menu-item-has-children dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bars"></i>Recruitement</a>
               <ul class="sub-menu children dropdown-menu">
                 <li >
@@ -47,7 +47,7 @@ const Navigation = (props) => {
                 </li>
 
               </ul>
-            </li>
+            </li> */}
 
             <li class="menu-item-has-children dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Candidates</a>
@@ -56,13 +56,13 @@ const Navigation = (props) => {
                   <NavLink activeClassName="activeLink" to="/candidate">Candidates </NavLink>
                 </li>
                 <li >
-                  <NavLink activeClassName="activeLink" to="/language">Languges </NavLink>
+                  <NavLink activeClassName="activeLink" to="/language">Languages </NavLink>
                 </li>
                 <li >
-                  <NavLink activeClassName="activeLink" to="/degree">Degree </NavLink>
+                  <NavLink activeClassName="activeLink" to="/degree">Degrees </NavLink>
                 </li>
                 <li >
-                  <NavLink activeClassName="activeLink" to="/experience">Experience </NavLink>
+                  <NavLink activeClassName="activeLink" to="/experience">Experiences </NavLink>
                 </li>
                 <li >
                   <NavLink activeClassName="activeLink" to="/education">Educations </NavLink>
@@ -74,7 +74,7 @@ const Navigation = (props) => {
 
 
             <li >
-              <NavLink activeClassName="activeLink" to="/interview"><i className="menu-icon fa fa-address-card"></i>Interviews  <span className="badge badge-warning">2</span> </NavLink>
+              <NavLink activeClassName="activeLink" to="/interview"><i className="menu-icon fa fa-address-card"></i>Interviews  <span className="badge badge-warning">1</span> </NavLink>
             </li>
             <li class="menu-item-has-children dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user-circle"></i>Job Offers</a>
@@ -102,9 +102,9 @@ const Navigation = (props) => {
                 <li >
                   <NavLink activeClassName="activeLink" to="/users">Teams </NavLink>
                 </li>
-                <li >
+                {/*    <li >
                   <NavLink activeClassName="activeLink" to="/roles">Roles </NavLink>
-                </li>
+                </li> */}
               </ul>
             </li>
             <li class="menu-item-has-children dropdown">
@@ -137,7 +137,7 @@ const Navigation = (props) => {
               </ul>
             </li>
 
-            <li class="menu-item-has-children dropdown">
+            {/*   <li class="menu-item-has-children dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-comment"></i>FeedBacks</a>
               <ul class="sub-menu children dropdown-menu">
                 <li >
@@ -148,18 +148,20 @@ const Navigation = (props) => {
                 </li>
               </ul>
             </li>
+ */}
 
-            <li class="menu-item-has-children dropdown">
+
+            {/*  <li class="menu-item-has-children dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-handshake"></i>Contracts</a>
               <ul class="sub-menu children dropdown-menu">
-                {/*  <li >
+                 <li >
                   <NavLink activeClassName="activeLink" to="/type-contract"> contracts Types</NavLink>
-                </li> */}
+                </li> 
                 <li >
                   <NavLink activeClassName="activeLink" to="/contract-signed">Contracts</NavLink>
                 </li>
               </ul>
-            </li>
+            </li> */}
 
             <li >
               <NavLink activeClassName="activeLink" to="/todo"><i className="menu-icon fa fa-tasks"></i>Tasks </NavLink>
@@ -169,7 +171,7 @@ const Navigation = (props) => {
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-handshake"></i>Charts</a>
               <ul class="sub-menu children dropdown-menu">
                 <li >
-                  <NavLink activeClassName="activeLink" to="/job-analytics"> Job</NavLink>
+                  <NavLink activeClassName="activeLink" to="/job-analytics"> Jobs</NavLink>
                 </li>
                 <li >
                   <NavLink activeClassName="activeLink" to="/job-application-analytics">Job Applications</NavLink>
