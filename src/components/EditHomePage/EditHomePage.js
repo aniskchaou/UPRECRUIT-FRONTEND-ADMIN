@@ -40,38 +40,38 @@ const EditHomePage = (props) => {
     <div className="EditGroupe">
       <form onSubmit={handleSubmit(onSubmit)}>
 
-        <div class="form-group row">
-          <label for="text" class="col-4 col-form-label">Sub Title</label>
-          <div class="col-8">
+        <div className="form-group row">
+          <label htmlFor="text" className="col-4 col-form-label">Sub Title</label>
+          <div className="col-8">
             <input onChange={handleInputChange} value={frontOffice.title1} ref={register({ required: true })}
-              id="text" name="title1" type="text" class="form-control" />
+              id="text" name="title1" type="text" className="form-control" />
 
           </div>
         </div>
 
-        <div class="form-group row">
-          <label for="text" class="col-4 col-form-label">Main Title</label>
-          <div class="col-8">
+        <div className="form-group row">
+          <label htmlFor="text" className="col-4 col-form-label">Main Title</label>
+          <div className="col-8">
             <input onChange={handleInputChange} value={frontOffice.title2} ref={register({ required: true })}
-              id="text" name="title2" type="text" class="form-control" />
+              id="text" name="title2" type="text" className="form-control" />
 
           </div>
         </div>
 
-        <div class="form-group row">
-          <label for="text" class="col-4 col-form-label">Description</label>
-          <div class="col-8">
+        <div className="form-group row">
+          <label htmlFor="text" className="col-4 col-form-label">Description</label>
+          <div className="col-8">
             <input onChange={handleInputChange} value={frontOffice.title3} ref={register({ required: true })}
-              id="text" name="title3" type="text" class="form-control" />
+              id="text" name="title3" type="text" className="form-control" />
 
           </div>
         </div>
 
 
 
-        <div class="form-group row">
-          <div class="offset-4 col-8">
-            <button name="submit" type="submit" class="btn btn-primary"><i class="far fa-save"></i>Save </button>
+        <div className="form-group row">
+          <div className="offset-4 col-8">
+            <button name="submit" type="submit" className="btn btn-primary"><i className="far fa-save"></i>Save </button>
           </div>
         </div>
 
@@ -85,3 +85,4 @@ EditHomePage.propTypes = {};
 EditHomePage.defaultProps = {};
 
 export default EditHomePage;
+

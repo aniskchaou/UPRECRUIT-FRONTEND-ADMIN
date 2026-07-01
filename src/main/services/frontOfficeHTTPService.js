@@ -30,6 +30,10 @@ const getNewsLetterPage = () => {
     return http.get(`${BASE_URL}/api/newsletterpage`)
 }
 
+const getInsightContent = () => {
+    return http.get(`${BASE_URL}/api/insightcontent`)
+}
+
 const editNewsLetterPage = (id, data) => {
     return http.put(`${BASE_URL}/api/newsletterpage/${id}`, data);
 };
@@ -41,6 +45,7 @@ export default {
     editHeaderPage,
     getHeaderPage,
     getNewsLetterPage,
+    getInsightContent,
     editNewsLetterPage,
     editSummaryPage
 };

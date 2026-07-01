@@ -1,5 +1,156 @@
 .Header {}
 
-.header{
-    height: 75px;
+.header {
+    min-height: 75px;
+}
+
+/* Messages bell / icon */
+.msg-bell {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.msg-bell__btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #555;
+    padding: 6px 10px;
+    border-radius: 50%;
+    position: relative;
+    transition: color 0.2s, background 0.2s;
+}
+
+.msg-bell__btn:hover {
+    color: #1a73e8;
+    background: rgba(26, 115, 232, 0.08);
+}
+
+.msg-bell__badge {
+    position: absolute;
+    top: 2px;
+    right: 4px;
+    background: #e53935;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    min-width: 17px;
+    height: 17px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 3px;
+    line-height: 1;
+    pointer-events: none;
+}
+
+.msg-bell__dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 340px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.16);
+    z-index: 9999;
+    overflow: hidden;
+    animation: msgDropIn 0.18s ease;
+}
+
+@keyframes msgDropIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.msg-bell__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px 10px;
+    font-weight: 700;
+    font-size: 15px;
+    color: #1a1a2e;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.msg-bell__count {
+    font-size: 12px;
+    font-weight: 400;
+    color: #888;
+}
+
+.msg-bell__list {
+    max-height: 360px;
+    overflow-y: auto;
+}
+
+.msg-bell__empty {
+    padding: 28px;
+    text-align: center;
+    color: #aaa;
+    font-size: 14px;
+}
+
+.msg-bell__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 18px;
+    border-bottom: 1px solid #f5f5f5;
+    cursor: default;
+    transition: background 0.15s;
+}
+
+.msg-bell__item:last-child {
+    border-bottom: none;
+}
+
+.msg-bell__item:hover {
+    background: #f7f9ff;
+}
+
+.msg-bell__item--unread {
+    background: #f0f5ff;
+}
+
+.msg-bell__avatar {
+    font-size: 28px;
+    color: #1a73e8;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.msg-bell__body {
+    flex: 1;
+    min-width: 0;
+}
+
+.msg-bell__name {
+    font-weight: 600;
+    font-size: 13px;
+    color: #222;
+    margin-bottom: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.msg-bell__preview {
+    font-size: 12px;
+    color: #666;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.msg-bell__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #1a73e8;
+    flex-shrink: 0;
+    margin-top: 5px;
 }

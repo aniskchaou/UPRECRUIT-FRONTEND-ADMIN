@@ -43,7 +43,7 @@ const AddSkill = (props) => {
                     <div className="col-md-9">
 
                         <div className="form-group">
-                            <label for="address"><font   ><font   >Skill</font></font></label>
+                            <label htmlFor="address"><font   ><font   >Skill</font></font></label>
                             <input onChange={handleInputChange}
                                 value={skill.name}
                                 ref={register({ required: true })}
@@ -73,3 +73,4 @@ AddSkill.propTypes = {};
 AddSkill.defaultProps = {};
 
 export default AddSkill;
+

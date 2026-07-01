@@ -15,8 +15,8 @@ const ViewCandidate = (props) => {
             <div className="slimscrollright" id="right-sidebar-content">
 
                 <div className="r-panel-body p-3">
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a id="home-tab" data-toggle="tab" href="#home">Info</a></li>
+                    <ul className="nav nav-tabs">
+                        <li className="active"><a id="home-tab" data-toggle="tab" href="#home">Info</a></li>
                         <li><a data-toggle="tab" href="#menu1">CV</a></li>
                     </ul>
                     <div className="row font-12">
@@ -24,15 +24,15 @@ const ViewCandidate = (props) => {
 
                         <br />
 
-                        <div class="tab-content">
-                            <div id="home" class="tab-pane fade in active">
+                        <div className="tab-content">
+                            <div id="home" className="tab-pane fade in active">
 
                                 <div className="col-4 text-center">
                                     <img src="/images/admin.png" className="img-circle img-fluid" />
 
 
                                     {/* <p className="text-muted resume-button" id="resume-1">
-                                <a href="javascript:;" id="view-application-details" data-application-id="1" className="btn btn-sm btn-primary"><i class="fas fa-eye"></i> View Details</a>
+                                <a href="javascript:;" id="view-application-details" data-application-id="1" className="btn btn-sm btn-primary"><i className="fas fa-eye"></i> View Details</a>
                             </p> */}
 
                                     {/*  <div className="stars stars-example-fontawesome text-center">
@@ -48,11 +48,11 @@ const ViewCandidate = (props) => {
 
                             <div className="text-muted resume-button">
                                 <a href="javascript:archiveApplication(1)" className="btn btn-sm btn-info">
-                                    <i class="fas fa-save"></i> Archiver la demande                    </a>
+                                    <i className="fas fa-save"></i> Archiver la demande                    </a>
                             </div>
                             <div className="text-muted resume-button">
                                 <a href="javascript:deleteApplication(1)" className="btn btn-sm btn-danger">
-                                    <i class="fas fa-trash"></i> Supprimer la demande                    </a>
+                                    <i className="fas fa-trash"></i> Supprimer la demande                    </a>
                             </div> */}
                                 </div>
 
@@ -123,13 +123,13 @@ const ViewCandidate = (props) => {
                                     {/*  <div className="row">
                                 <div className="col-sm-6">
                                 
-                                    <a className="btn btn-sm btn-primary"><i class="fas fa-calendar"></i> planifier un entretien</a>
+                                    <a className="btn btn-sm btn-primary"><i className="fas fa-calendar"></i> planifier un entretien</a>
                                 
                                 </div>
                             </div> */}
                                 </div>
                             </div>
-                            <div id="menu1" class="tab-pane fade">
+                            <div id="menu1" className="tab-pane fade">
                                 <embed src={`${BASE_URL}/uploads/` + props.candidate?.cv} type="application/pdf" height="700" width="720" />
 
                             </div>
@@ -145,7 +145,7 @@ const ViewCandidate = (props) => {
                                 <h5>Compétences</h5>
                             </div>
                             <div className="form-group mb-2">
-                                <select multiple name="skills[]" id="skills" className="form-control select2 custom-select select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                <select multiple name="skills[]" id="skills" className="form-control select2 custom-select select2-hidden-accessible" tabIndex="-1" aria-hidden="true">
                                     <option value="1">Angular JS</option>
                                     <option value="2">Vue.JS</option>
                                     <option value="3">Laravel 5.4</option>
@@ -154,7 +154,7 @@ const ViewCandidate = (props) => {
                                 </select>
                             </div>
                             <a id="add-skills" className="btn btn-sm btn-success">
-                                <i class="fas fa-plus"></i> Add Skills                                    </a>
+                                <i className="fas fa-plus"></i> Add Skills                                    </a>
                         </div> */}
                         {/*   <div className="col-12">
                             <hr />
@@ -171,7 +171,7 @@ const ViewCandidate = (props) => {
                                 <div className="form-group mb-2">
                                     <textarea name="note" id="note_text" cols="30" rows="2" className="form-control"></textarea>
                                 </div>
-                                <a id="add-note" className="btn btn-sm btn-primary"><i class="fas fa-plus"></i> Ajouter Note</a>
+                                <a id="add-note" className="btn btn-sm btn-primary"><i className="fas fa-plus"></i> Ajouter Note</a>
                             </div>
 
                         </div> */}
@@ -190,3 +190,4 @@ ViewCandidate.propTypes = {};
 ViewCandidate.defaultProps = {};
 
 export default ViewCandidate;
+

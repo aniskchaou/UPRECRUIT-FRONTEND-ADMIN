@@ -1,211 +1,348 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './Interview.css';
-import { LoadJS } from '../../../libraries/datatables/datatables';
 import EditInterview from '../EditInterview/EditInterview';
+import ViewInterview from '../ViewInterview/ViewInterview';
 import AddInterview from '../AddInterview/AddInterview';
-import useForceUpdate from 'use-force-update';
 import showMessage from '../../../libraries/messages/messages';
-import interviewMessage from '../../../main/messages/interviewMessage';
-import InterviewTestService from '../../../main/mocks/InterviewTestService';
-import HTTPService from '../../../main/services/HTTPService';
-import FullCalendar from '@fullcalendar/react'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import ViewInterview from './../ViewInterview/ViewInterview';
-import interviewHTTPService from "../../../main/services/interviewHTTPService";
+import interviewHTTPService from '../../../main/services/interviewHTTPService'
+import { Table, Button, Modal, Space, Popconfirm, Empty, Spin, Input, Tooltip, Select, Row, Col, Drawer, Tag } from 'antd';
+import { EyeOutlined, EditOutlined, DeleteOutlined, PlusOutlined, DownloadOutlined, FilterOutlined, UndoOutlined, ReloadOutlined } from '@ant-design/icons';
+
 const Interview = () => {
 
   const [interviews, setInterviews] = useState([]);
+  const [filteredInterviews, setFilteredInterviews] = useState([]);
   const [updatedItem, setUpdatedItem] = useState({});
-  const forceUpdate = useForceUpdate();
-  const closeButtonEdit = useRef(null);
-  const closeButtonAdd = useRef(null);
   const [loading, setLoading] = useState(true);
-
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [viewModalVisible, setViewModalVisible] = useState(false);
+  const [addModalVisible, setAddModalVisible] = useState(false);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [searchText, setSearchText] = useState('');
+  const [filterDrawerVisible, setFilterDrawerVisible] = useState(false);
 
   useEffect(() => {
-    LoadJS()
-    getAllPatient()
+    getAllInterview()
   }, []);
 
-
-  const getAllPatient = () => {
+  const getAllInterview = () => {
     setLoading(true);
     interviewHTTPService.getAllInterview()
       .then(response => {
         setInterviews(response.data);
+        filterData(response.data, searchText);
         setLoading(false);
       })
       .catch(e => {
-        showMessage('Confirmation', e, 'info')
+        setLoading(false);
+        showMessage('Error', 'Failed to load interviews', 'error')
       });
   };
 
-
-  const resfresh = () => {
-    getAllPatient()
-    // forceUpdate()
-  }
-
-  const removeInterviewAction = (e, data) => {
-    e.preventDefault();
-    var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
-    if (r) {
-      //  showMessage('Confirmation', 'patientMessage.delet', 'success')
-      interviewHTTPService.removeInterview(data).then(data => {
-        resfresh()
-      }).catch(e => {
-        showMessage('Confirmation', e, 'warning')
-      });
+  const filterData = useCallback((data, search) => {
+    let filtered = data;
+    if (search) {
+      filtered = filtered.filter(item =>
+        item.candidate?.toLowerCase().includes(search.toLowerCase())
+      );
     }
+    setFilteredInterviews(filtered);
+  }, []);
+
+  useEffect(() => {
+    filterData(interviews, searchText);
+  }, [searchText, interviews, filterData]);
+
+  const handleBulkDelete = () => {
+    if (selectedRowKeys.length === 0) {
+      showMessage('Info', 'Select interviews to delete', 'info');
+      return;
+    }
+    const deletePromises = selectedRowKeys.map(id => interviewHTTPService.removeInterview(id));
+    Promise.all(deletePromises)
+      .then(() => {
+        getAllInterview();
+        setSelectedRowKeys([]);
+        showMessage('Success', `${selectedRowKeys.length} deleted`, 'success');
+      })
+      .catch(e => showMessage('Error', 'Deletion failed', 'error'));
+  };
+
+  const handleExport = () => {
+    const data = selectedRowKeys.length > 0 
+      ? filteredInterviews.filter(i => selectedRowKeys.includes(i.id))
+      : filteredInterviews;
+    if (data.length === 0) {
+      showMessage('Info', 'No data to export', 'info');
+      return;
+    }
+    const headers = ['Candidate', 'Schedule Date', 'Time', 'Employee', 'Comment'];
+    const rows = data.map(item => [item.candidate, item.scheduleDate, item.scheduleTime, item.employee, item.comment]);
+    const csv = [headers, ...rows].map(row => row.map(cell => `"${cell || ''}"`).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `interviews_${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    showMessage('Success', 'Exported', 'success');
+  };
+
+  const removeInterviewAction = (id) => {
+    interviewHTTPService.removeInterview(id).then(() => {
+      getAllInterview();
+      showMessage('Success', 'Interview deleted', 'success');
+      setSelectedRowKeys(selectedRowKeys.filter(key => key !== id));
+    }).catch(e => {
+      showMessage('Error', 'Deletion failed', 'error')
+    });
   }
 
-  const updateInterviewAction = (e, data) => {
-    e.preventDefault();
+  const updateInterviewAction = (data) => {
     setUpdatedItem(data)
-    resfresh()
+    setEditModalVisible(true)
   }
 
-  const closeModalEdit = (data) => {
-    resfresh()
-    closeButtonEdit.current.click()
+  const viewInterviewAction = (data) => {
+    setUpdatedItem(data)
+    setViewModalVisible(true)
   }
 
-  const closeModalAdd = (data) => {
-    resfresh()
-    closeButtonAdd.current.click()
+  const closeEditModal = () => {
+    setEditModalVisible(false)
+    getAllInterview()
   }
 
+  const handleResetFilters = () => {
+    setSearchText('');
+    showMessage('Success', 'Filters reset', 'success');
+  };
+
+  const columns = [
+    {
+      title: 'Candidate',
+      dataIndex: 'candidate',
+      key: 'candidate',
+      width: 180,
+      sorter: (a, b) => (a.candidate || '').localeCompare(b.candidate || ''),
+    },
+    {
+      title: 'Schedule Date',
+      dataIndex: 'scheduleDate',
+      key: 'scheduleDate',
+      width: 130,
+    },
+    {
+      title: 'Time',
+      dataIndex: 'scheduleTime',
+      key: 'scheduleTime',
+      width: 100,
+    },
+    {
+      title: 'Employee',
+      dataIndex: 'employee',
+      key: 'employee',
+      width: 150,
+    },
+    {
+      title: 'Comment',
+      dataIndex: 'comment',
+      key: 'comment',
+      width: 200,
+      render: (text) => <span>{text ? `${text.substring(0, 50)}...` : '—'}</span>,
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      width: 140,
+      fixed: 'right',
+      render: (_, record) => (
+        <Space size="small">
+          <Tooltip title="View">
+            <Button 
+              type="primary" 
+              size="small" 
+              icon={<EyeOutlined />}
+              onClick={() => viewInterviewAction(record)}
+            />
+          </Tooltip>
+          <Tooltip title="Edit">
+            <Button 
+              type="default" 
+              size="small" 
+              icon={<EditOutlined />}
+              onClick={() => updateInterviewAction(record)}
+            />
+          </Tooltip>
+          <Tooltip title="Delete">
+            <Popconfirm
+              title="Delete"
+              description="Confirm?"
+              onConfirm={() => removeInterviewAction(record.id)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button type="primary" danger size="small" icon={<DeleteOutlined />} />
+            </Popconfirm>
+          </Tooltip>
+        </Space>
+      ),
+    },
+  ];
 
   return (
-    <div className="card">
-      <div className="card-header">
-        <strong className="card-title">Interviews</strong>
-      </div>
-      <div className="card-body">
-        <button type="button" data-toggle="modal" data-target="#addInterview" className="btn btn-success btn-sm"><i class="fas fa-plus"></i> Create </button>
-        <table id="example1" className="table table-striped table-bordered">
-          <thead>
-            <tr>
-              <th>Candidate</th>
-              <th>Date</th>
-              <th>Interviewer</th>
-              <th>Time</th>
-              <th>Comment</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {interviews.map(item =>
-              <tr>
-                <td>{item.candidates}</td>
-                <td>{item.scheduleDate}</td>
-                <td>{item.employees}</td>
-                <td>{item.scheduleTime}</td>
-                <td>{item.comment}</td>
-                <td>
-                  {/*  <button onClick={e => updateInterviewAction(e, item)} type="button" data-toggle="modal" data-target="#editInterview" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button> */}
-                  <button onClick={e => removeInterviewAction(e, item.id)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
-              </tr>
-            )}
-          </tbody>  <tfoot>
-            <tr>
-              <th>Candidate</th>
-              <th>Date</th>
-              <th>Interviewer</th>
-              <th>Time</th>
-              <th>Comment</th>
-              <th>Actions</th>
-            </tr>
-          </tfoot>
-        </table>
-
-
-        <br />
+    <div className="module-page">
+      <section className="module-page__hero">
         <div>
+          <span className="module-page__eyebrow">Core module</span>
+          <h2 className="module-page__title">Interview Management</h2>
+          <p className="module-page__subtitle">Schedule, track, and manage interviews with candidates.</p>
+          <div className="module-page__meta">
+            <span>Interview scheduling</span>
+            <span>Candidate tracking</span>
+            <span>Interview pipeline</span>
+          </div>
+        </div>
+        <div className="module-page__kpis">
+          <div>
+            <strong>{filteredInterviews.length}</strong>
+            <span>Total interviews</span>
+          </div>
+          <div>
+            <strong>{interviews.length}</strong>
+            <span>All scheduled</span>
+          </div>
+        </div>
+      </section>
 
-          <FullCalendar
-
-            plugins={[dayGridPlugin]}
-            initialView="dayGridMonth"
-            weekends={false}
-            events={[
-              { title: 'Entretien developpeur mobile', date: '2022-07-27' },
-              { title: 'event 2', date: '2019-04-02' }
-            ]}
+      <div style={{ background: '#fff', borderRadius: '14px', padding: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
+        <div style={{ marginBottom: '16px' }}>
+          <Row gutter={[16, 16]} align="middle" wrap>
+            <Col flex="auto">
+              <Input
+                placeholder="Search by candidate..."
+                prefix="🔍"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                style={{ maxWidth: '300px' }}
+              />
+            </Col>
+            {searchText && (
+              <Col>
+                <Button
+                  icon={<UndoOutlined />}
+                  onClick={handleResetFilters}
+                  danger
+                >
+                  Reset
+                </Button>
+              </Col>
+            )}
+            <Col>
+              <Button
+                type="primary"
+                icon={<PlusOutlined />}
+                onClick={() => setAddModalVisible(true)}
+              >
+                Add Interview
+              </Button>
+            </Col>
+            <Col>
+              <Tooltip title="Export">
+                <Button
+                  icon={<DownloadOutlined />}
+                  onClick={handleExport}
+                  disabled={filteredInterviews.length === 0}
+                >
+                  Export
+                </Button>
+              </Tooltip>
+            </Col>
+            <Col>
+              <Button
+                icon={<ReloadOutlined />}
+                onClick={() => {
+                  setSelectedRowKeys([]);
+                  getAllInterview();
+                }}
+                loading={loading}
+              />
+            </Col>
+            {selectedRowKeys.length > 0 && (
+              <Col>
+                <Popconfirm
+                  title="Delete Multiple"
+                  description={`Delete ${selectedRowKeys.length}?`}
+                  onConfirm={handleBulkDelete}
+                  okText="Delete"
+                  okButtonProps={{ danger: true }}
+                >
+                  <Button type="primary" danger>
+                    Delete {selectedRowKeys.length}
+                  </Button>
+                </Popconfirm>
+              </Col>
+            )}
+          </Row>
+        </div>
+        
+        <Spin spinning={loading}>
+          <Table
+            columns={columns}
+            dataSource={filteredInterviews}
+            rowKey={(record) => record.id}
+            rowSelection={{
+              selectedRowKeys,
+              onChange: setSelectedRowKeys,
+            }}
+            pagination={{ pageSize: 10 }}
+            locale={{
+              emptyText: <Empty description="No interviews found" style={{ marginTop: '40px' }} />
+            }}
+            size="middle"
+            scroll={{ x: 1200 }}
           />
-        </div>
-        <div className="modal fade" id="addInterview" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLongTitle">New</h5>
-                <button onClick={resfresh} type="button" className="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <AddInterview closeModal={closeModalAdd} />
-              </div>
-              <div className="modal-footer">
-                <button ref={closeButtonAdd} type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-        <div className="modal fade" id="editInterview" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLongTitle">Edit</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <EditInterview interview={updatedItem} />
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-
-        <div className="modal fade" id="viewInterview" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <ViewInterview />
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" className="btn btn-primary">Save changes</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
+        </Spin>
       </div>
+
+      <Modal
+        title="Edit Interview"
+        open={editModalVisible}
+        onCancel={() => setEditModalVisible(false)}
+        footer={null}
+        width={900}
+      >
+        <EditInterview interview={updatedItem} closeModal={closeEditModal} />
+      </Modal>
+
+      <Modal
+        title="Interview Details"
+        open={viewModalVisible}
+        onCancel={() => setViewModalVisible(false)}
+        footer={null}
+        width={900}
+      >
+        <ViewInterview interview={updatedItem} />
+      </Modal>
+
+      <Modal
+        title="Add Interview"
+        open={addModalVisible}
+        onCancel={() => setAddModalVisible(false)}
+        footer={null}
+        width={900}
+      >
+        <AddInterview closeModal={() => {
+          setAddModalVisible(false);
+          getAllInterview();
+        }} />
+      </Modal>
     </div>
   )
 };
 
 Interview.propTypes = {};
-
 Interview.defaultProps = {};
 
 export default Interview;
+

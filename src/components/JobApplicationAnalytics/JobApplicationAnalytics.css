@@ -1,1 +1,63 @@
-.JobApplicationAnalytics {}
+.analytics-page {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.analytics-kpis {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 12px;
+}
+
+.analytics-kpi-card {
+	border-radius: 14px;
+	border: 1px solid #dce5f4;
+	background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+	padding: 14px 16px;
+}
+
+.analytics-kpi-card h4 {
+	margin: 0;
+	font-size: 28px;
+	color: #16326f;
+	font-weight: 800;
+}
+
+.analytics-kpi-card p {
+	margin: 6px 0 2px;
+	font-size: 13px;
+	color: #4f6486;
+	font-weight: 700;
+}
+
+.analytics-kpi-card span {
+	font-size: 12px;
+	color: #287f6a;
+}
+
+.analytics-card {
+	border: 1px solid #dce5f4;
+	border-radius: 14px;
+}
+
+.analytics-insights ul {
+	margin: 0;
+	padding-left: 18px;
+	display: grid;
+	gap: 10px;
+	color: #4f6486;
+	font-size: 14px;
+}
+
+@media (max-width: 1199px) {
+	.analytics-kpis {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 575px) {
+	.analytics-kpis {
+		grid-template-columns: 1fr;
+	}
+}

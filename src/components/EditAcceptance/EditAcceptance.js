@@ -48,9 +48,9 @@ const EditAcceptance = (props) => {
         </div>
 
 
-        <div class="form-group row">
-          <div class="col-8">
-            <button name="submit" type="submit" class="btn btn-primary"><i class="far fa-save"></i>Save</button>
+        <div className="form-group row">
+          <div className="col-8">
+            <button name="submit" type="submit" className="btn btn-primary"><i className="far fa-save"></i>Save</button>
           </div>
         </div>
 
@@ -64,3 +64,4 @@ EditAcceptance.propTypes = {};
 EditAcceptance.defaultProps = {};
 
 export default EditAcceptance;
+

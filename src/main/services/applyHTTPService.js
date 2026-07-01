@@ -39,6 +39,7 @@ export default {
     createApply,
     editApply,
     removeApply,
+    deleteById: removeApply,
     getAllFirstInterview,
     getAllSecondInterview,
     getAllInitialQualification,

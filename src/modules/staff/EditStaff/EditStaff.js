@@ -30,7 +30,7 @@ const EditStaff = (props) => {
             <form id="editSettings" className="ajax-form" onSubmit={handleSubmit(onSubmit)}>
 
                 <div className="form-group">
-                    <label for="name">  Nom  </label>
+                    <label htmlFor="name">  Nom  </label>
                     <input onChange={handleInputChange} value={staff.full_name}
                         ref={register({ required: true })} type="text" className="form-control" id="name" name="full_name" />
 
@@ -40,7 +40,7 @@ const EditStaff = (props) => {
                 </div>
 
                 <div className="form-group">
-                    <label for="email">  Email  </label>
+                    <label htmlFor="email">  Email  </label>
                     <input onChange={handleInputChange} value={staff.email}
                         ref={register({ required: true })} type="email" className="form-control" id="email" name="email" />
                     <div className="error text-danger">
@@ -50,9 +50,9 @@ const EditStaff = (props) => {
                 </div>
 
                 <div className="form-group">
-                    <label for="company_phone">  Mot de passe  </label>
+                    <label htmlFor="company_phone">  Mot de passe  </label>
                     <input onChange={handleInputChange} value={staff.password}
-                        ref={register({ required: true })} type="password" className="form-control" id="password" name="password" />
+                        ref={register({ required: true })} type="password" className="form-control" id="password" name="password" autoComplete="new-password" />
                     <div className="error text-danger">
                         {errors.password && staffValidation.password}
                     </div>
@@ -66,7 +66,7 @@ const EditStaff = (props) => {
                                 <select onChange={handleInputChange} value={staff.calling_code}
                                     ref={register({ required: true })}
                                     name="calling_code" id="calling_code" className="form-control"
-                                    data-live-search="true" data-width="100%" tabindex="-98">
+                                    data-live-search="true" data-width="100%" tabIndex="-98">
                                     <option value="+93">  +93 - Afghanistan  </option>
                                     <option value="+358">  +358 - Iles Aland  </option>
                                     <option value="+355">  +355 - Albanie  </option>
@@ -320,7 +320,7 @@ const EditStaff = (props) => {
                     </div>
                 </div>
                 <div className="form-group">
-                    <label for="exampleInputPassword1">  Image  </label>
+                    <label htmlFor="exampleInputPassword1">  Image  </label>
                     <div className="card">
                         <div className="card-body">
                             <div className="dropify-wrapper has-preview"><div className="dropify-message">
@@ -336,7 +336,7 @@ const EditStaff = (props) => {
 
                                 <button type="button" className="btn">  Retirer  </button>
                                 <div className="dropify-preview" ><span className="dropify-render">
-                                    <img height="100" width="100" src="/images/admin.png" /></span>
+                                    <img height="100" width="100" src="/images/admin.png" alt="Staff avatar preview" /></span>
                                     <div className="dropify-infos"><div className="dropify-infos-inner">
                                         <p className="dropify-filename"><span className="file-icon"></span>
                                             <span className="dropify-filename-inner">  avatar.png  </span></p>
@@ -349,7 +349,7 @@ const EditStaff = (props) => {
 
 
                 <div className="form-group">
-                    <label for="role">  Nom de rôle  </label>
+                    <label htmlFor="role">  Nom de rôle  </label>
                     <select onChange={handleInputChange} value={staff.role_id}
                         ref={register({ required: true })}
                         className="form-control" name="role_id" id="role_id">
@@ -377,3 +377,4 @@ EditStaff.propTypes = {};
 EditStaff.defaultProps = {};
 
 export default EditStaff;
+

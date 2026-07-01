@@ -36,11 +36,11 @@ const EditLocalisationSettings = () => {
   return (
     <div className="EditDashboardSettings">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div class="form-group row">
-          <label for="select2" class="col-4 col-form-label">Language</label>
-          <div class="col-8">
-            <select onChange={handleInputChange} value={localisationSettings?.language} ref={register({ required: true })}
-              id="select2" name="language" class="custom-select">
+        <div className="form-group row">
+          <label htmlFor="select2" className="col-4 col-form-label">Language</label>
+          <div className="col-8">
+            <select onChange={handleInputChange} value={localisationSettings?.language || ""} ref={register({ required: true })}
+              id="select2" name="language" className="custom-select">
 
               <option value="English">English</option>
 
@@ -48,11 +48,11 @@ const EditLocalisationSettings = () => {
           </div>
         </div>
 
-        <div class="form-group row">
-          <label for="select2" class="col-4 col-form-label">Currency</label>
-          <div class="col-8">
-            <select onChange={handleInputChange} value={localisationSettings?.showCalendar} ref={register({ required: true })}
-              id="select2" name="showCalendar" class="custom-select">
+        <div className="form-group row">
+          <label htmlFor="select2" className="col-4 col-form-label">Currency</label>
+          <div className="col-8">
+            <select onChange={handleInputChange} value={localisationSettings?.showCalendar || ""} ref={register({ required: true })}
+              id="select2" name="showCalendar" className="custom-select">
 
               <option value="1">Yes</option>
               <option value="0">No</option>
@@ -60,11 +60,11 @@ const EditLocalisationSettings = () => {
           </div>
         </div>
 
-        <div class="form-group row">
-          <label for="select2" class="col-4 col-form-label">Currency Symbol</label>
-          <div class="col-8">
-            <select onChange={handleInputChange} value={localisationSettings?.currencySymbol} ref={register({ required: true })}
-              id="select2" name="currencySymbol" class="custom-select">
+        <div className="form-group row">
+          <label htmlFor="select2" className="col-4 col-form-label">Currency Symbol</label>
+          <div className="col-8">
+            <select onChange={handleInputChange} value={localisationSettings?.currencySymbol || ""} ref={register({ required: true })}
+              id="select2" name="currencySymbol" className="custom-select">
 
               <option value="$">USD</option>
 
@@ -72,11 +72,11 @@ const EditLocalisationSettings = () => {
           </div>
         </div>
 
-        <div class="form-group row">
-          <label for="select2" class="col-4 col-form-label">Date format</label>
-          <div class="col-8">
-            <select onChange={handleInputChange} value={localisationSettings?.dateFormat} ref={register({ required: true })}
-              id="select2" name="dateFormat" class="custom-select">
+        <div className="form-group row">
+          <label htmlFor="select2" className="col-4 col-form-label">Date format</label>
+          <div className="col-8">
+            <select onChange={handleInputChange} value={localisationSettings?.dateFormat || ""} ref={register({ required: true })}
+              id="select2" name="dateFormat" className="custom-select">
 
               <option value="dd/mm/yyyy">dd/mm/yyyy</option>
 
@@ -84,9 +84,9 @@ const EditLocalisationSettings = () => {
           </div>
         </div>
 
-        <div class="form-group row">
-          <div class="offset-4 col-8">
-            <button name="submit" type="submit" class="btn btn-primary"><i class="far fa-save"></i>
+        <div className="form-group row">
+          <div className="offset-4 col-8">
+            <button name="submit" type="submit" className="btn btn-primary"><i className="far fa-save"></i>
               Save</button>
           </div>
         </div>
@@ -101,3 +101,4 @@ EditLocalisationSettings.propTypes = {};
 EditLocalisationSettings.defaultProps = {};
 
 export default EditLocalisationSettings;
+

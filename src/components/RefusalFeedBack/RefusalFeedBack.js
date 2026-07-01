@@ -75,7 +75,7 @@ const RefusalFeedBack = () => {
         <strong className="card-title">Refusal FeedBacks</strong>
       </div>
       <div className="card-body">
-        <button type="button" data-toggle="modal" data-target="#addCategory" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
+        <button type="button" data-toggle="modal" data-target="#addCategory" className="btn btn-success btn-sm"><i className="fas fa-plus"></i>
           Create</button>
         <table id="example1" className="table table-striped table-bordered">
           <thead>
@@ -89,8 +89,8 @@ const RefusalFeedBack = () => {
               <tr>
                 <td>{item.name}</td>
                 <td>
-                  <button onClick={e => updatePatientAction(e, item)} type="button" data-toggle="modal" data-target="#editCategory" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => removePatientAction(e, item)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => updatePatientAction(e, item)} type="button" data-toggle="modal" data-target="#editCategory" className="btn btn-warning btn-sm"><i className="fas fa-edit"></i></button>
+                  <button onClick={e => removePatientAction(e, item)} type="button" className="btn btn-danger btn-sm"><i className="fas fa-trash-alt"></i></button></td>
               </tr>))}
 
 
@@ -154,3 +154,4 @@ RefusalFeedBack.propTypes = {};
 RefusalFeedBack.defaultProps = {};
 
 export default RefusalFeedBack;
+

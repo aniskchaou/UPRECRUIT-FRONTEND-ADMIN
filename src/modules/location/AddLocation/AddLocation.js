@@ -49,8 +49,8 @@ const AddLocation = (props) => {
                     <div className="col-md-12">
 
                         <div className="form-group">
-                            <label for="address">Country</label>
-                            <select ref={register({ required: true })} onChange={handleInputChange} value={category.country} name="country" id="country_id" className="form-control select2 custom-select select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                            <label htmlFor="address">Country</label>
+                            <select ref={register({ required: true })} onChange={handleInputChange} value={category.country} name="country" id="country_id" className="form-control select2 custom-select select2-hidden-accessible" tabIndex="-1" aria-hidden="true">
                                 <option value="1">Afghanistan</option>
                                 <option value="2">Albania</option>
                                 <option value="3">Algeria</option>
@@ -306,7 +306,7 @@ const AddLocation = (props) => {
                     <div className="row">
                         <div className="col-md-12">
                             <div className="form-group">
-                                <label for="address">City</label><br />
+                                <label htmlFor="address">City</label><br />
                                 <div className="input-group">
 
                                     <input onChange={handleInputChange} ref={register({ required: true })} value={category.city} type="text" name="city" className="form-control" placeholder="lieu" />
@@ -329,3 +329,4 @@ AddLocation.propTypes = {};
 AddLocation.defaultProps = {};
 
 export default AddLocation;
+

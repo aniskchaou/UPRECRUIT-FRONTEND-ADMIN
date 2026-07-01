@@ -29,11 +29,13 @@ const AddTask = (props) => {
 
         taskHTTPService.createTask(data)
             .then(response => {
-                setTask(initialState)
-                props.closeModal()
+                setTask(initialState);
+                showMessage('Success', taskMessage.add, 'success');
+                props.closeModal();
             })
             .catch(e => {
                 console.log(e);
+                showMessage('Error', 'Failed to save task. Please try again.', 'error');
             });
 
     };
@@ -46,24 +48,24 @@ const AddTask = (props) => {
 
     return (
         <div className="AddTask">
-            <form id="createTodoItem" class="ajax-form" onSubmit={handleSubmit(onSubmit)}>
+            <form id="createTodoItem" className="ajax-form" onSubmit={handleSubmit(onSubmit)}>
 
-                <div class="form-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
+                <div className="form-body">
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="form-group">
                                 <label>Task</label>
                                 <input onChange={handleInputChange}
                                     value={task.task}
                                     ref={register({ required: true })}
-                                    type="text" class="form-control" id="title" name="task" />
+                                    type="text" className="form-control" id="title" name="task" />
                             </div>
-                            <div class="form-group">
-                                <label>Satus</label>
+                            <div className="form-group">
+                                <label>Status</label>
                                 <select onChange={handleInputChange}
                                     value={task.status}
                                     ref={register({ required: true })}
-                                    type="text" class="form-control" id="title" name="status" >
+                                    type="text" className="form-control" id="title" name="status" >
                                     <option value="toDo">To do</option>
                                     <option value="Doing" >Doing</option>
                                     <option value="Done">Done</option>
@@ -77,8 +79,8 @@ const AddTask = (props) => {
                 </div>
 
 
-                <div class="form-actions">
-                    <button type="submit" id="create-todo-item" class="btn btn-success"><i className="fa fa-check"></i>
+                <div className="form-actions">
+                    <button type="submit" id="create-todo-item" className="btn btn-success"><i className="fa fa-check"></i>
                         <font ><font  > Save</font></font></button>
                 </div>
             </form>
@@ -91,3 +93,4 @@ AddTask.propTypes = {};
 AddTask.defaultProps = {};
 
 export default AddTask;
+

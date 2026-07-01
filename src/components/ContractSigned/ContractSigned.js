@@ -100,8 +100,8 @@ const ContractSigned = () => {
                 <td>{item.dateApplication}</td>
                 <td>{item.status}</td>
                 <td>
-                  <button onClick={e => updateApplyAction(e, item)} type="button" data-toggle="modal" data-target="#editContract" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => removeApplyAction(e, applyJobs.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => updateApplyAction(e, item)} type="button" data-toggle="modal" data-target="#editContract" className="btn btn-warning btn-sm"><i className="fas fa-edit"></i></button>
+                  <button onClick={e => removeApplyAction(e, applyJobs.indexOf(item))} type="button" className="btn btn-danger btn-sm"><i className="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
           </tbody>
@@ -122,40 +122,40 @@ const ContractSigned = () => {
 
 
 
-        <div class="modal fade" id="addContract" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Voir</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <div className="modal fade" id="addContract" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLongTitle">Voir</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div class="modal-body">
+              <div className="modal-body">
                 <AddContract />
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-danger" data-dismiss="modal">Close</button>
 
               </div>
             </div>
           </div>
         </div>
 
-        <div class="modal fade" id="editContract" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Documents</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <div className="modal fade" id="editContract" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLongTitle">Documents</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div class="modal-body">
+              <div className="modal-body">
                 <EditContract />
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-danger" data-dismiss="modal">Close</button>
 
               </div>
             </div>
@@ -173,3 +173,4 @@ ContractSigned.propTypes = {};
 ContractSigned.defaultProps = {};
 
 export default ContractSigned;
+

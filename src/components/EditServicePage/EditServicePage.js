@@ -35,9 +35,9 @@ const EditServicePage = (props) => {
 
 
 
-        <div class="form-group row">
-          <div class="offset-4 col-8">
-            <button name="submit" type="submit" class="btn btn-primary"><i class="far fa-save"></i>Sauvegarder</button>
+        <div className="form-group row">
+          <div className="offset-4 col-8">
+            <button name="submit" type="submit" className="btn btn-primary"><i className="far fa-save"></i>Sauvegarder</button>
           </div>
         </div>
 
@@ -50,3 +50,4 @@ EditServicePage.propTypes = {};
 EditServicePage.defaultProps = {};
 
 export default EditServicePage;
+

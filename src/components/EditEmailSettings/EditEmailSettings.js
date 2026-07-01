@@ -36,27 +36,27 @@ const EditEmailSettings = () => {
     <div className="EditDashboardSettings">
       <form onSubmit={handleSubmit(onSubmit)}>
 
-        <div class="form-group row">
-          <label for="select2" class="col-4 col-form-label">SMTP</label>
-          <div class="col-8">
+        <div className="form-group row">
+          <label htmlFor="select2" className="col-4 col-form-label">SMTP</label>
+          <div className="col-8">
 
-            <input onChange={handleInputChange} value={emailSettings?.smtp} ref={register({ required: true })}
-              id="text" name="smtp" type="text" class="form-control" />
+            <input onChange={handleInputChange} value={emailSettings?.smtp || ""} ref={register({ required: true })}
+              id="text" name="smtp" type="text" className="form-control" />
           </div>
         </div>
 
-        <div class="form-group row">
-          <label for="select2" class="col-4 col-form-label">Email address</label>
-          <div class="col-8">
-            <input onChange={handleInputChange} value={emailSettings?.emailSentAddress} ref={register({ required: true })}
-              id="text" name="emailSentAddress" type="text" class="form-control" />
+        <div className="form-group row">
+          <label htmlFor="select2" className="col-4 col-form-label">Email address</label>
+          <div className="col-8">
+            <input onChange={handleInputChange} value={emailSettings?.emailSentAddress || ""} ref={register({ required: true })}
+              id="text" name="emailSentAddress" type="text" className="form-control" />
           </div>
         </div>
 
 
-        <div class="form-group row">
-          <div class="offset-4 col-8">
-            <button name="submit" type="submit" class="btn btn-primary"><i class="far fa-save"></i>
+        <div className="form-group row">
+          <div className="offset-4 col-8">
+            <button name="submit" type="submit" className="btn btn-primary"><i className="far fa-save"></i>
               Save</button>
           </div>
         </div>
@@ -73,3 +73,4 @@ EditEmailSettings.propTypes = {};
 EditEmailSettings.defaultProps = {};
 
 export default EditEmailSettings;
+

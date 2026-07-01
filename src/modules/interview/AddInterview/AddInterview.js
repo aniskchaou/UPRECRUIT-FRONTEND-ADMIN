@@ -62,21 +62,21 @@ const AddInterview = (props) => {
 
     return (
         <div className="AddInterview">
-            <form id="createSchedule" class="ajax-form" onSubmit={handleSubmit(onSubmit)}>
+            <form id="createSchedule" className="ajax-form" onSubmit={handleSubmit(onSubmit)}>
 
-                <div class="form-body">
-                    <div class="row">
-                        <div class="col-md-6  col-xs-12">
+                <div className="form-body">
+                    <div className="row">
+                        <div className="col-md-6  col-xs-12">
 
 
-                            <div class="form-group">
-                                <label class="d-block"><font  ><font  >Candidate</font></font></label>
+                            <div className="form-group">
+                                <label className="d-block"><font  ><font  >Candidate</font></font></label>
                                 <select onChange={handleInputChange} value={interview.candidates}
                                     ref={register({ required: true })}
-                                    class="select2 m-b-10 form-control select2-multiple select2-hidden-accessible" multiple=""
-                                    data-placeholder="Choose Candidate" name="candidates" tabindex="-1" aria-hidden="true">
+                                    className="select2 m-b-10 form-control select2-multiple select2-hidden-accessible"
+                                    data-placeholder="Choose Candidate" name="candidates" tabIndex="-1" aria-hidden="true">
                                     {candidates.map(item =>
-                                        <option value={item.firstName + ' ' + item.lastName}>{item.firstName + ' ' + item.lastName}</option>
+                                        <option key={item.id || item._id || (item.firstName + item.lastName)} value={item.firstName + ' ' + item.lastName}>{item.firstName + ' ' + item.lastName}</option>
                                     )}
 
                                 </select>
@@ -87,14 +87,14 @@ const AddInterview = (props) => {
 
 
                         </div>
-                        <div class="col-md-6 col-xs-12">
+                        <div className="col-md-6 col-xs-12">
 
 
-                            <div class="form-group">
-                                <label class="d-block"><font  ><font  >Interviewer</font></font></label>
+                            <div className="form-group">
+                                <label className="d-block"><font  ><font  >Interviewer</font></font></label>
                                 <select onChange={handleInputChange} value={interview.employees} ref={register({ required: true })}
-                                    class="select2 m-b-10 form-control select2-multiple select2-hidden-accessible" multiple=""
-                                    data-placeholder="Choose Employee" name="employees[]" tabindex="-1" aria-hidden="true">
+                                    className="select2 m-b-10 form-control select2-multiple select2-hidden-accessible"
+                                    data-placeholder="Choose Employee" name="employees" tabIndex="-1" aria-hidden="true">
                                     <option value="Admin">Admin</option>
 
                                 </select>
@@ -107,14 +107,14 @@ const AddInterview = (props) => {
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div className="row">
 
-                        <div class="col-xs-6 col-md-4 ">
-                            <div class="form-group">
+                        <div className="col-xs-6 col-md-4 ">
+                            <div className="form-group">
                                 <label><font  ><font  >Date</font></font></label>
                                 <input onChange={handleInputChange} value={interview.scheduleDate}
                                     ref={register({ required: true })}
-                                    type="date" name="scheduleDate" id="scheduleDate" class="form-control"
+                                    type="date" name="scheduleDate" id="scheduleDate" className="form-control"
 
                                 />
                                 <div className="error text-danger">
@@ -123,11 +123,11 @@ const AddInterview = (props) => {
                             </div>
                         </div>
 
-                        <div class="col-xs-5 col-md-4">
-                            <div class="form-group chooseCandidate bootstrap-timepicker timepicker">
+                        <div className="col-xs-5 col-md-4">
+                            <div className="form-group chooseCandidate bootstrap-timepicker timepicker">
                                 <label><font  ><font  >Hour</font></font></label>
                                 <input onChange={handleInputChange} value={interview.scheduleTime} ref={register({ required: true })}
-                                    type="time" name="scheduleTime" id="scheduleTime" class="form-control" />
+                                    type="time" name="scheduleTime" id="scheduleTime" className="form-control" />
                             </div>
                             <div className="error text-danger">
                                 {errors.scheduleTime && interviewValidation.scheduleTime}
@@ -136,12 +136,12 @@ const AddInterview = (props) => {
 
                     </div>
 
-                    <div class="row">
-                        <div class="col-xs-12 col-md-12 ">
-                            <div class="form-group">
+                    <div className="row">
+                        <div className="col-xs-12 col-md-12 ">
+                            <div className="form-group">
                                 <label><font  ><font  >Comment</font></font></label>
                                 <textarea onChange={handleInputChange} value={interview.comment} ref={register({ required: false })}
-                                    type="text" name="comment" id="comment" placeholder="Commentaire" class="form-control">
+                                    type="text" name="comment" id="comment" placeholder="Commentaire" className="form-control">
                                 </textarea>
                             </div>
                             <div className="error text-danger">
@@ -162,3 +162,4 @@ AddInterview.propTypes = {};
 AddInterview.defaultProps = {};
 
 export default AddInterview;
+

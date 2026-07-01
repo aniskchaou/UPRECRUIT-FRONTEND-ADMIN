@@ -20,9 +20,25 @@ const login = data => {
     return http.post(`${BASE_URL}/api/user/login`, data);
 };
 
+const requestReset = data => {
+    return http.post(`${BASE_URL}/api/user/request-reset`, data);
+};
+
+const resetPassword = data => {
+    return http.post(`${BASE_URL}/api/user/reset-password`, data);
+};
+
+const socialLogin = data => {
+    return http.post(`${BASE_URL}/api/user/social-login`, data);
+};
+
 export default {
     getAllUser,
     createUser,
     editUser,
-    removeUser, login
+    removeUser,
+    login,
+    requestReset,
+    resetPassword,
+    socialLogin
 };

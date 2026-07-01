@@ -40,8 +40,8 @@ const EditLocation = (props) => {
                     <div className="col-md-9">
 
                         <div className="form-group">
-                            <label for="address">Pays</label><br />
-                            <select ref={register({ required: true })} onChange={handleInputChange} value={location.country} name="country" id="country_id" className="form-control select2 custom-select select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                            <label htmlFor="address">Pays</label><br />
+                            <select ref={register({ required: true })} onChange={handleInputChange} value={location.country} name="country" id="country_id" className="form-control select2 custom-select select2-hidden-accessible" tabIndex="-1" aria-hidden="true">
                                 <option value="1">Afghanistan</option>
                                 <option value="2">Albania</option>
                                 <option value="3">Algeria</option>
@@ -318,3 +318,4 @@ EditLocation.propTypes = {};
 EditLocation.defaultProps = {};
 
 export default EditLocation;
+

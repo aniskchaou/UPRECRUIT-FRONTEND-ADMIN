@@ -16,9 +16,14 @@ const removeCandidate = id => {
     return http.delete(`${BASE_URL}/api/candidate/${id}`);
 };
 
+const searchTalent = (params) => {
+    return http.get(`${BASE_URL}/api/candidate/search/talent`, { params });
+};
+
 export default {
     getAllCandidate,
     createCandidate,
     editCandidate,
-    removeCandidate
+    removeCandidate,
+    searchTalent
 };

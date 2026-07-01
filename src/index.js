@@ -4,6 +4,19 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+const resizeObserverWarnings = [
+  'ResizeObserver loop completed with undelivered notifications.',
+  'ResizeObserver loop limit exceeded',
+];
+
+// Capture phase — runs before React's dev-overlay handler
+window.addEventListener('error', (event) => {
+  if (resizeObserverWarnings.some(w => event.message?.includes(w))) {
+    event.stopImmediatePropagation();
+    event.preventDefault();
+  }
+}, true);
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

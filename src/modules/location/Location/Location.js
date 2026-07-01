@@ -1,180 +1,300 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './Location.css';
-import { LoadJS } from '../../../libraries/datatables/datatables';
 import EditLocation from '../EditLocation/EditLocation';
 import AddLocation from '../AddLocation/AddLocation';
-import useForceUpdate from 'use-force-update';
 import showMessage from '../../../libraries/messages/messages';
-import locationMessage from '../../../main/messages/locationMessage';
-import LocationTestService from '../../../main/mocks/LocationTestService';
-import HTTPService from '../../../main/services/HTTPService';
-import locationHTTPService from "../../../main/services/locationHTTPService"
+import locationHTTPService from '../../../main/services/locationHTTPService'
+import { Table, Button, Modal, Space, Popconfirm, Empty, Spin, Input, Tooltip, Row, Col, Tag } from 'antd';
+import { EditOutlined, DeleteOutlined, PlusOutlined, DownloadOutlined, UndoOutlined, ReloadOutlined } from '@ant-design/icons';
+
 const Location = () => {
 
   const [locations, setLocations] = useState([]);
+  const [filteredLocations, setFilteredLocations] = useState([]);
   const [updatedItem, setUpdatedItem] = useState({});
-  const forceUpdate = useForceUpdate();
-  const closeButtonEdit = useRef(null);
-  const closeButtonAdd = useRef(null);
   const [loading, setLoading] = useState(true);
-
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [addModalVisible, setAddModalVisible] = useState(false);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
-    LoadJS()
-    getAllPatient()
+    getAllLocation()
   }, []);
 
-
-  const getAllPatient = () => {
+  const getAllLocation = () => {
     setLoading(true);
     locationHTTPService.getAllLocation()
       .then(response => {
         setLocations(response.data);
+        filterData(response.data, searchText);
         setLoading(false);
       })
       .catch(e => {
-        showMessage('Confirmation', e, 'info')
+        setLoading(false);
+        showMessage('Error', 'Failed to load locations', 'error')
       });
   };
 
-
-  const resfresh = () => {
-    getAllPatient()
-    //forceUpdate()
-  }
-
-  const removePatientAction = (e, data) => {
-    e.preventDefault();
-    var r = window.confirm("Are Sure ?");
-    if (r) {
-      showMessage('Confirmation', 'patientMessage.delete', 'success')
-      locationHTTPService.removeLocation(data.id).then(data => {
-        resfresh()
-      }).catch(e => {
-        showMessage('Confirmation', e, 'warning')
-      });
+  const filterData = useCallback((data, search) => {
+    let filtered = data;
+    if (search) {
+      filtered = filtered.filter(item =>
+        item.city?.toLowerCase().includes(search.toLowerCase()) ||
+        item.country?.toLowerCase().includes(search.toLowerCase())
+      );
     }
+    setFilteredLocations(filtered);
+  }, []);
+
+  useEffect(() => {
+    filterData(locations, searchText);
+  }, [searchText, locations, filterData]);
+
+  const handleBulkDelete = () => {
+    if (selectedRowKeys.length === 0) {
+      showMessage('Info', 'Select locations to delete', 'info');
+      return;
+    }
+    const deletePromises = selectedRowKeys.map(id => locationHTTPService.removeLocation(id));
+    Promise.all(deletePromises)
+      .then(() => {
+        getAllLocation();
+        setSelectedRowKeys([]);
+        showMessage('Success', `${selectedRowKeys.length} deleted`, 'success');
+      })
+      .catch(e => showMessage('Error', 'Deletion failed', 'error'));
+  };
+
+  const handleExport = () => {
+    const data = selectedRowKeys.length > 0 
+      ? filteredLocations.filter(l => selectedRowKeys.includes(l.id))
+      : filteredLocations;
+    if (data.length === 0) {
+      showMessage('Info', 'No data to export', 'info');
+      return;
+    }
+    const headers = ['City', 'Country'];
+    const rows = data.map(item => [item.city, item.country]);
+    const csv = [headers, ...rows].map(row => row.map(cell => `"${cell || ''}"`).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `locations_${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    showMessage('Success', 'Exported', 'success');
+  };
+
+  const removeLocationAction = (id) => {
+    locationHTTPService.removeLocation(id).then(() => {
+      getAllLocation();
+      showMessage('Success', 'Location deleted', 'success');
+      setSelectedRowKeys(selectedRowKeys.filter(key => key !== id));
+    }).catch(e => {
+      showMessage('Error', 'Deletion failed', 'error')
+    });
   }
 
-  const updatePatientAction = (e, data) => {
-    e.preventDefault();
+  const updateLocationAction = (data) => {
     setUpdatedItem(data)
-    resfresh()
+    setEditModalVisible(true)
   }
 
-  const closeModalEdit = (data) => {
-    resfresh()
-    closeButtonEdit.current.click()
-  }
+  const countryCount = new Set(locations.map(item => item.country).filter(Boolean)).size;
 
-  const closeModalAdd = (data) => {
-    resfresh()
-    closeButtonAdd.current.click()
-  }
+  const columns = [
+    {
+      title: 'City',
+      dataIndex: 'city',
+      key: 'city',
+      sorter: (a, b) => (a.city || '').localeCompare(b.city || ''),
+      width: 200,
+    },
+    {
+      title: 'Country',
+      dataIndex: 'country',
+      key: 'country',
+      render: (text) => <Tag>{text || '—'}</Tag>,
+      width: 200,
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      width: 130,
+      fixed: 'right',
+      render: (_, record) => (
+        <Space size="small">
+          <Tooltip title="Edit">
+            <Button 
+              type="default" 
+              size="small" 
+              icon={<EditOutlined />}
+              onClick={() => updateLocationAction(record)}
+            />
+          </Tooltip>
+          <Tooltip title="Delete">
+            <Popconfirm
+              title="Delete"
+              description="Confirm?"
+              onConfirm={() => removeLocationAction(record.id)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button type="primary" danger size="small" icon={<DeleteOutlined />} />
+            </Popconfirm>
+          </Tooltip>
+        </Space>
+      ),
+    },
+  ];
 
   return (
-    <div className="card">
-      <div className="card-header">
-        <strong className="card-title">Locations</strong>
-      </div>
-      <div className="card-body">
-        <button type="button" data-toggle="modal" data-target="#addLocation" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
-          Create</button>
-        <table id="example1" className="table table-striped table-bordered">
-          <thead>
-            <tr>
-              <th>City</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
+    <div className="module-page">
+      <section className="module-page__hero">
+        <div>
+          <span className="module-page__eyebrow">Settings module</span>
+          <h2 className="module-page__title">Location Management</h2>
+          <p className="module-page__subtitle">Manage office locations and job sites.</p>
+          <div className="module-page__meta">
+            <span>Office locations</span>
+            <span>Geographic coverage</span>
+            <span>Job sites</span>
+          </div>
+        </div>
+        <div className="module-page__kpis">
+          <div>
+            <strong>{filteredLocations.length}</strong>
+            <span>Total locations</span>
+          </div>
+          <div>
+            <strong>{countryCount}</strong>
+            <span>Countries</span>
+          </div>
+        </div>
+      </section>
 
-            {locations.map(item =>
-              <tr>
-                <td>{item.city}</td>
-                <td>
-                  <button onClick={e => updatePatientAction(e, item)} type="button" data-toggle="modal" data-target="#editLocation" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => removePatientAction(e, item)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
-              </tr>
+      <div style={{ background: '#fff', borderRadius: '14px', padding: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
+        <div style={{ marginBottom: '16px' }}>
+          <Row gutter={[16, 16]} align="middle" wrap>
+            <Col flex="auto">
+              <Input
+                placeholder="Search locations..."
+                prefix="🔍"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                style={{ maxWidth: '300px' }}
+              />
+            </Col>
+            {searchText && (
+              <Col>
+                <Button
+                  icon={<UndoOutlined />}
+                  onClick={() => setSearchText('')}
+                  danger
+                >
+                  Reset
+                </Button>
+              </Col>
             )}
-          </tbody>
-          <tfoot>
-            <tr>
-              <th>City</th>
-              <th>Actions</th>
-            </tr>
-          </tfoot>
-        </table>
-
-
-
-        <div class="modal fade" id="addLocation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">New</h5>
-                <button onClick={resfresh} type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <AddLocation closeModal={closeModalAdd} />
-              </div>
-              <div class="modal-footer">
-                <button ref={closeButtonAdd} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-              </div>
-            </div>
-          </div>
+            <Col>
+              <Button
+                type="primary"
+                icon={<PlusOutlined />}
+                onClick={() => setAddModalVisible(true)}
+              >
+                Add Location
+              </Button>
+            </Col>
+            <Col>
+              <Tooltip title="Export">
+                <Button
+                  icon={<DownloadOutlined />}
+                  onClick={handleExport}
+                  disabled={filteredLocations.length === 0}
+                >
+                  Export
+                </Button>
+              </Tooltip>
+            </Col>
+            <Col>
+              <Button
+                icon={<ReloadOutlined />}
+                onClick={() => {
+                  setSelectedRowKeys([]);
+                  getAllLocation();
+                }}
+                loading={loading}
+              />
+            </Col>
+            {selectedRowKeys.length > 0 && (
+              <Col>
+                <Popconfirm
+                  title="Delete Multiple"
+                  description={`Delete ${selectedRowKeys.length}?`}
+                  onConfirm={handleBulkDelete}
+                  okText="Delete"
+                  okButtonProps={{ danger: true }}
+                >
+                  <Button type="primary" danger>
+                    Delete {selectedRowKeys.length}
+                  </Button>
+                </Popconfirm>
+              </Col>
+            )}
+          </Row>
         </div>
-
-
-        <div class="modal fade" id="editLocation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Edit</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <EditLocation location={updatedItem} closeModal={closeModalEdit} />
-              </div>
-              <div class="modal-footer">
-                <button ref={closeButtonEdit} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="modal fade" id="viewLocation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-
-              </div>
-            </div>
-          </div>
-        </div>
+        
+        <Spin spinning={loading}>
+          <Table
+            columns={columns}
+            dataSource={filteredLocations}
+            rowKey={(record) => record.id}
+            rowSelection={{
+              selectedRowKeys,
+              onChange: setSelectedRowKeys,
+            }}
+            pagination={{ pageSize: 10 }}
+            locale={{
+              emptyText: <Empty description="No locations found" style={{ marginTop: '40px' }} />
+            }}
+            size="middle"
+            scroll={{ x: 800 }}
+          />
+        </Spin>
       </div>
+
+      <Modal
+        title="Edit Location"
+        open={editModalVisible}
+        onCancel={() => setEditModalVisible(false)}
+        footer={null}
+        width={900}
+      >
+        <EditLocation location={updatedItem} closeModal={() => {
+          setEditModalVisible(false);
+          getAllLocation();
+        }} />
+      </Modal>
+
+      <Modal
+        title="Add Location"
+        open={addModalVisible}
+        onCancel={() => setAddModalVisible(false)}
+        footer={null}
+        width={900}
+      >
+        <AddLocation closeModal={() => {
+          setAddModalVisible(false);
+          getAllLocation();
+        }} />
+      </Modal>
     </div>
   )
 };
 
 Location.propTypes = {};
-
 Location.defaultProps = {};
 
 export default Location;
+

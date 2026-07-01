@@ -1,27 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
+﻿import PropTypes from 'prop-types';
 import './SecondInterview.css';
+import React, { useEffect, useRef, useState } from 'react';
 import applyHTTPService from '../../main/services/applyHTTPService';
 import showMessage from '../../libraries/messages/messages';
 import ViewCandidate from '../../modules/candidate/ViewCandidate/ViewCandidate';
 import ViewApplyJob from '../../modules/applyjob/ViewApplyJob/ViewApplyJob';
 import { LoadJS } from '../../libraries/datatables/datatables';
-
 const SecondInterview = () => {
 
   const [applyJobs, setApplyJobs] = useState([]);
   const [updatedItem, setUpdatedItem] = useState({});
-  //const forceUpdate = useForceUpdate();
   const closeButtonEdit = useRef(null);
   const closeButtonAdd = useRef(null);
   const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {
     LoadJS()
     getAllPatient()
   }, []);
-
 
   const getAllPatient = () => {
     setLoading(true);
@@ -35,15 +31,13 @@ const SecondInterview = () => {
       });
   };
 
-
   const resfresh = () => {
     getAllPatient()
-    //forceUpdate()
   }
 
   const removeApplyAction = (e, data) => {
     e.preventDefault();
-    var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
+    var r = window.confirm("Etes-vous sur que vous voulez supprimer ?");
     if (r) {
       showMessage('Confirmation', 'patientMessage.delete', 'success')
       applyHTTPService.removeApply(data).then(data => {
@@ -70,9 +64,6 @@ const SecondInterview = () => {
     closeButtonAdd.current.click()
   }
 
-
-
-
   return (
     <div className="card">
       <div className="card-header">
@@ -91,83 +82,71 @@ const SecondInterview = () => {
           </thead>
           <tbody>
             {applyJobs.map(item =>
-              <tr>
+              <tr key={item.id}>
                 <td>{item.condidate}</td>
                 <td>{item.jobOffer}</td>
                 <td>{item.dateApplication}</td>
                 <td>{item.status}</td>
                 <td>
-                  <button onClick={e => updateApplyAction(e, item)} type="button" data-toggle="modal" data-target="#editApplyJob" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => removeApplyAction(e, applyJobs.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => updateApplyAction(e, item)} type="button" data-toggle="modal" data-target="#editApplyJob" className="btn btn-warning btn-sm"><i className="fas fa-edit"></i></button>
+                  <button onClick={e => removeApplyAction(e, applyJobs.indexOf(item))} type="button" className="btn btn-danger btn-sm"><i className="fas fa-trash-alt"></i></button>
+                </td>
               </tr>
             )}
           </tbody>
           <tfoot>
             <tr>
               <th>Full Name</th>
-              <th>Job offer</th>
+              <th>Job Offer</th>
               <th>Date </th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
           </tfoot>
-
         </table>
 
-
-
-
-
-
-
-        <div class="modal fade" id="viewCandidate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Voir</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <div className="modal fade" id="viewCandidate" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLongTitle">View Candidate</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div class="modal-body">
+              <div className="modal-body">
                 <ViewCandidate />
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-
+              <div className="modal-footer">
+                <button type="button" className="btn btn-danger" data-dismiss="modal">Close</button>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="modal fade" id="viewApplyJob" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Documents</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <div className="modal fade" id="viewApplyJob" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLongTitle">Documents</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div class="modal-body">
+              <div className="modal-body">
                 <ViewApplyJob />
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-
+              <div className="modal-footer">
+                <button type="button" className="btn btn-danger" data-dismiss="modal">Close</button>
               </div>
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
   )
 };
 
 SecondInterview.propTypes = {};
-
 SecondInterview.defaultProps = {};
-
 export default SecondInterview;

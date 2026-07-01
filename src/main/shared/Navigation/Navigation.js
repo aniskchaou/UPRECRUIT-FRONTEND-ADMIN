@@ -1,202 +1,223 @@
 import React from 'react';
 import './Navigation.css';
-import { NavLink } from "react-router-dom"
-import User from '../../config/user';
+import { NavLink } from 'react-router-dom';
 
-const Navigation = (props) => {
-
-
+const Navigation = () => {
   return (
     <aside id="left-panel" className="left-panel">
+      <div className="workspace-nav-card">
+        <h3 className="workspace-nav-title">Company Admin Portal</h3>
+        <p className="workspace-nav-subtitle">Manage your recruitment, team, and company operations in one place.</p>
+        <div className="workspace-nav-metrics">
+          <span>16 Open roles</span>
+          <span>342 Candidates</span>
+        </div>
+      </div>
       <nav className="navbar navbar-expand-sm navbar-default">
-
         <div id="main-menu" className="main-menu collapse navbar-collapse">
           <ul className="nav navbar-nav">
-            <li >
-              <NavLink activeClassName="activeLink" to="/dashboard"><i className="menu-icon fa fa-laptop"></i>Dashboard </NavLink>
+
+            {/* ── OVERVIEW ── */}
+            <li className="nav-section-label">Overview</li>
+            <li>
+              <NavLink activeClassName="activeLink" to="/dashboard">
+                <i className="menu-icon fa fa-home"></i>Dashboard
+              </NavLink>
             </li>
-            <li class="menu-item-has-children dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bullseye"></i>Requests</a>
-              <ul class="sub-menu children dropdown-menu">
-                <li >
-                  <NavLink activeClassName="activeLink" to="/apply">Job Application <span className="badge badge-primary">1</span> </NavLink>
-                </li>
-                <li >
-                  <NavLink activeClassName="activeLink" to="/company">Companies</NavLink>
-                </li>
+            <li>
+              <NavLink activeClassName="activeLink" to="/profile">
+                <i className="menu-icon fa fa-user"></i>My Profile
+              </NavLink>
+            </li>
+            <li>
+              <NavLink activeClassName="activeLink" to="/billing">
+                <i className="menu-icon fa fa-credit-card"></i>Billing &amp; Subscription
+              </NavLink>
+            </li>
+
+            {/* ── COMPANY ── */}
+            <li className="nav-section-label">Company</li>
+            <li>
+              <NavLink activeClassName="activeLink" to="/company">
+                <i className="menu-icon fa fa-building"></i>Company Profile
+              </NavLink>
+            </li>
+            <li>
+              <NavLink activeClassName="activeLink" to="/organization">
+                <i className="menu-icon fa fa-sitemap"></i>Organization Structure
+              </NavLink>
+            </li>
+            <li className="menu-item-has-children dropdown">
+              <a href="/#" className="dropdown-toggle" data-toggle="dropdown" role="button" tabIndex="0" aria-haspopup="true" aria-expanded="false">
+                <i className="menu-icon fa fa-paint-brush"></i>Career Page
+              </a>
+              <ul className="sub-menu children dropdown-menu">
+                <li><NavLink to="/header">Header Section</NavLink></li>
+                <li><NavLink to="/summary">Summary Section</NavLink></li>
+                <li><NavLink to="/service">Services Section</NavLink></li>
+                <li><NavLink to="/testimonials">Testimonials</NavLink></li>
+                <li><NavLink to="/newsletter">Newsletter Section</NavLink></li>
+                <li><NavLink to="/footer">Footer Section</NavLink></li>
+                <li><NavLink to="/jobs">Jobs Page</NavLink></li>
+                <li><NavLink to="/companies">Companies Page</NavLink></li>
               </ul>
             </li>
 
-            {/*  <li class="menu-item-has-children dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bars"></i>Recruitement</a>
-              <ul class="sub-menu children dropdown-menu">
-                <li >
-                  <NavLink activeClassName="activeLink" to="/initial-qualification">Initial Qualification</NavLink>
-                </li>
-                <li >
-                  <NavLink activeClassName="activeLink" to="/first-interview">First Interview </NavLink>
-                </li>
-                <li >
-                  <NavLink activeClassName="activeLink" to="/second-interview">Second Interview </NavLink>
-                </li>
-                <li >
-                  <NavLink activeClassName="activeLink" to="/contract-proposal">Contract proposal </NavLink>
-                </li>
-                <li >
-                  <NavLink activeClassName="activeLink" to="/contract-signed">Contract signed</NavLink>
-                </li>
-
-              </ul>
-            </li> */}
-
-            <li class="menu-item-has-children dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Candidates</a>
-              <ul class="sub-menu children dropdown-menu">
-                <li >
-                  <NavLink activeClassName="activeLink" to="/candidate">Candidates </NavLink>
-                </li>
-                <li >
-                  <NavLink activeClassName="activeLink" to="/language">Languages </NavLink>
-                </li>
-                <li >
-                  <NavLink activeClassName="activeLink" to="/degree">Degrees </NavLink>
-                </li>
-                <li >
-                  <NavLink activeClassName="activeLink" to="/experience">Experiences </NavLink>
-                </li>
-                <li >
-                  <NavLink activeClassName="activeLink" to="/education">Educations </NavLink>
-                </li>
-              </ul>
+            {/* ── TEAM ── */}
+            <li className="nav-section-label">Team</li>
+            <li>
+              <NavLink activeClassName="activeLink" to="/users">
+                <i className="menu-icon fa fa-user-friends"></i>Team Members
+              </NavLink>
+            </li>
+            <li>
+              <NavLink activeClassName="activeLink" to="/staff">
+                <i className="menu-icon fa fa-id-badge"></i>Staff
+              </NavLink>
+            </li>
+            <li>
+              <NavLink activeClassName="activeLink" to="/roles">
+                <i className="menu-icon fa fa-shield-alt"></i>Roles &amp; Permissions
+              </NavLink>
             </li>
 
-
-
-
-            <li >
-              <NavLink activeClassName="activeLink" to="/interview"><i className="menu-icon fa fa-address-card"></i>Interviews  <span className="badge badge-warning">1</span> </NavLink>
+            {/* ── RECRUITMENT ── */}
+            <li className="nav-section-label">Recruitment</li>
+            <li>
+              <NavLink activeClassName="activeLink" to="/apply">
+                <i className="menu-icon fa fa-envelope-open-text"></i>Applications
+              </NavLink>
             </li>
-            <li class="menu-item-has-children dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user-circle"></i>Job Offers</a>
-              <ul class="sub-menu children dropdown-menu">
-                <li >
-                  <NavLink activeClassName="activeLink" to="/job">Job Offers </NavLink>
-                </li>
-                <li >
-                  <NavLink activeClassName="activeLink" to="/skill">Skills </NavLink>
-                </li>
-                {/*  <li >
-                  <NavLink activeClassName="activeLink" to="/category">Category </NavLink>
-                </li> */}
-
-                <li >
-                  <NavLink activeClassName="activeLink" to="/location">Locations </NavLink>
-                </li>
-
+            <li>
+              <NavLink activeClassName="activeLink" to="/candidate">
+                <i className="menu-icon fa fa-users"></i>Candidates
+              </NavLink>
+            </li>
+            <li>
+              <NavLink activeClassName="activeLink" to="/talent-pool">
+                <i className="menu-icon fa fa-star"></i>Talent Pool
+              </NavLink>
+            </li>
+            <li className="menu-item-has-children dropdown">
+              <a href="/#" className="dropdown-toggle" data-toggle="dropdown" role="button" tabIndex="0" aria-haspopup="true" aria-expanded="false">
+                <i className="menu-icon fa fa-briefcase"></i>Job Management
+              </a>
+              <ul className="sub-menu children dropdown-menu">
+                <li><NavLink to="/job">All Jobs</NavLink></li>
+                <li><NavLink to="/add-job">Create Job</NavLink></li>
+                <li><NavLink to="/skill">Skills Library</NavLink></li>
+                <li><NavLink to="/location">Locations</NavLink></li>
+              </ul>
+            </li>
+            <li className="menu-item-has-children dropdown">
+              <a href="/#" className="dropdown-toggle" data-toggle="dropdown" role="button" tabIndex="0" aria-haspopup="true" aria-expanded="false">
+                <i className="menu-icon fa fa-stream"></i>Hiring Pipeline
+              </a>
+              <ul className="sub-menu children dropdown-menu">
+                <li><NavLink to="/initial-qualification">Initial Qualification</NavLink></li>
+                <li><NavLink to="/first-interview">First Interview</NavLink></li>
+                <li><NavLink to="/second-interview">Second Interview</NavLink></li>
+                <li><NavLink to="/contract-proposal">Contract Proposal</NavLink></li>
+                <li><NavLink to="/contract-signed">Signed Contracts</NavLink></li>
               </ul>
             </li>
 
-            <li class="menu-item-has-children dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-blind"></i>HR</a>
-              <ul class="sub-menu children dropdown-menu">
-                <li >
-                  <NavLink activeClassName="activeLink" to="/users">Teams </NavLink>
-                </li>
-                {/*    <li >
-                  <NavLink activeClassName="activeLink" to="/roles">Roles </NavLink>
-                </li> */}
-              </ul>
-            </li>
-            <li class="menu-item-has-children dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-folder"></i>CMS</a>
-              <ul class="sub-menu children dropdown-menu">
-                <li >
-                  <NavLink activeClassName="activeLink" to="/header">Header Section</NavLink>
-                </li>
-
-                <li >
-                  <NavLink activeClassName="activeLink" to="/footer">Footer Section</NavLink>
-                </li>
-                <li >
-                  <NavLink activeClassName="activeLink" to="/summary">Summary Section</NavLink>
-                </li>
-                <li >
-                  <NavLink activeClassName="activeLink" to="/newsletter">Newsletters Section</NavLink>
-                </li>
-                <li >
-                  <NavLink activeClassName="activeLink" to="/testimonials">Testimonials </NavLink>
-                </li>
-
-                <li >
-                  <NavLink activeClassName="activeLink" to="/newsletters">Newsletters</NavLink>
-                </li>
-                <li >
-                  <NavLink activeClassName="activeLink" to="/service">Services </NavLink>
-                </li>
-
-              </ul>
+            <li>
+              <NavLink activeClassName="activeLink" to="/approval-workflow">
+                <i className="menu-icon fa fa-clipboard-check"></i>Approval Workflow
+              </NavLink>
             </li>
 
-            {/*   <li class="menu-item-has-children dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-comment"></i>FeedBacks</a>
-              <ul class="sub-menu children dropdown-menu">
-                <li >
-                  <NavLink activeClassName="activeLink" to="/refusal">Refusal</NavLink>
-                </li>
-                <li >
-                  <NavLink activeClassName="activeLink" to="/acceptance">Acceptence</NavLink>
-                </li>
-              </ul>
+            {/* ── INTERVIEWS & ASSESSMENTS ── */}
+            <li className="nav-section-label">Interviews &amp; Assessments</li>
+            <li>
+              <NavLink activeClassName="activeLink" to="/interview">
+                <i className="menu-icon fa fa-calendar-check"></i>Interview Schedule
+              </NavLink>
             </li>
- */}
-
-
-            {/*  <li class="menu-item-has-children dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-handshake"></i>Contracts</a>
-              <ul class="sub-menu children dropdown-menu">
-                 <li >
-                  <NavLink activeClassName="activeLink" to="/type-contract"> contracts Types</NavLink>
-                </li> 
-                <li >
-                  <NavLink activeClassName="activeLink" to="/contract-signed">Contracts</NavLink>
-                </li>
-              </ul>
-            </li> */}
-
-            <li >
-              <NavLink activeClassName="activeLink" to="/todo"><i className="menu-icon fa fa-tasks"></i>Tasks </NavLink>
+            <li>
+              <NavLink activeClassName="activeLink" to="/enterprise/assessment">
+                <i className="menu-icon fa fa-clipboard-check"></i>Assessments
+              </NavLink>
+            </li>
+            <li>
+              <NavLink activeClassName="activeLink" to="/enterprise/offers">
+                <i className="menu-icon fa fa-file-contract"></i>Offer Management
+              </NavLink>
             </li>
 
-            <li class="menu-item-has-children dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-handshake"></i>Charts</a>
-              <ul class="sub-menu children dropdown-menu">
-                <li >
-                  <NavLink activeClassName="activeLink" to="/job-analytics"> Jobs</NavLink>
-                </li>
-                <li >
-                  <NavLink activeClassName="activeLink" to="/job-application-analytics">Job Applications</NavLink>
-                </li>
-                <li >
-                  <NavLink activeClassName="activeLink" to="/candidate-analytics">Candidate</NavLink>
-                </li>
-              </ul>
+            {/* ── TALENT ── */}
+            <li className="nav-section-label">Talent Programs</li>
+            <li>
+              <NavLink activeClassName="activeLink" to="/enterprise/referral">
+                <i className="menu-icon fa fa-hand-holding-heart"></i>Employee Referrals
+              </NavLink>
+            </li>
+            <li>
+              <NavLink activeClassName="activeLink" to="/enterprise/mobility">
+                <i className="menu-icon fa fa-arrows-alt"></i>Internal Hiring
+              </NavLink>
             </li>
 
-
-
-
-            <li >
-              <NavLink activeClassName="activeLink" to="/configuration"><i className="menu-icon fa fa-cogs"></i>Settings </NavLink>
+            {/* ── ANALYTICS ── */}
+            <li className="nav-section-label">Analytics &amp; Reports</li>
+            <li>
+              <NavLink activeClassName="activeLink" to="/job-analytics">
+                <i className="menu-icon fa fa-chart-bar"></i>Job Analytics
+              </NavLink>
             </li>
+            <li>
+              <NavLink activeClassName="activeLink" to="/candidate-analytics">
+                <i className="menu-icon fa fa-user-chart"></i>Candidate Analytics
+              </NavLink>
+            </li>
+            <li>
+              <NavLink activeClassName="activeLink" to="/job-application-analytics">
+                <i className="menu-icon fa fa-chart-line"></i>Application Analytics
+              </NavLink>
+            </li>
+            <li>
+              <NavLink activeClassName="activeLink" to="/enterprise/analytics">
+                <i className="menu-icon fa fa-analytics"></i>Advanced Reports
+              </NavLink>
+            </li>
+
+            {/* ── OPERATIONS ── */}
+            <li className="nav-section-label">Operations</li>
+            <li>
+              <NavLink activeClassName="activeLink" to="/communication">
+                <i className="menu-icon fa fa-paper-plane"></i>Communication
+              </NavLink>
+            </li>
+            <li>
+              <NavLink activeClassName="activeLink" to="/enterprise/integrations">
+                <i className="menu-icon fa fa-plug"></i>Integrations
+              </NavLink>
+            </li>
+
+            {/* ── SETTINGS ── */}
+            <li className="nav-section-label">Settings</li>
+            <li>
+              <NavLink activeClassName="activeLink" to="/security">
+                <i className="menu-icon fa fa-shield-alt"></i>Security
+              </NavLink>
+            </li>
+            <li>
+              <NavLink activeClassName="activeLink" to="/configuration">
+                <i className="menu-icon fa fa-cogs"></i>Configuration
+              </NavLink>
+            </li>
+            <li>
+              <NavLink activeClassName="activeLink" to="/audit-logs">
+                <i className="menu-icon fa fa-history"></i>Audit Logs
+              </NavLink>
+            </li>
+
           </ul>
         </div>
       </nav>
     </aside>
-  )
+  );
 };
-
-Navigation.propTypes = {};
-
-Navigation.defaultProps = {};
 
 export default Navigation;

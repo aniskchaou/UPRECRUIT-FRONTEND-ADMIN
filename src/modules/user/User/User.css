@@ -1,1 +1,205 @@
-.User {}
+.user-management__header {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 16px;
+}
+
+.user-management__subtitle {
+	margin: 8px 0 0;
+	color: #5f6b7a;
+	max-width: 760px;
+}
+
+.user-management__message {
+	margin-bottom: 16px;
+	padding: 10px 12px;
+	border-radius: 8px;
+	border: 1px solid #d7e8dc;
+	background: #f4fbf6;
+	color: #22633f;
+	font-weight: 600;
+}
+
+.user-management__section {
+	margin-bottom: 28px;
+}
+
+.user-management__filters {
+	display: grid;
+	grid-template-columns: minmax(260px, 2fr) minmax(180px, 1fr) minmax(180px, 1fr);
+	gap: 12px;
+	margin-bottom: 14px;
+}
+
+.user-management__table td,
+.user-management__table th {
+	vertical-align: top;
+}
+
+.user-management__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	min-width: 290px;
+}
+
+.user-management__status {
+	display: inline-block;
+	margin-bottom: 4px;
+	padding: 3px 8px;
+	border-radius: 999px;
+	background: #eef5ff;
+	color: #1a4a84;
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.user-management__detail {
+	margin-top: 14px;
+	border: 1px solid #d9e2ee;
+}
+
+.user-management__detail ul {
+	margin: 0;
+	padding-left: 18px;
+}
+
+.user-management__assign-row {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: 8px;
+	margin-top: 8px;
+	min-width: 250px;
+}
+
+.user-management__metrics-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+	gap: 12px;
+	margin-bottom: 16px;
+}
+
+.user-management__metric-card {
+	padding: 14px;
+	border-radius: 10px;
+	background: #f8fbff;
+	border: 1px solid #dbe7f3;
+}
+
+.user-management__metric-card strong {
+	display: block;
+	font-size: 20px;
+	color: #153b6d;
+}
+
+.user-management__metric-card span {
+	color: #516173;
+	font-size: 13px;
+}
+
+.user-management__subsection {
+	margin-top: 18px;
+}
+
+.user-management__safety-grid,
+.user-management__pricing-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 16px;
+	margin-top: 16px;
+}
+
+.user-management__panel {
+	border: 1px solid #d9e2ee;
+}
+
+.user-management__inline-form,
+.user-management__coupon-form,
+.user-management__plan-form {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+	gap: 10px;
+	align-items: center;
+}
+
+.user-management__tag-groups {
+	display: grid;
+	gap: 12px;
+	margin-top: 14px;
+}
+
+.user-management__tag-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-top: 8px;
+}
+
+.user-management__tag {
+	border: 1px solid #c8d7e8;
+	background: #f5f9fd;
+	padding: 6px 10px;
+	border-radius: 999px;
+	font-size: 12px;
+	color: #29496b;
+}
+
+.user-management__plan-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 10px;
+}
+
+.user-management__plan-header h5 {
+	margin: 0;
+}
+
+.user-management__textarea {
+	min-height: 90px;
+	resize: vertical;
+}
+
+.user-management__plan-features {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-top: 12px;
+}
+
+.user-management__coupon-item {
+	padding: 10px 12px;
+	border-radius: 8px;
+	border: 1px solid #e2e8f0;
+	background: #fbfcfe;
+}
+
+.user-management__coupon-item strong,
+.user-management__coupon-item span {
+	display: block;
+}
+
+.user-management__panel label {
+	font-weight: 600;
+	margin: 6px 0;
+	display: block;
+}
+
+@media (max-width: 992px) {
+	.user-management__header {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.user-management__filters {
+		grid-template-columns: 1fr;
+	}
+
+	.user-management__inline-form,
+	.user-management__coupon-form,
+	.user-management__plan-form {
+		grid-template-columns: 1fr;
+	}
+}

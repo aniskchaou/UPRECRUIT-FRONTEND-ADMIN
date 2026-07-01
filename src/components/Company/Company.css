@@ -1,1 +1,36 @@
-.Company {}
+.company-management__media-form {
+	display: grid;
+	gap: 10px;
+}
+
+.company-management__media-form label {
+	font-weight: 600;
+	margin-top: 6px;
+}
+
+.company-management__reviews-wrap {
+	max-height: 360px;
+	overflow: auto;
+	display: grid;
+	gap: 10px;
+}
+
+.company-management__review-item {
+	border: 1px solid #e2e8f0;
+	border-radius: 10px;
+	padding: 10px;
+	background: #fafcff;
+}
+
+.company-management__review-item strong {
+	display: block;
+}
+
+.company-management__review-item span {
+	font-size: 12px;
+	color: #334155;
+}
+
+.company-management__review-item p {
+	margin: 6px 0 0;
+}

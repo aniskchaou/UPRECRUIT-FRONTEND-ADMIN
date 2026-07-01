@@ -33,28 +33,28 @@ const HeaderPage = () => {
             </div>
             <div className="card-body">
               <div className="table-responsive">
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editFrontOffice">Edit</button>
-                <a type="button" class="btn btn-warning" href="http://localhost:5000">Website</a>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">Header Title : {frontOffice?.title}</li>
+                <button type="button" className="btn btn-success" data-toggle="modal" data-target="#editFrontOffice">Edit</button>
+                <a type="button" className="btn btn-warning" href="http://localhost:5000">Website</a>
+                <ul className="list-group list-group-flush">
+                  <li className="list-group-item">Header Title : {frontOffice?.title}</li>
 
                 </ul>
               </div>
             </div>
-            <div class="modal fade" id="editFrontOffice" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Edit</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div className="modal fade" id="editFrontOffice" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title" id="exampleModalLongTitle">Edit</h5>
+                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                  <div class="modal-body">
+                  <div className="modal-body">
                     <EditHeaderPage frontOffice={frontOffice} />
                   </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <div className="modal-footer">
+                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
 
                   </div>
                 </div>
@@ -73,3 +73,4 @@ HeaderPage.propTypes = {};
 HeaderPage.defaultProps = {};
 
 export default HeaderPage;
+

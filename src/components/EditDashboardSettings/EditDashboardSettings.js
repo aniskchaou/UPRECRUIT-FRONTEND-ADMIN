@@ -37,11 +37,11 @@ const EditDashboardSettings = () => {
         <div className="EditDashboardSettings">
             <form onSubmit={handleSubmit(onSubmit)}>
 
-                <div class="form-group row">
-                    <label for="select2" class="col-4 col-form-label">Show Summary</label>
-                    <div class="col-8">
-                        <select onChange={handleInputChange} value={dashboardSettings?.showSummary} ref={register({ required: true })}
-                            id="select2" name="showSummary" class="custom-select">
+                <div className="form-group row">
+                    <label htmlFor="select2" className="col-4 col-form-label">Show Summary</label>
+                    <div className="col-8">
+                        <select onChange={handleInputChange} value={dashboardSettings?.showSummary || ""} ref={register({ required: true })}
+                            id="select2" name="showSummary" className="custom-select">
 
                             <option value="1">Yes</option>
                             <option value="0">No</option>
@@ -49,11 +49,11 @@ const EditDashboardSettings = () => {
                     </div>
                 </div>
 
-                <div class="form-group row">
-                    <label for="select2" class="col-4 col-form-label">Show Calendar</label>
-                    <div class="col-8">
-                        <select onChange={handleInputChange} value={dashboardSettings?.showCalendar} ref={register({ required: true })}
-                            id="select2" name="showCalendar" class="custom-select">
+                <div className="form-group row">
+                    <label htmlFor="select2" className="col-4 col-form-label">Show Calendar</label>
+                    <div className="col-8">
+                        <select onChange={handleInputChange} value={dashboardSettings?.showCalendar || ""} ref={register({ required: true })}
+                            id="select2" name="showCalendar" className="custom-select">
 
                             <option value="1">Yes</option>
                             <option value="0">No</option>
@@ -61,11 +61,11 @@ const EditDashboardSettings = () => {
                     </div>
                 </div>
 
-                <div class="form-group row">
-                    <label for="select2" class="col-4 col-form-label">Show Charts</label>
-                    <div class="col-8">
-                        <select onChange={handleInputChange} value={dashboardSettings?.showExpenseIncomeCharts} ref={register({ required: true })}
-                            id="select2" name="showExpenseIncomeCharts" class="custom-select">
+                <div className="form-group row">
+                    <label htmlFor="select2" className="col-4 col-form-label">Show Charts</label>
+                    <div className="col-8">
+                        <select onChange={handleInputChange} value={dashboardSettings?.showExpenseIncomeCharts || ""} ref={register({ required: true })}
+                            id="select2" name="showExpenseIncomeCharts" className="custom-select">
 
                             <option value="1">Yes</option>
                             <option value="0">No</option>
@@ -73,9 +73,9 @@ const EditDashboardSettings = () => {
                     </div>
                 </div>
 
-                <div class="form-group row">
-                    <div class="offset-4 col-8">
-                        <button name="submit" type="submit" class="btn btn-primary"><i class="far fa-save"></i>
+                <div className="form-group row">
+                    <div className="offset-4 col-8">
+                        <button name="submit" type="submit" className="btn btn-primary"><i className="far fa-save"></i>
                             Save</button>
                     </div>
                 </div>
@@ -91,3 +91,4 @@ EditDashboardSettings.propTypes = {};
 EditDashboardSettings.defaultProps = {};
 
 export default EditDashboardSettings;
+

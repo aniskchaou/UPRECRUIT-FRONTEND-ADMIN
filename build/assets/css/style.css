@@ -1195,7 +1195,7 @@ header .form-inline {
 
 .content {
   float: left;
-  padding: 1.875em;
+  padding: 0;
   width: 100%; }
 
 .card {

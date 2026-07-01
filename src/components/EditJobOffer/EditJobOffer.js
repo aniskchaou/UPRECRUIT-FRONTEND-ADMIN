@@ -31,19 +31,19 @@ const EditJobOffer = (props) => {
     <div className="EditGroupe">
       <form onSubmit={handleSubmit(onSubmit)}>
 
-        <div class="form-group row">
-          <label for="text" class="col-4 col-form-label">Nom du groupe</label>
-          <div class="col-8">
-            <input onChange={handleInputChange} value={groupe?.groupe_name} ref={register({ required: true })}
-              id="text" name="groupe_name" type="text" class="form-control" />
+        <div className="form-group row">
+          <label htmlFor="text" className="col-4 col-form-label">Nom du groupe</label>
+          <div className="col-8">
+            <input onChange={handleInputChange} value={groupe?.groupe_name || ""} ref={register({ required: true })}
+              id="text" name="groupe_name" type="text" className="form-control" />
 
           </div>
         </div>
 
 
-        <div class="form-group row">
-          <div class="offset-4 col-8">
-            <button name="submit" type="submit" class="btn btn-primary"><i class="far fa-save"></i>Sauvegarder</button>
+        <div className="form-group row">
+          <div className="offset-4 col-8">
+            <button name="submit" type="submit" className="btn btn-primary"><i className="far fa-save"></i>Sauvegarder</button>
           </div>
         </div>
 
@@ -56,3 +56,4 @@ EditJobOffer.propTypes = {};
 EditJobOffer.defaultProps = {};
 
 export default EditJobOffer;
+

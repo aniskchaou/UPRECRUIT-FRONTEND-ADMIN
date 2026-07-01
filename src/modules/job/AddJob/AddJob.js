@@ -58,11 +58,11 @@ const AddJob = (props) => {
       <form onSubmit={handleSubmit(onSubmit)}>
 
 
-        <div class="form-group row">
-          <label for="text" class="col-4 col-form-label">Role</label>
-          <div class="col-8">
-            <div class="input-group">
-              <input onChange={handleInputChange} value={job.post} id="text" name="post" type="text" class="form-control" ref={register({ required: true })} />
+        <div className="form-group row">
+          <label htmlFor="text" className="col-4 col-form-label">Role</label>
+          <div className="col-8">
+            <div className="input-group">
+              <input onChange={handleInputChange} value={job.post} id="text" name="post" type="text" className="form-control" ref={register({ required: true })} />
             </div>
             <div className="error text-danger">
               {errors.post && jobValidation.post}
@@ -70,31 +70,31 @@ const AddJob = (props) => {
           </div>
         </div>
 
-        <div class="form-group row">
-          <label for="textarea" class="col-4 col-form-label">Description</label>
-          <div class="col-8">
-            <textarea onChange={handleInputChange} value={job.description} id="textarea" name="description" cols="40" rows="5" class="form-control" ref={register({ required: true })} ></textarea>
+        <div className="form-group row">
+          <label htmlFor="textarea" className="col-4 col-form-label">Description</label>
+          <div className="col-8">
+            <textarea onChange={handleInputChange} value={job.description} id="textarea" name="description" cols="40" rows="5" className="form-control" ref={register({ required: true })} ></textarea>
             <div className="error text-danger">
               {errors.description && jobValidation.description}
             </div>
           </div>
         </div>
 
-        <div class="form-group row">
-          <label for="textarea1" class="col-4 col-form-label">Requirements</label>
-          <div class="col-8">
-            <textarea onChange={handleInputChange} value={job.requirement} id="requirement" name="requirement" cols="40" rows="5" class="form-control" ref={register({ required: true })} ></textarea>
-          </div>
-          <div className="error text-danger">
-            {errors.requirement && jobValidation.requirement}
+        <div className="form-group row">
+          <label htmlFor="textarea1" className="col-4 col-form-label">Requirements</label>
+          <div className="col-8">
+            <textarea onChange={handleInputChange} value={job.requirement} id="requirement" name="requirement" cols="40" rows="5" className="form-control" ref={register({ required: true })} ></textarea>
+            <div className="error text-danger">
+              {errors.requirement && jobValidation.requirement}
+            </div>
           </div>
         </div>
 
 
-        <div class="form-group row">
-          <label for="text2" class="col-4 col-form-label">Location</label>
-          <div class="col-8">
-            <input onChange={handleInputChange} value={job.location} id="text2" name="location" type="text" class="form-control" ref={register({ required: true })} />
+        <div className="form-group row">
+          <label htmlFor="text2" className="col-4 col-form-label">Location</label>
+          <div className="col-8">
+            <input onChange={handleInputChange} value={job.location} id="text2" name="location" type="text" className="form-control" ref={register({ required: true })} />
             <div className="error text-danger">
               {errors.location && jobValidation.location}
             </div>
@@ -103,10 +103,10 @@ const AddJob = (props) => {
         </div>
 
 
-        <div class="form-group row">
-          <label for="select1" class="col-4 col-form-label">Category</label>
-          <div class="col-8">
-            <select class="custom-select" name="category" ref={register({ required: true })}>
+        <div className="form-group row">
+          <label htmlFor="select1" className="col-4 col-form-label">Category</label>
+          <div className="col-8">
+            <select className="custom-select" name="category" ref={register({ required: true })}>
               <option value="Développement">IT</option>
               <option value="Design">Design</option>
             </select>
@@ -118,10 +118,10 @@ const AddJob = (props) => {
         </div>
 
 
-        <div class="form-group row">
-          <label for="select3" class="col-4 col-form-label">Skills</label>
-          <div class="col-8">
-            <select name="skill" class="custom-select" ref={register({ required: true })}>
+        <div className="form-group row">
+          <label htmlFor="select3" className="col-4 col-form-label">Skills</label>
+          <div className="col-8">
+            <select name="skill" className="custom-select" ref={register({ required: true })}>
               <option value="PHP">PHP</option>
               <option value="Java">Java</option>
             </select>
@@ -133,20 +133,20 @@ const AddJob = (props) => {
         </div>
 
 
-        <div class="form-group row">
-          <label for="text4" class="col-4 col-form-label">Start</label>
-          <div class="col-8">
-            <input onChange={handleInputChange} value={job.start} id="text4" name="start" type="date" class="form-control" ref={register({ required: true })} />
+        <div className="form-group row">
+          <label htmlFor="text4" className="col-4 col-form-label">Start</label>
+          <div className="col-8">
+            <input onChange={handleInputChange} value={job.start} id="text4" name="start" type="date" className="form-control" ref={register({ required: true })} />
             <div className="error text-danger">
               {errors.start && jobValidation.start}
             </div>
           </div>
         </div>
 
-        <div class="form-group row">
-          <label for="text3" class="col-4 col-form-label">End</label>
-          <div class="col-8">
-            <input onChange={handleInputChange} value={job.end} id="text3" name="end" type="date" class="form-control" ref={register({ required: true })} />
+        <div className="form-group row">
+          <label htmlFor="text3" className="col-4 col-form-label">End</label>
+          <div className="col-8">
+            <input onChange={handleInputChange} value={job.end} id="text3" name="end" type="date" className="form-control" ref={register({ required: true })} />
             <div className="error text-danger">
               {errors.end && jobValidation.end}
             </div>
@@ -155,10 +155,10 @@ const AddJob = (props) => {
         </div>
 
 
-        <div class="form-group row">
-          <label for="select4" class="col-4 col-form-label">Status</label>
-          <div class="col-8">
-            <select onChange={handleInputChange} id="select4" name="active" value={job.active} class="custom-select" ref={register({ required: true })}>
+        <div className="form-group row">
+          <label htmlFor="select4" className="col-4 col-form-label">Status</label>
+          <div className="col-8">
+            <select onChange={handleInputChange} id="select4" name="active" value={job.active} className="custom-select" ref={register({ required: true })}>
               <option value="Available">Available</option>
               <option value="Closed">Closed</option>
             </select>
@@ -171,9 +171,9 @@ const AddJob = (props) => {
 
 
 
-        <div class="form-group row">
-          <div class="offset-4 col-8">
-            <button name="submit" type="submit" class="btn btn-primary">
+        <div className="form-group row">
+          <div className="offset-4 col-8">
+            <button name="submit" type="submit" className="btn btn-primary">
               <i className="fa fa-check"></i><font><font> Save</font></font></button>
 
           </div>
@@ -191,3 +191,5 @@ AddJob.propTypes = {};
 AddJob.defaultProps = {};
 
 export default AddJob;
+
+

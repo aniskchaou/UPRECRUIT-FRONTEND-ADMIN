@@ -34,11 +34,11 @@ const EditFooterSettings = () => {
   return (
     <div className="EditDashboardSettings">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div class="form-group row">
-          <label for="select2" class="col-4 col-form-label">Show footer</label>
-          <div class="col-8">
-            <select onChange={handleInputChange} value={footerSettings?.enableFooter} ref={register({ required: true })}
-              id="select2" name="enableFooter" class="custom-select">
+        <div className="form-group row">
+          <label htmlFor="select2" className="col-4 col-form-label">Show footer</label>
+          <div className="col-8">
+            <select onChange={handleInputChange} value={footerSettings?.enableFooter || ""} ref={register({ required: true })}
+              id="select2" name="enableFooter" className="custom-select">
 
               <option value="1">Yes</option>
               <option value="0">No</option>
@@ -46,11 +46,11 @@ const EditFooterSettings = () => {
           </div>
         </div>
 
-        <div class="form-group row">
-          <label for="select2" class="col-4 col-form-label">Show copy right</label>
-          <div class="col-8">
-            <select onChange={handleInputChange} value={footerSettings?.enableCopyRightTest} ref={register({ required: true })}
-              id="select2" name="enableCopyRightTest" class="custom-select">
+        <div className="form-group row">
+          <label htmlFor="select2" className="col-4 col-form-label">Show copy right</label>
+          <div className="col-8">
+            <select onChange={handleInputChange} value={footerSettings?.enableCopyRightTest || ""} ref={register({ required: true })}
+              id="select2" name="enableCopyRightTest" className="custom-select">
 
               <option value="1">Yes</option>
               <option value="0">No</option>
@@ -60,9 +60,9 @@ const EditFooterSettings = () => {
 
 
 
-        <div class="form-group row">
-          <div class="offset-4 col-8">
-            <button name="submit" type="submit" class="btn btn-primary"><i class="far fa-save"></i>
+        <div className="form-group row">
+          <div className="offset-4 col-8">
+            <button name="submit" type="submit" className="btn btn-primary"><i className="far fa-save"></i>
               Save</button>
           </div>
         </div>
@@ -78,3 +78,4 @@ EditFooterSettings.propTypes = {};
 EditFooterSettings.defaultProps = {};
 
 export default EditFooterSettings;
+

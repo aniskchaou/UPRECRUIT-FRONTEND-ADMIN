@@ -1,8 +1,5 @@
 .Navigation {}
 
 .navbar-nav li>.activeLink {
-    font-weight: bold;
-    font-size:large;
-    background-color: #fafafa;
-    color: #0056b3;
+    font-weight: 700;
   }

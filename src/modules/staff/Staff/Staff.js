@@ -1,182 +1,301 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './Staff.css';
-import { LoadJS } from '../../../libraries/datatables/datatables';
 import EditStaff from '../EditStaff/EditStaff';
 import AddStaff from '../AddStaff/AddStaff';
-import useForceUpdate from 'use-force-update';
 import showMessage from '../../../libraries/messages/messages';
-import staffMessage from '../../../main/messages/staffMessage';
-import StaffTestService from '../../../main/mocks/StaffTestService';
-import staffHTTPService from '../../../main/services/staffHTTPService';
+import staffHTTPService from '../../../main/services/staffHTTPService'
+import { Table, Button, Modal, Space, Popconfirm, Empty, Spin, Input, Tooltip, Row, Col, Tag } from 'antd';
+import { EditOutlined, DeleteOutlined, PlusOutlined, DownloadOutlined, UndoOutlined, ReloadOutlined } from '@ant-design/icons';
 
 const Staff = () => {
-  const [staffs, setStaffs] = useState([]);
-  const [updatedItem, setUpdatedItem] = useState({});
-  const forceUpdate = useForceUpdate();
-  const closeButtonEdit = useRef(null);
-  const closeButtonAdd = useRef(null);
-  const [loading, setLoading] = useState(true);
 
+  const [staff, setStaff] = useState([]);
+  const [filteredStaff, setFilteredStaff] = useState([]);
+  const [updatedItem, setUpdatedItem] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [addModalVisible, setAddModalVisible] = useState(false);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
-    LoadJS()
-    getAllPatient()
+    getAllStaff()
   }, []);
 
-
-  const getAllPatient = () => {
+  const getAllStaff = () => {
     setLoading(true);
     staffHTTPService.getAllStaff()
       .then(response => {
-        setStaffs(response.data);
+        setStaff(response.data);
+        filterData(response.data, searchText);
         setLoading(false);
       })
       .catch(e => {
-        showMessage('Confirmation', e, 'info')
+        setLoading(false);
+        showMessage('Error', 'Failed to load staff', 'error')
       });
   };
 
-
-  const resfresh = () => {
-    getAllPatient()
-    forceUpdate()
-  }
-
-  const removePatientAction = (e, data) => {
-    e.preventDefault();
-    var r = window.confirm("Etes-vous sûr que vous voulez supprimer ?");
-    if (r) {
-      showMessage('Confirmation', 'patientMessage.delete', 'success')
-      staffHTTPService.removeStaff(data).then(data => {
-        resfresh()
-      }).catch(e => {
-        showMessage('Confirmation', e, 'warning')
-      });
+  const filterData = useCallback((data, search) => {
+    let filtered = data;
+    if (search) {
+      filtered = filtered.filter(item =>
+        item.full_name?.toLowerCase().includes(search.toLowerCase()) ||
+        item.role?.toLowerCase().includes(search.toLowerCase())
+      );
     }
+    setFilteredStaff(filtered);
+  }, []);
+
+  useEffect(() => {
+    filterData(staff, searchText);
+  }, [searchText, staff, filterData]);
+
+  const handleBulkDelete = () => {
+    if (selectedRowKeys.length === 0) {
+      showMessage('Info', 'Select staff to delete', 'info');
+      return;
+    }
+    const deletePromises = selectedRowKeys.map(id => staffHTTPService.removeStaff(id));
+    Promise.all(deletePromises)
+      .then(() => {
+        getAllStaff();
+        setSelectedRowKeys([]);
+        showMessage('Success', `${selectedRowKeys.length} deleted`, 'success');
+      })
+      .catch(e => showMessage('Error', 'Deletion failed', 'error'));
+  };
+
+  const handleExport = () => {
+    const data = selectedRowKeys.length > 0 
+      ? filteredStaff.filter(s => selectedRowKeys.includes(s.id))
+      : filteredStaff;
+    if (data.length === 0) {
+      showMessage('Info', 'No data to export', 'info');
+      return;
+    }
+    const headers = ['Full Name', 'Role'];
+    const rows = data.map(item => [item.full_name, item.role]);
+    const csv = [headers, ...rows].map(row => row.map(cell => `"${cell || ''}"`).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `staff_${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    showMessage('Success', 'Exported', 'success');
+  };
+
+  const removeStaffAction = (id) => {
+    staffHTTPService.removeStaff(id).then(() => {
+      getAllStaff();
+      showMessage('Success', 'Staff deleted', 'success');
+      setSelectedRowKeys(selectedRowKeys.filter(key => key !== id));
+    }).catch(e => {
+      showMessage('Error', 'Deletion failed', 'error')
+    });
   }
 
-  const updatePatientAction = (e, data) => {
-    e.preventDefault();
+  const updateStaffAction = (data) => {
     setUpdatedItem(data)
-    resfresh()
+    setEditModalVisible(true)
   }
 
-  const closeModalEdit = (data) => {
-    resfresh()
-    closeButtonEdit.current.click()
-  }
+  const uniqueRoles = new Set(staff.map(item => item.role).filter(Boolean)).size;
 
-  const closeModalAdd = (data) => {
-    resfresh()
-    closeButtonAdd.current.click()
-  }
-
+  const columns = [
+    {
+      title: 'Full Name',
+      dataIndex: 'full_name',
+      key: 'full_name',
+      render: (text) => text || '—',
+      sorter: (a, b) => (a.full_name || '').localeCompare(b.full_name || ''),
+      width: 250,
+    },
+    {
+      title: 'Role',
+      dataIndex: 'role',
+      key: 'role',
+      render: (text) => <Tag color="cyan">{text || '—'}</Tag>,
+      width: 200,
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      width: 130,
+      fixed: 'right',
+      render: (_, record) => (
+        <Space size="small">
+          <Tooltip title="Edit">
+            <Button 
+              type="default" 
+              size="small" 
+              icon={<EditOutlined />}
+              onClick={() => updateStaffAction(record)}
+            />
+          </Tooltip>
+          <Tooltip title="Delete">
+            <Popconfirm
+              title="Delete"
+              description="Confirm?"
+              onConfirm={() => removeStaffAction(record.id)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button type="primary" danger size="small" icon={<DeleteOutlined />} />
+            </Popconfirm>
+          </Tooltip>
+        </Space>
+      ),
+    },
+  ];
 
   return (
-    <div className="card">
-      <div className="card-header">
-        <strong className="card-title">Staffs</strong>
-      </div>
-      <div className="card-body">
-        <table id="example1" className="table table-striped table-bordered">
-          <thead>
-            <tr>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {staffs.map(item =>
-              <tr>
-                <td>{item.email}</td>
-                <td>{item.full_name}</td>
-                <td>
-                  <button onClick={e => updatePatientAction(e, item)} type="button" data-toggle="modal" data-target="#editStaff" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => updatePatientAction(e, staffs.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
-              </tr>
+    <div className="module-page">
+      <section className="module-page__hero">
+        <div>
+          <span className="module-page__eyebrow">Operations module</span>
+          <h2 className="module-page__title">Staff Management</h2>
+          <p className="module-page__subtitle">Manage team members and their roles.</p>
+          <div className="module-page__meta">
+            <span>Team management</span>
+            <span>Role assignment</span>
+            <span>Staff directory</span>
+          </div>
+        </div>
+        <div className="module-page__kpis">
+          <div>
+            <strong>{filteredStaff.length}</strong>
+            <span>Team members</span>
+          </div>
+          <div>
+            <strong>{uniqueRoles}</strong>
+            <span>Roles</span>
+          </div>
+        </div>
+      </section>
+
+      <div style={{ background: '#fff', borderRadius: '14px', padding: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
+        <div style={{ marginBottom: '16px' }}>
+          <Row gutter={[16, 16]} align="middle" wrap>
+            <Col flex="auto">
+              <Input
+                placeholder="Search staff by name or role..."
+                prefix="🔍"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                style={{ maxWidth: '300px' }}
+              />
+            </Col>
+            {searchText && (
+              <Col>
+                <Button
+                  icon={<UndoOutlined />}
+                  onClick={() => setSearchText('')}
+                  danger
+                >
+                  Reset
+                </Button>
+              </Col>
             )}
-          </tbody>
-          <tfoot>
-            <tr>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Actions</th>
-            </tr>
-          </tfoot>
-        </table>
-        <button type="button" data-toggle="modal" data-target="#addStaff" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
-          Ajouter</button>
-
-
-        <div class="modal fade" id="addStaff" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Nouveau</h5>
-                <button onClick={resfresh} type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <AddStaff />
-              </div>
-              <div class="modal-footer">
-                <button onClick={resfresh} type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-
-              </div>
-            </div>
-          </div>
+            <Col>
+              <Button
+                type="primary"
+                icon={<PlusOutlined />}
+                onClick={() => setAddModalVisible(true)}
+              >
+                Add Staff
+              </Button>
+            </Col>
+            <Col>
+              <Tooltip title="Export">
+                <Button
+                  icon={<DownloadOutlined />}
+                  onClick={handleExport}
+                  disabled={filteredStaff.length === 0}
+                >
+                  Export
+                </Button>
+              </Tooltip>
+            </Col>
+            <Col>
+              <Button
+                icon={<ReloadOutlined />}
+                onClick={() => {
+                  setSelectedRowKeys([]);
+                  getAllStaff();
+                }}
+                loading={loading}
+              />
+            </Col>
+            {selectedRowKeys.length > 0 && (
+              <Col>
+                <Popconfirm
+                  title="Delete Multiple"
+                  description={`Delete ${selectedRowKeys.length}?`}
+                  onConfirm={handleBulkDelete}
+                  okText="Delete"
+                  okButtonProps={{ danger: true }}
+                >
+                  <Button type="primary" danger>
+                    Delete {selectedRowKeys.length}
+                  </Button>
+                </Popconfirm>
+              </Col>
+            )}
+          </Row>
         </div>
-
-
-        <div class="modal fade" id="editStaff" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Editt</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <EditStaff staff={updatedItem} />
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="modal fade" id="viewStaff" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-
-              </div>
-            </div>
-          </div>
-        </div>
+        
+        <Spin spinning={loading}>
+          <Table
+            columns={columns}
+            dataSource={filteredStaff}
+            rowKey={(record) => record.id}
+            rowSelection={{
+              selectedRowKeys,
+              onChange: setSelectedRowKeys,
+            }}
+            pagination={{ pageSize: 10 }}
+            locale={{
+              emptyText: <Empty description="No staff found" style={{ marginTop: '40px' }} />
+            }}
+            size="middle"
+            scroll={{ x: 900 }}
+          />
+        </Spin>
       </div>
+
+      <Modal
+        title="Edit Staff"
+        open={editModalVisible}
+        onCancel={() => setEditModalVisible(false)}
+        footer={null}
+        width={900}
+      >
+        <EditStaff staff={updatedItem} closeModal={() => {
+          setEditModalVisible(false);
+          getAllStaff();
+        }} />
+      </Modal>
+
+      <Modal
+        title="Add Staff"
+        open={addModalVisible}
+        onCancel={() => setAddModalVisible(false)}
+        footer={null}
+        width={900}
+      >
+        <AddStaff closeModal={() => {
+          setAddModalVisible(false);
+          getAllStaff();
+        }} />
+      </Modal>
     </div>
   )
 };
 
 Staff.propTypes = {};
-
 Staff.defaultProps = {};
 
 export default Staff;
+

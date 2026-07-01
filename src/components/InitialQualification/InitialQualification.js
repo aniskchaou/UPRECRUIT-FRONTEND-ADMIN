@@ -97,8 +97,8 @@ const InitialQualification = () => {
                 <td>{item.dateApplication}</td>
                 <td>{item.status}</td>
                 <td>
-                  <button onClick={e => updateApplyAction(e, item)} type="button" data-toggle="modal" data-target="#editApplyJob" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => removeApplyAction(e, applyJobs.indexOf(item))} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => updateApplyAction(e, item)} type="button" data-toggle="modal" data-target="#editApplyJob" className="btn btn-warning btn-sm"><i className="fas fa-edit"></i></button>
+                  <button onClick={e => removeApplyAction(e, applyJobs.indexOf(item))} type="button" className="btn btn-danger btn-sm"><i className="fas fa-trash-alt"></i></button></td>
               </tr>
             )}
           </tbody>
@@ -118,40 +118,40 @@ const InitialQualification = () => {
 
 
 
-        <div class="modal fade" id="viewCandidate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Voir</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <div className="modal fade" id="viewCandidate" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLongTitle">Voir</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div class="modal-body">
+              <div className="modal-body">
                 <ViewCandidate />
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-danger" data-dismiss="modal">Close</button>
 
               </div>
             </div>
           </div>
         </div>
 
-        <div class="modal fade" id="viewApplyJob" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Documents</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <div className="modal fade" id="viewApplyJob" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLongTitle">Documents</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div class="modal-body">
+              <div className="modal-body">
                 <ViewApplyJob />
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-danger" data-dismiss="modal">Close</button>
 
               </div>
             </div>
@@ -169,3 +169,4 @@ InitialQualification.propTypes = {};
 InitialQualification.defaultProps = {};
 
 export default InitialQualification;
+

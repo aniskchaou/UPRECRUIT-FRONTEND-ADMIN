@@ -1,30 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './Skill.css';
-import { LoadJS } from '../../../libraries/datatables/datatables';
+import EditSkill from '../../../components/EditSkill/EditSkill';
 import AddSkill from '../AddSkill/AddSkill';
-import useForceUpdate from 'use-force-update';
 import showMessage from '../../../libraries/messages/messages';
-import skillMessage from '../../../main/messages/skillMessage';
-import SkillTestService from '../../../main/mocks/SkillTestService';
-import skillHTTPService from '../../../main/services/skillHTTPService';
-import EditSkill from '../../../components/EditSkill/EditSkill'
+import skillHTTPService from '../../../main/services/skillHTTPService'
+import { Table, Button, Modal, Space, Popconfirm, Empty, Spin, Input, Tooltip, Row, Col } from 'antd';
+import { EditOutlined, DeleteOutlined, PlusOutlined, DownloadOutlined, UndoOutlined, ReloadOutlined } from '@ant-design/icons';
+
 const Skill = () => {
 
   const [skills, setSkills] = useState([]);
+  const [filteredSkills, setFilteredSkills] = useState([]);
   const [updatedItem, setUpdatedItem] = useState({});
-  const forceUpdate = useForceUpdate();
-  const closeButtonEdit = useRef(null);
-  const closeButtonAdd = useRef(null);
   const [loading, setLoading] = useState(true);
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [addModalVisible, setAddModalVisible] = useState(false);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [searchText, setSearchText] = useState('');
 
-
-  useEffect(() => {
-    LoadJS()
-    getAllPatient()
-  }, []);
-
-
-  const getAllPatient = () => {
+  const getAllSkill = useCallback(() => {
     setLoading(true);
     skillHTTPService.getAllSkill()
       .then(response => {
@@ -32,142 +26,264 @@ const Skill = () => {
         setLoading(false);
       })
       .catch(e => {
-        showMessage('Confirmation', e, 'info')
+        setLoading(false);
+        showMessage('Error', 'Failed to load skills', 'error')
       });
+  }, []);
+
+  useEffect(() => {
+    getAllSkill();
+  }, [getAllSkill]);
+
+  const filterData = useCallback((data, search) => {
+    let filtered = data;
+    if (search) {
+      filtered = filtered.filter(item =>
+        item.skillName?.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+    setFilteredSkills(filtered);
+  }, []);
+
+  useEffect(() => {
+    filterData(skills, searchText);
+  }, [searchText, skills, filterData]);
+
+  const handleBulkDelete = () => {
+    if (selectedRowKeys.length === 0) {
+      showMessage('Info', 'Select skills to delete', 'info');
+      return;
+    }
+    const deletePromises = selectedRowKeys.map(id => skillHTTPService.removeSkill(id));
+    Promise.all(deletePromises)
+      .then(() => {
+        getAllSkill();
+        setSelectedRowKeys([]);
+        showMessage('Success', `${selectedRowKeys.length} deleted`, 'success');
+      })
+      .catch(e => showMessage('Error', 'Deletion failed', 'error'));
   };
 
-
-  const resfresh = () => {
-    getAllPatient()
-    //forceUpdate()
-  }
-
-  const removePatientAction = (e, data) => {
-    e.preventDefault();
-    var r = window.confirm("Are you sure?");
-    if (r) {
-      showMessage('Confirmation', 'patientMessage.delete', 'success')
-      skillHTTPService.removeSkill(data.id).then(data => {
-        resfresh()
-      }).catch(e => {
-        showMessage('Confirmation', e, 'warning')
-      });
+  const handleExport = () => {
+    const data = selectedRowKeys.length > 0 
+      ? filteredSkills.filter(s => selectedRowKeys.includes(s.id))
+      : filteredSkills;
+    if (data.length === 0) {
+      showMessage('Info', 'No data to export', 'info');
+      return;
     }
+    const headers = ['Skill Name'];
+    const rows = data.map(item => [item.skillName]);
+    const csv = [headers, ...rows].map(row => row.map(cell => `"${cell || ''}"`).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `skills_${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    showMessage('Success', 'Exported', 'success');
+  };
+
+  const removeSkillAction = (id) => {
+    skillHTTPService.removeSkill(id).then(() => {
+      getAllSkill();
+      showMessage('Success', 'Skill deleted', 'success');
+      setSelectedRowKeys(selectedRowKeys.filter(key => key !== id));
+    }).catch(e => {
+      showMessage('Error', 'Deletion failed', 'error')
+    });
   }
 
-  const updatePatientAction = (e, data) => {
-    e.preventDefault();
+  const updateSkillAction = (data) => {
     setUpdatedItem(data)
-    //resfresh()
+    setEditModalVisible(true)
   }
 
-  const closeModalEdit = (data) => {
-    resfresh()
-    closeButtonEdit.current.click()
-  }
-
-  const closeModalAdd = (data) => {
-    resfresh()
-    closeButtonAdd.current.click()
-  }
+  const columns = [
+    {
+      title: 'Skill Name',
+      dataIndex: 'skillName',
+      key: 'skillName',
+      sorter: (a, b) => (a.skillName || '').localeCompare(b.skillName || ''),
+      width: 300,
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      width: 130,
+      fixed: 'right',
+      render: (_, record) => (
+        <Space size="small">
+          <Tooltip title="Edit">
+            <Button 
+              type="default" 
+              size="small" 
+              icon={<EditOutlined />}
+              onClick={() => updateSkillAction(record)}
+            />
+          </Tooltip>
+          <Tooltip title="Delete">
+            <Popconfirm
+              title="Delete"
+              description="Confirm?"
+              onConfirm={() => removeSkillAction(record.id)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button type="primary" danger size="small" icon={<DeleteOutlined />} />
+            </Popconfirm>
+          </Tooltip>
+        </Space>
+      ),
+    },
+  ];
 
   return (
-    <div className="card">
-      <div className="card-header">
-        <strong className="card-title">Skills</strong>
-      </div>
-      <div className="card-body">
-        <button type="button" data-toggle="modal" data-target="#addSkill" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
-          Create</button>
-        <table id="example1" className="table table-striped table-bordered">
-          <thead>
-            <tr>
-              <th>Skill</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
+    <div className="module-page">
+      <section className="module-page__hero">
+        <div>
+          <span className="module-page__eyebrow">Settings module</span>
+          <h2 className="module-page__title">Skill Management</h2>
+          <p className="module-page__subtitle">Manage available skills and competencies.</p>
+          <div className="module-page__meta">
+            <span>Skill registry</span>
+            <span>Competency tracking</span>
+            <span>Job requirements</span>
+          </div>
+        </div>
+        <div className="module-page__kpis">
+          <div>
+            <strong>{filteredSkills.length}</strong>
+            <span>Total skills</span>
+          </div>
+          <div>
+            <strong>{skills.length}</strong>
+            <span>All available</span>
+          </div>
+        </div>
+      </section>
 
-
-            {skills.map(item =>
-              <tr>
-                <td>{item.name}</td>
-                <td>
-                  <button onClick={e => updatePatientAction(e, item)} type="button" data-toggle="modal" data-target="#editSkill" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                  <button onClick={e => removePatientAction(e, item)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
-              </tr>
+      <div style={{ background: '#fff', borderRadius: '14px', padding: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
+        <div style={{ marginBottom: '16px' }}>
+          <Row gutter={[16, 16]} align="middle" wrap>
+            <Col flex="auto">
+              <Input
+                placeholder="Search skills..."
+                prefix="🔍"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                style={{ maxWidth: '300px' }}
+              />
+            </Col>
+            {searchText && (
+              <Col>
+                <Button
+                  icon={<UndoOutlined />}
+                  onClick={() => setSearchText('')}
+                  danger
+                >
+                  Reset
+                </Button>
+              </Col>
             )}
-          </tbody>
-
-        </table>
-
-
-        <div class="modal fade" id="addSkill" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">New</h5>
-                <button onClick={resfresh} type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <AddSkill closeModal={closeModalAdd} />
-              </div>
-              <div class="modal-footer">
-                <button ref={closeButtonAdd} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-              </div>
-            </div>
-          </div>
+            <Col>
+              <Button
+                type="primary"
+                icon={<PlusOutlined />}
+                onClick={() => setAddModalVisible(true)}
+              >
+                Add Skill
+              </Button>
+            </Col>
+            <Col>
+              <Tooltip title="Export">
+                <Button
+                  icon={<DownloadOutlined />}
+                  onClick={handleExport}
+                  disabled={filteredSkills.length === 0}
+                >
+                  Export
+                </Button>
+              </Tooltip>
+            </Col>
+            <Col>
+              <Button
+                icon={<ReloadOutlined />}
+                onClick={() => {
+                  setSelectedRowKeys([]);
+                  getAllSkill();
+                }}
+                loading={loading}
+              />
+            </Col>
+            {selectedRowKeys.length > 0 && (
+              <Col>
+                <Popconfirm
+                  title="Delete Multiple"
+                  description={`Delete ${selectedRowKeys.length}?`}
+                  onConfirm={handleBulkDelete}
+                  okText="Delete"
+                  okButtonProps={{ danger: true }}
+                >
+                  <Button type="primary" danger>
+                    Delete {selectedRowKeys.length}
+                  </Button>
+                </Popconfirm>
+              </Col>
+            )}
+          </Row>
         </div>
-
-        <div class="modal fade" id="editSkill" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Edit</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <EditSkill skill={updatedItem} closeModal={closeModalEdit} />
-              </div>
-              <div class="modal-footer">
-                <button ref={closeButtonEdit} type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="modal fade" id="viewSkill" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-
-              </div>
-            </div>
-          </div>
-        </div>
+        
+        <Spin spinning={loading}>
+          <Table
+            columns={columns}
+            dataSource={filteredSkills}
+            rowKey={(record) => record.id}
+            rowSelection={{
+              selectedRowKeys,
+              onChange: setSelectedRowKeys,
+            }}
+            pagination={{ pageSize: 10 }}
+            locale={{
+              emptyText: <Empty description="No skills found" style={{ marginTop: '40px' }} />
+            }}
+            size="middle"
+            scroll={{ x: 600 }}
+          />
+        </Spin>
       </div>
+
+      <Modal
+        title="Edit Skill"
+        open={editModalVisible}
+        onCancel={() => setEditModalVisible(false)}
+        footer={null}
+        width={900}
+      >
+        <EditSkill skill={updatedItem} closeModal={() => {
+          setEditModalVisible(false);
+          getAllSkill();
+        }} />
+      </Modal>
+
+      <Modal
+        title="Add Skill"
+        open={addModalVisible}
+        onCancel={() => setAddModalVisible(false)}
+        footer={null}
+        width={900}
+      >
+        <AddSkill closeModal={() => {
+          setAddModalVisible(false);
+          getAllSkill();
+        }} />
+      </Modal>
     </div>
   )
 };
 
 Skill.propTypes = {};
-
 Skill.defaultProps = {};
 
 export default Skill;
+

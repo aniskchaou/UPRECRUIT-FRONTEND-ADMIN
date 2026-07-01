@@ -34,28 +34,28 @@ const EditRefusal = (props) => {
     <div className="EditGroupe">
       <form onSubmit={handleSubmit(onSubmit)}>
 
-        <div class="form-group row">
-          <label for="text" class="col-4 col-form-label">name</label>
-          <div class="col-8">
-            <input onChange={handleInputChange} value={groupe?.name} ref={register({ required: true })}
-              id="text" name="name" type="text" class="form-control" />
+        <div className="form-group row">
+          <label htmlFor="text" className="col-4 col-form-label">name</label>
+          <div className="col-8">
+            <input onChange={handleInputChange} value={groupe?.name || ""} ref={register({ required: true })}
+              id="text" name="name" type="text" className="form-control" />
 
           </div>
         </div>
 
-        <div class="form-group row">
-          <label for="text" class="col-4 col-form-label">description</label>
-          <div class="col-8">
-            <input onChange={handleInputChange} value={groupe?.description} ref={register({ required: true })}
-              id="text" name="description" type="text" class="form-control" />
+        <div className="form-group row">
+          <label htmlFor="text" className="col-4 col-form-label">description</label>
+          <div className="col-8">
+            <input onChange={handleInputChange} value={groupe?.description || ""} ref={register({ required: true })}
+              id="text" name="description" type="text" className="form-control" />
 
           </div>
         </div>
 
 
-        <div class="form-group row">
-          <div class="offset-4 col-8">
-            <button name="submit" type="submit" class="btn btn-primary"><i class="far fa-save"></i> Save</button>
+        <div className="form-group row">
+          <div className="offset-4 col-8">
+            <button name="submit" type="submit" className="btn btn-primary"><i className="far fa-save"></i> Save</button>
           </div>
         </div>
 
@@ -69,3 +69,4 @@ EditRefusal.propTypes = {};
 EditRefusal.defaultProps = {};
 
 export default EditRefusal;
+

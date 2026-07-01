@@ -28,6 +28,7 @@ const ToDo = () => {
         setLoading(false);
       })
       .catch(e => {
+        setLoading(false);
         showMessage('Confirmation', e, 'info')
       });
   };
@@ -54,7 +55,6 @@ const ToDo = () => {
   const updatePatientAction = (e, data) => {
     e.preventDefault();
     setUpdatedItem(data)
-    resfresh()
   }
 
   const closeModalEdit = (data) => {
@@ -75,7 +75,7 @@ const ToDo = () => {
         <strong className="card-title">Tasks</strong>
       </div>
       <div className="card-body">
-        <button type="button" data-toggle="modal" data-target="#addCategory" className="btn btn-success btn-sm"><i class="fas fa-plus"></i>
+        <button type="button" data-toggle="modal" data-target="#addCategory" className="btn btn-success btn-sm"><i className="fas fa-plus"></i>
           Create</button>
         <table id="example1" className="table table-striped table-bordered">
           <thead>
@@ -86,13 +86,23 @@ const ToDo = () => {
             </tr>
           </thead>
           <tbody>
-            {tasks.map(item => (
+            {loading && (
               <tr>
+                <td colSpan="3" className="text-center py-4">Loading tasks...</td>
+              </tr>
+            )}
+            {!loading && tasks.length === 0 && (
+              <tr>
+                <td colSpan="3" className="text-center py-4">No tasks yet. Create one to start tracking operations.</td>
+              </tr>
+            )}
+            {!loading && tasks.map(item => (
+              <tr key={item.id || item.task}>
                 <td>{item.task}</td>
                 <td>{item.status}</td>
                 <td>
 
-                  <button onClick={e => removePatientAction(e, item.id)} type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                  <button onClick={e => removePatientAction(e, item.id)} type="button" className="btn btn-danger btn-sm"><i className="fas fa-trash-alt"></i></button></td>
               </tr>))}
 
 
@@ -104,7 +114,7 @@ const ToDo = () => {
           <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <h5 className="modal-title" id="exampleModalLongTitle">Task Preview</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -114,7 +124,6 @@ const ToDo = () => {
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" className="btn btn-primary">Save changes</button>
               </div>
             </div>
           </div>
@@ -124,7 +133,7 @@ const ToDo = () => {
           <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLongTitle">Nouveau</h5>
+                <h5 className="modal-title" id="exampleModalLongTitle">Create Task</h5>
                 <button onClick={resfresh} type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -133,7 +142,7 @@ const ToDo = () => {
                 <AddToDo />
               </div>
               <div className="modal-footer">
-                <button onClick={resfresh} type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button onClick={resfresh} type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
 
               </div>
             </div>
@@ -150,3 +159,4 @@ ToDo.propTypes = {};
 ToDo.defaultProps = {};
 
 export default ToDo;
+

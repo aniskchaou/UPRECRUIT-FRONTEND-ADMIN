@@ -34,30 +34,30 @@ const SummaryPage = () => {
             </div>
             <div className="card-body">
               <div className="table-responsive">
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editFrontOffice">Edit</button>
-                <a type="button" class="btn btn-warning" href="http://localhost:5000">Website</a>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">Jobs posted : {frontOffice.jobsPosted}</li>
-                  <li class="list-group-item">all companies : {frontOffice.allCompanies} </li>
-                  <li class="list-group-item">total members : {frontOffice.totalMembers} </li>
-                  <li class="list-group-item">happy members : {frontOffice.happyMembers} </li>
+                <button type="button" className="btn btn-success" data-toggle="modal" data-target="#editFrontOffice">Edit</button>
+                <a type="button" className="btn btn-warning" href="http://localhost:5000">Website</a>
+                <ul className="list-group list-group-flush">
+                  <li className="list-group-item">Jobs posted : {frontOffice.jobsPosted}</li>
+                  <li className="list-group-item">all companies : {frontOffice.allCompanies} </li>
+                  <li className="list-group-item">total members : {frontOffice.totalMembers} </li>
+                  <li className="list-group-item">happy members : {frontOffice.happyMembers} </li>
                 </ul>
               </div>
             </div>
-            <div class="modal fade" id="editFrontOffice" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Edit</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div className="modal fade" id="editFrontOffice" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title" id="exampleModalLongTitle">Edit</h5>
+                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                  <div class="modal-body">
+                  <div className="modal-body">
                     <EditSummaryPage frontOffice={frontOffice} />
                   </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <div className="modal-footer">
+                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
 
                   </div>
                 </div>
@@ -76,3 +76,4 @@ SummaryPage.propTypes = {};
 SummaryPage.defaultProps = {};
 
 export default SummaryPage;
+

@@ -871,7 +871,7 @@ aside.left-panel {
   left: 0;
   right: 0;
   top: 0;
-  z-index: 999; }
+  z-index: 1000; }
 .right-panel .navbar-brand {
   width: 250px;
   display: inline-block; }
@@ -1197,7 +1197,7 @@ header .form-inline {
 
 .content {
   float: left;
-  padding: 1.875em;
+  padding: 0;
   width: 100%; }
 
 .card {
@@ -2334,7 +2334,7 @@ footer.site-footer {
     top: 51px !important; }
 
   .content {
-    padding: 1.25em; }
+    padding: 0; }
 
   .flotRealtime2 {
     height: 330px; }
