@@ -1,0 +1,435 @@
+{
+  "recruiters": [
+    {
+      "id": 1,
+      "fullName": "Madalyn Edric",
+      "email": "madalyn.edric@uprecruit.com",
+      "password": "Recruiter@2026",
+      "role": "Lead Recruiter",
+      "contactPhone": "+216 52 100 210",
+      "companyIds": [
+        1
+      ],
+      "activeCompanyId": 1
+    },
+    {
+      "id": 2,
+      "fullName": "Omar Nasser",
+      "email": "omar.nasser@uprecruit.com",
+      "password": "Recruiter2@2026",
+      "role": "Recruiter",
+      "contactPhone": "+216 52 100 220",
+      "companyIds": [
+        1
+      ],
+      "activeCompanyId": 1
+    }
+  ],
+  "companies": [
+    {
+      "id": 1,
+      "name": "Nexa Systems",
+      "description": "Nexa Systems builds SaaS products for customer operations teams.",
+      "culture": "High ownership, transparent communication, customer obsession.",
+      "benefits": "Hybrid work, private health insurance, annual learning budget.",
+      "visibility": "Public",
+      "logoUrl": "https://cdn.uprecruit.com/company/nexa-logo.png",
+      "bannerUrl": "https://cdn.uprecruit.com/company/nexa-banner.png",
+      "media": [
+        "https://cdn.uprecruit.com/company/nexa-office-1.jpg"
+      ],
+      "locations": [
+        "Tunis, Tunisia",
+        "Paris, France"
+      ],
+      "reviews": [
+        {
+          "id": 1,
+          "author": "Anonymous Employee",
+          "rating": 4,
+          "comment": "Great growth opportunities and supportive leadership.",
+          "response": "lmlml"
+        }
+      ]
+    }
+  ],
+  "teamMembers": [
+    {
+      "id": 1,
+      "companyId": 1,
+      "name": "Karim Mansouri",
+      "email": "karim.mansouri@uprecruit.com",
+      "role": "HR Manager",
+      "permissions": [
+        "post_jobs",
+        "review_candidates"
+      ],
+      "status": "Active"
+    }
+  ],
+  "invitations": [
+    {
+      "id": 1,
+      "companyId": 1,
+      "name": "Team Member",
+      "email": "",
+      "role": "HR",
+      "permissions": [
+        "post_jobs",
+        "review_candidates"
+      ],
+      "status": "Pending"
+    }
+  ],
+  "jobApplicants": [
+    {
+      "id": 1,
+      "companyId": 1,
+      "jobId": 101,
+      "jobTitle": "Frontend Engineer",
+      "candidateName": "Lina Farhat",
+      "candidateEmail": "lina.farhat@example.com",
+      "skills": [
+        "React",
+        "TypeScript",
+        "Testing"
+      ],
+      "experienceYears": 4,
+      "screeningAnswers": {
+        "availability": "2 weeks",
+        "relocation": "No",
+        "salaryExpectation": "3500 TND"
+      },
+      "appliedAt": "2026-04-29T15:38:14.234Z",
+      "rating": 0,
+      "resumeUrl": "https://cdn.uprecruit.com/resumes/lina-farhat.pdf",
+      "stage": "Offer",
+      "notes": [],
+      "tags": [
+        "Strong"
+      ],
+      "rejectedReason": "",
+      "selectionStatus": "Selected",
+      "selectedAt": "2026-05-01T19:32:53.132Z",
+      "selectedBy": ""
+    },
+    {
+      "id": 2,
+      "companyId": 1,
+      "jobId": 101,
+      "jobTitle": "Frontend Engineer",
+      "candidateName": "Youssef Karray",
+      "candidateEmail": "youssef.karray@example.com",
+      "skills": [
+        "React",
+        "Redux",
+        "Cypress"
+      ],
+      "experienceYears": 3,
+      "screeningAnswers": {
+        "availability": "Immediate",
+        "relocation": "Yes",
+        "salaryExpectation": "3200 TND"
+      },
+      "appliedAt": "2026-04-26T15:38:14.234Z",
+      "rating": 4.1,
+      "resumeUrl": "https://cdn.uprecruit.com/resumes/youssef-karray.pdf",
+      "stage": "Hired",
+      "notes": [],
+      "tags": [
+        "Backup"
+      ],
+      "rejectedReason": "",
+      "hiredAt": "2026-05-01T19:33:03.463Z",
+      "source": "Direct Application"
+    },
+    {
+      "id": 3,
+      "companyId": 1,
+      "jobId": 102,
+      "jobTitle": "Backend Engineer",
+      "candidateName": "Meriem Ben Salem",
+      "candidateEmail": "meriem.bensalem@example.com",
+      "skills": [
+        "Node.js",
+        "PostgreSQL",
+        "AWS"
+      ],
+      "experienceYears": 6,
+      "screeningAnswers": {
+        "availability": "1 month",
+        "relocation": "No",
+        "salaryExpectation": "4800 TND"
+      },
+      "appliedAt": "2026-04-30T15:38:14.234Z",
+      "rating": 4.8,
+      "resumeUrl": "https://cdn.uprecruit.com/resumes/meriem-bensalem.pdf",
+      "stage": "Interview",
+      "notes": [],
+      "tags": [
+        "Strong"
+      ],
+      "rejectedReason": ""
+    }
+  ],
+  "candidateDatabase": [
+    {
+      "id": 201,
+      "companyId": 1,
+      "fullName": "Sarra Gharbi",
+      "email": "sarra.gharbi@example.com",
+      "location": "Tunis, Tunisia",
+      "skills": [
+        "React",
+        "Next.js",
+        "TypeScript"
+      ],
+      "experienceYears": 5,
+      "summary": "Frontend engineer focused on performance and design systems.",
+      "resumeUrl": "https://cdn.uprecruit.com/resumes/sarra-gharbi.pdf",
+      "source": "Talent DB"
+    },
+    {
+      "id": 202,
+      "companyId": 1,
+      "fullName": "Walid Chebbi",
+      "email": "walid.chebbi@example.com",
+      "location": "Sfax, Tunisia",
+      "skills": [
+        "Node.js",
+        "PostgreSQL",
+        "Redis"
+      ],
+      "experienceYears": 7,
+      "summary": "Backend engineer with API platform and scalability expertise.",
+      "resumeUrl": "https://cdn.uprecruit.com/resumes/walid-chebbi.pdf",
+      "source": "Referral"
+    },
+    {
+      "id": 203,
+      "companyId": 1,
+      "fullName": "Nour Trabelsi",
+      "email": "nour.trabelsi@example.com",
+      "location": "Remote",
+      "skills": [
+        "QA",
+        "Cypress",
+        "Playwright"
+      ],
+      "experienceYears": 4,
+      "summary": "Automation QA specialist and quality advocacy lead.",
+      "resumeUrl": "https://cdn.uprecruit.com/resumes/nour-trabelsi.pdf",
+      "source": "LinkedIn"
+    }
+  ],
+  "candidateShortlists": [
+    {
+      "id": 1,
+      "companyId": 1,
+      "name": "Priority Shortlist",
+      "candidateIds": [
+        201
+      ]
+    }
+  ],
+  "talentPools": [
+    {
+      "id": 1,
+      "companyId": 1,
+      "name": "General Talent Pool",
+      "candidateIds": [
+        201
+      ]
+    },
+    {
+      "id": 2,
+      "companyId": 1,
+      "name": "QA Pool",
+      "candidateIds": [],
+      "createdAt": "2026-05-01T19:03:45.622Z"
+    }
+  ],
+  "recruiterMessages": [
+    {
+      "id": 1,
+      "companyId": 1,
+      "candidateId": 201,
+      "direction": "inbound",
+      "subject": "Interested in frontend roles",
+      "body": "Hello, I am open to frontend opportunities with remote flexibility.",
+      "attachments": [],
+      "createdAt": "2026-05-01T18:27:02.853Z",
+      "threadId": "thread-201",
+      "type": "message"
+    }
+  ],
+  "messageTemplates": [
+    {
+      "id": 1,
+      "companyId": 1,
+      "name": "Initial Outreach",
+      "subject": "Opportunity at {{companyName}}",
+      "body": "Hi {{candidateName}}, your profile looks like a great match for our team. Are you open to a quick chat?"
+    },
+    {
+      "id": 2,
+      "companyId": 1,
+      "name": "Interview Invitation",
+      "subject": "Interview Invitation - {{companyName}}",
+      "body": "Hi {{candidateName}}, we would like to invite you for an interview on {{interviewDate}}."
+    }
+  ],
+  "emailSequences": [],
+  "candidateOutreach": [],
+  "pipelineSettings": {
+    "1": {
+      "stages": [
+        "Applied",
+        "Interview",
+        "Offer",
+        "Hired"
+      ],
+      "updatedAt": "2026-05-01T19:13:16.865Z"
+    }
+  },
+  "hiringWorkflows": {
+    "1": [
+      {
+        "id": "wf_1777662796870",
+        "name": "Standard Hiring",
+        "description": "",
+        "steps": [
+          "Source",
+          "Screen",
+          "Interview",
+          "Offer"
+        ],
+        "triggers": [],
+        "enabled": true,
+        "createdAt": "2026-05-01T19:13:16.870Z"
+      }
+    ]
+  },
+  "automationRules": {
+    "1": [
+      {
+        "id": "rule_1777662796871",
+        "type": "auto-move",
+        "criteria": {
+          "minExperience": 2
+        },
+        "targetStage": "Interview",
+        "enabled": true,
+        "createdAt": "2026-05-01T19:13:16.871Z"
+      },
+      {
+        "id": "rule_1777662796872",
+        "type": "auto-reject",
+        "screeningConditions": [
+          "noDegree"
+        ],
+        "rejectMessage": "Does not meet requirements.",
+        "enabled": true,
+        "createdAt": "2026-05-01T19:13:16.872Z"
+      }
+    ]
+  },
+  "integrations": {
+    "1": [
+      {
+        "name": "Greenhouse",
+        "type": "ATS",
+        "apiKey": "key123",
+        "id": "int_1777662796874",
+        "createdAt": "2026-05-01T19:13:16.874Z",
+        "active": true
+      }
+    ]
+  },
+  "companySubscriptions": [
+    {
+      "id": 1,
+      "companyId": 1,
+      "planName": "Standard",
+      "billingCycle": "Monthly",
+      "jobCredits": 0,
+      "featuredListingCredits": 0,
+      "status": "Active",
+      "startedAt": "2026-05-01T19:18:50.627Z",
+      "renewalDate": "2026-05-31T19:18:50.627Z",
+      "updatedAt": "2026-05-01T19:34:53.102Z"
+    }
+  ],
+  "billingInvoices": [
+    {
+      "id": 1,
+      "companyId": 1,
+      "type": "Plan Change",
+      "description": "Plan updated to Standard",
+      "amount": 149,
+      "currency": "USD",
+      "status": "Paid",
+      "issuedAt": "2026-05-01T19:34:51.953Z"
+    },
+    {
+      "id": 2,
+      "companyId": 1,
+      "type": "Plan Change",
+      "description": "Plan updated to Standard",
+      "amount": 149,
+      "currency": "USD",
+      "status": "Paid",
+      "issuedAt": "2026-05-01T19:34:52.606Z"
+    },
+    {
+      "id": 3,
+      "companyId": 1,
+      "type": "Plan Change",
+      "description": "Plan updated to Standard",
+      "amount": 149,
+      "currency": "USD",
+      "status": "Paid",
+      "issuedAt": "2026-05-01T19:34:53.102Z"
+    }
+  ],
+  "companyPaymentMethods": [],
+  "notificationSettings": [
+    {
+      "id": 1,
+      "companyId": 1,
+      "emailEnabled": true,
+      "pushEnabled": true,
+      "alerts": {
+        "newApplicants": true,
+        "messages": true,
+        "interviewConfirmations": true
+      },
+      "readNotificationIds": [],
+      "updatedAt": "2026-05-01T19:18:50.643Z"
+    }
+  ],
+  "recruiterNotifications": [],
+  "featuredListingPayments": [],
+  "interviewSchedules": [],
+  "interviewFeedback": [],
+  "candidateAssessments": [],
+  "candidateStructuredFeedback": [],
+  "jobOffers": [],
+  "closedJobPostings": [],
+  "recruiterActivityStats": [
+    {
+      "id": 1,
+      "companyId": 1,
+      "recruiterId": 0,
+      "recruiterName": "Recruiter",
+      "actions": {
+        "candidatesSelected": 1,
+        "offersCreated": 0,
+        "hiresCompleted": 1,
+        "jobsClosed": 0
+      },
+      "lastActionAt": "2026-05-01T19:33:03.463Z"
+    }
+  ],
+  "hiringManagerFeedback": []
+}

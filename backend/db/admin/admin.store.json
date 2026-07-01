@@ -1,0 +1,242 @@
+{
+  "jobSeekers": [
+    {
+      "id": 1,
+      "fullName": "Sara Ben Ali",
+      "email": "sara.benali@uprecruit.dev",
+      "status": "Active",
+      "verified": true,
+      "suspended": false,
+      "banned": false,
+      "deleted": false,
+      "skills": [
+        "React",
+        "TypeScript",
+        "Node.js"
+      ],
+      "phone": "+216 55 000 111",
+      "location": "Tunis",
+      "profileCompletion": 92,
+      "activity": [
+        "Applied to Senior React Developer (2h ago)",
+        "Updated CV (Yesterday)",
+        "Completed profile skills section (2 days ago)"
+      ]
+    },
+    {
+      "id": 2,
+      "fullName": "Youssef Trabelsi",
+      "email": "youssef.trabelsi@uprecruit.dev",
+      "status": "Inactive",
+      "verified": false,
+      "suspended": false,
+      "banned": false,
+      "deleted": false,
+      "skills": [
+        "Java",
+        "Spring Boot",
+        "SQL"
+      ],
+      "phone": "+216 55 222 333",
+      "location": "Sousse",
+      "profileCompletion": 74,
+      "activity": [
+        "Started application for Backend Engineer (3 days ago)",
+        "Last login (6 days ago)"
+      ]
+    }
+  ],
+  "recruiters": [
+    {
+      "id": 101,
+      "fullName": "Maya Laurent",
+      "email": "maya@talentbridge.io",
+      "company": "TalentBridge",
+      "registrationStatus": "Pending",
+      "companyVerified": false,
+      "status": "Active",
+      "subscription": "Free",
+      "paymentStatus": "Trial",
+      "jobsPosted": 2,
+      "hires": 0
+    },
+    {
+      "id": 102,
+      "fullName": "Karim Ben Salem",
+      "email": "karim@acmehiring.com",
+      "company": "Acme Hiring",
+      "registrationStatus": "Approved",
+      "companyVerified": true,
+      "status": "Active",
+      "subscription": "Premium",
+      "paymentStatus": "Paid",
+      "jobsPosted": 19,
+      "hires": 6
+    }
+  ],
+  "payments": [
+    {
+      "id": 1,
+      "recruiterId": 102,
+      "amount": 149,
+      "status": "Paid",
+      "paymentDate": "2026-04-03"
+    },
+    {
+      "id": 2,
+      "recruiterId": 101,
+      "amount": 0,
+      "status": "Trial",
+      "paymentDate": "2026-04-11"
+    },
+    {
+      "id": 3,
+      "recruiterId": 102,
+      "amount": 149,
+      "status": "Refunded",
+      "paymentDate": "2026-03-03"
+    }
+  ],
+  "configuration": {
+    "featureToggles": {
+      "messaging": true,
+      "videoInterviews": true,
+      "aiRecommendations": true
+    },
+    "security": {
+      "twoFactorEnabled": true,
+      "retentionPolicies": [
+        {
+          "id": "applications",
+          "label": "Applications",
+          "duration": 24,
+          "unit": "months"
+        },
+        {
+          "id": "activity-logs",
+          "label": "Activity Logs",
+          "duration": 12,
+          "unit": "months"
+        }
+      ]
+    },
+    "cms": {
+      "posts": [],
+      "faqs": [],
+      "landingPages": []
+    },
+    "advanced": {
+      "customFields": {
+        "jobs": [],
+        "applications": []
+      },
+      "pipelineStages": [],
+      "integrationSettings": {
+        "apiAccessEnabled": true,
+        "apiBaseUrl": "https://api.uprecruit.com/v1",
+        "webhooksEnabled": true
+      },
+      "webhooks": [],
+      "indexingSettings": {
+        "allowSearchIndexing": true,
+        "includeJobPages": true,
+        "includeCompanyPages": true,
+        "sitemapAutoRefresh": true
+      },
+      "recommendationRules": [],
+      "supportSlas": []
+    },
+    "appearance": {
+      "themeMode": "Light",
+      "density": "Comfortable",
+      "chartPalette": "Ocean",
+      "enableAnimations": true
+    },
+    "branding": {
+      "primaryColor": "#1c4679",
+      "accentColor": "#3f6a9b",
+      "logoShape": "Rounded",
+      "landingHeadingFont": "Poppins"
+    },
+    "profile": {
+      "adminDisplayName": "Admin User",
+      "profileVisibility": "Internal",
+      "timezonePreference": "Africa/Tunis",
+      "localePreference": "en-US"
+    },
+    "jobPosting": {
+      "templates": [
+        {
+          "id": "tpl-engineering",
+          "name": "Engineering Standard",
+          "title": "Senior Software Engineer",
+          "description": "Build and ship reliable product features with measurable business impact.",
+          "requirements": "5+ years experience, strong problem solving, collaborative communication.",
+          "salaryRange": {
+            "min": 50000,
+            "max": 80000
+          },
+          "locations": [
+            "Remote"
+          ],
+          "employmentType": "Full-Time",
+          "screeningQuestions": [
+            {
+              "id": "q-eng-1",
+              "type": "yes_no",
+              "question": "Do you have at least 5 years of software engineering experience?"
+            },
+            {
+              "id": "q-eng-2",
+              "type": "custom",
+              "question": "Describe a production system you owned end-to-end."
+            }
+          ],
+          "visibility": "Public"
+        },
+        {
+          "id": "tpl-design",
+          "name": "Product Design",
+          "title": "Product Designer",
+          "description": "Design user journeys and product experiences from discovery to handoff.",
+          "requirements": "Portfolio required, experience with design systems and UX research.",
+          "salaryRange": {
+            "min": 40000,
+            "max": 70000
+          },
+          "locations": [
+            "Paris"
+          ],
+          "employmentType": "Hybrid",
+          "screeningQuestions": [
+            {
+              "id": "q-des-1",
+              "type": "mcq",
+              "question": "Primary tool",
+              "options": [
+                "Figma",
+                "Sketch",
+                "Adobe XD"
+              ]
+            }
+          ],
+          "visibility": "Public"
+        }
+      ],
+      "jobs": []
+    }
+  },
+  "analytics": {
+    "scheduledReports": [
+      {
+        "id": 1,
+        "name": "Weekly Admin KPI",
+        "format": "CSV",
+        "frequency": "Weekly",
+        "email": "admin@uprecruit.com",
+        "status": "Active"
+      }
+    ],
+    "exports": []
+  }
+}

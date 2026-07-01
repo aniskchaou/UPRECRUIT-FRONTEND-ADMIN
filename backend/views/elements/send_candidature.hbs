@@ -1,0 +1,204 @@
+<!-- Navigation Start  -->
+		<nav class="navbar navbar-default navbar-sticky bootsnav">
+
+			<div class="container">
+				<!-- Start Header Navigation -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+						<i class="fa fa-bars"></i>
+					</button>
+					<a class="navbar-brand" href="/"><img src="../img/logo.png" class="logo" alt=""></a>
+				</div>
+				<!-- End Header Navigation -->
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="navbar-menu">
+					<ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
+									<li><a href="/">Home</a></li>
+									<li><a href="/">Jobs</a></li>
+									<li><a href="/">Login</a></li>
+									<li><a href="/">Companies</a></li>
+						</ul>
+				</div><!-- /.navbar-collapse -->
+			</div>
+		</nav>
+		<!-- Navigation End  -->
+		<!-- login section start -->
+		<section class="login-wrapper">
+			<div class="row heading">
+				<h2>Finish Candidature</h2>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</p>
+			</div>
+			<div class="container">
+				<div class="col-md-6 col-sm-8 col-md-offset-3 col-sm-offset-2">
+					<form id="myForm" action="/finishcandidature" method="POST" enctype="multipart/form-data">
+						<label class="form-check-label" for="flexCheckDefault">
+							FirstName
+						</label>
+						<input name="firstName" type="text" class="form-control input-lg" placeholder="First Name">
+						<label class="form-check-label" for="flexCheckDefault">
+							LastName
+						</label>
+						<input name="lastName" type="text" class="form-control input-lg" placeholder="Last Name">
+						<label class="form-check-label" for="flexCheckDefault">
+							Email
+						</label>
+						<input name="email" type="text" class="form-control input-lg" placeholder="Email">
+						<label class="form-check-label" for="flexCheckDefault">
+							Telephone
+						</label>
+						<input name="phone" type="text" class="form-control input-lg" placeholder="Telephone">
+						<label class="form-check-label" for="flexCheckDefault">
+							Date of Birth
+						</label>
+						<input name="dateOfBirth" type="date" class="form-control input-lg" placeholder="Birth Date">
+						<label class="form-check-label" for="flexCheckDefault">
+							Details
+						</label>
+						<input name="details" type="text" class="form-control input-lg" placeholder="Details">
+						<label class="form-check-label" for="flexCheckDefault">
+							Gender
+						</label>
+						<select name="gender" type="text" class="form-control input-lg" placeholder="Gender">
+                          <option value="Male">Male</option>
+						  <option value="Female">Female</option>
+						</select>
+						<label class="form-check-label" for="flexCheckDefault">
+							Skills
+						</label>
+						<input name="skills" type="text" class="form-control input-lg" placeholder="Skills">
+						<label class="form-check-label" for="flexCheckDefault">
+							Note
+						</label>
+						<textarea name="note" type="text" class="form-control input-lg" placeholder="User Name"></textarea>
+						<label class="form-check-label" for="flexCheckDefault">
+							Nationality
+						</label>
+						<input name="nationality" type="text" class="form-control input-lg" placeholder="Nationality">
+						<label class="form-check-label" for="flexCheckDefault">
+							City
+						</label>
+						<input name="city" type="text" class="form-control input-lg" placeholder="City">
+						<label class="form-check-label" for="flexCheckDefault">
+							Country
+						</label>
+						<input name="country" type="text" class="form-control input-lg" placeholder="Country">
+						<label class="form-check-label" for="flexCheckDefault">
+							Addess
+						</label>
+						<input name="address" type="text" class="form-control input-lg" placeholder="Address">
+						<label class="form-check-label" for="flexCheckDefault">
+							Experience
+						</label>
+						<input name="experience" type="text" class="form-control input-lg" placeholder="Experience">
+						<label class="form-check-label" for="flexCheckDefault">
+							Language
+						</label>
+						<input name="language" type="text" class="form-control input-lg" placeholder="Language">
+						<label class="form-check-label" for="flexCheckDefault">
+							CV
+						</label>
+						<input name="cv" type="file" class="form-control input-lg" placeholder="CV">
+						<label class="form-check-label" for="flexCheckDefault">
+							Salary
+						</label>
+						<input name="salary" type="text" class="form-control input-lg" placeholder="Salary">
+						<label class="form-check-label" for="flexCheckDefault">
+							Cover letter
+						</label>
+						<input name="coverLetter" type="file" class="form-control input-lg" placeholder="Cover Letter">
+						<label class="form-check-label" for="flexCheckDefault">
+							Candidate Role
+						</label>
+						<input name="jobRole" type="text" class="form-control input-lg" placeholder="Candidate Role">
+						<input name="idJob" type="hidden" class="form-control input-lg" placeholder="User Name" value="{{idJob}}">
+						<div>
+							<label class="form-check-label" for="flexCheckDefault">
+								Remote Work
+							</label>
+							 <input name="remoteWork" type="checkbox" class=" input-lg" placeholder="User Name">
+						
+						<label class="form-check-label" for="flexCheckDefault">
+							Immediate Available
+						</label>
+						<input name="immediateAvailable" type="checkbox" class="input-lg" placeholder="User Name"></div>
+					
+						<button id="send-btn" type="submit" class="btn btn-primary">Send Candidature</button>
+
+					</form>
+					<script>
+						var form = document.getElementById("myForm");
+						document.getElementById("send-btn").addEventListener("click", function () {
+							form.submit();
+						})
+					</script>
+				</div>
+			</div>
+		</section>
+		<!-- login section End -->
+
+		<!-- footer start -->
+		<footer>
+			<div class="container">
+				<div class="col-md-3 col-sm-6">
+					<h4>Featured Job</h4>
+					<ul>
+						<li><a href="#">Browse Jobs</a></li>
+						<li><a href="#">Premium MBA Jobs</a></li>
+						<li><a href="#">Access Database</a></li>
+						<li><a href="#">Manage Responses</a></li>
+						<li><a href="#">Report a Problem</a></li>
+						<li><a href="#">Mobile Site</a></li>
+						<li><a href="#">Jobs by Skill</a></li>
+					</ul>
+				</div>
+
+				<div class="col-md-3 col-sm-6">
+					<h4>Latest Job</h4>
+					<ul>
+						<li><a href="#">Browse Jobs</a></li>
+						<li><a href="#">Premium MBA Jobs</a></li>
+						<li><a href="#">Access Database</a></li>
+						<li><a href="#">Manage Responses</a></li>
+						<li><a href="#">Report a Problem</a></li>
+						<li><a href="#">Mobile Site</a></li>
+						<li><a href="#">Jobs by Skill</a></li>
+					</ul>
+				</div>
+
+				<div class="col-md-3 col-sm-6">
+					<h4>Reach Us</h4>
+					<address>
+					<ul>
+					<li>1201, Murakeu Market, QUCH07<br>
+					United Kingdon</li>
+					<li>Email: Support@job.com</li>
+					<li>Call: 044 123 458 65879</li>
+					<li>Skype: job@skype</li>
+					<li>FAX: 123 456 85</li>
+					</ul>
+					</address>
+				</div>
+
+				<div class="col-md-3 col-sm-6">
+					<h4>Drop A Mail</h4>
+					<form>
+						<input type="text" class="form-control input-lg" placeholder="Your Name">
+						<input type="text" class="form-control input-lg" placeholder="Email...">
+						<textarea class="form-control" placeholder="Message"></textarea>
+						<button type="submit" class="btn btn-primary">Login</button>
+					</form>
+				</div>
+
+
+			</div>
+			<div class="copy-right">
+			 <p></p>
+			</div>
+		</footer>
+
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/owl.carousel.min.js"></script>
+		<script src="js/bootsnav.js"></script>
+		<script src="js/main.js"></script>
