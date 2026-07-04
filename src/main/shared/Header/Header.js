@@ -53,7 +53,7 @@ const Header = ({ connected, handleClick }) => {
 
 
     return (
-        <div id="right-panel" className="right-panel">
+        <div className="right-panel header-panel">
             <header id="header" className="header">
                 <div className="top-left">
                     <div className="brand-block">

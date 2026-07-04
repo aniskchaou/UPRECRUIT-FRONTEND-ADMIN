@@ -47,32 +47,12 @@ const Navigation = () => {
                 <i className="menu-icon fa fa-sitemap"></i>Organization Structure
               </NavLink>
             </li>
-            <li className="menu-item-has-children dropdown">
-              <a href="/#" className="dropdown-toggle" data-toggle="dropdown" role="button" tabIndex="0" aria-haspopup="true" aria-expanded="false">
-                <i className="menu-icon fa fa-paint-brush"></i>Career Page
-              </a>
-              <ul className="sub-menu children dropdown-menu">
-                <li><NavLink to="/header">Header Section</NavLink></li>
-                <li><NavLink to="/summary">Summary Section</NavLink></li>
-                <li><NavLink to="/service">Services Section</NavLink></li>
-                <li><NavLink to="/testimonials">Testimonials</NavLink></li>
-                <li><NavLink to="/newsletter">Newsletter Section</NavLink></li>
-                <li><NavLink to="/footer">Footer Section</NavLink></li>
-                <li><NavLink to="/jobs">Jobs Page</NavLink></li>
-                <li><NavLink to="/companies">Companies Page</NavLink></li>
-              </ul>
-            </li>
 
             {/* ── TEAM ── */}
             <li className="nav-section-label">Team</li>
             <li>
               <NavLink activeClassName="activeLink" to="/users">
                 <i className="menu-icon fa fa-user-friends"></i>Team Members
-              </NavLink>
-            </li>
-            <li>
-              <NavLink activeClassName="activeLink" to="/staff">
-                <i className="menu-icon fa fa-id-badge"></i>Staff
               </NavLink>
             </li>
             <li>
@@ -98,29 +78,6 @@ const Navigation = () => {
                 <i className="menu-icon fa fa-star"></i>Talent Pool
               </NavLink>
             </li>
-            <li className="menu-item-has-children dropdown">
-              <a href="/#" className="dropdown-toggle" data-toggle="dropdown" role="button" tabIndex="0" aria-haspopup="true" aria-expanded="false">
-                <i className="menu-icon fa fa-briefcase"></i>Job Management
-              </a>
-              <ul className="sub-menu children dropdown-menu">
-                <li><NavLink to="/job">All Jobs</NavLink></li>
-                <li><NavLink to="/add-job">Create Job</NavLink></li>
-                <li><NavLink to="/skill">Skills Library</NavLink></li>
-                <li><NavLink to="/location">Locations</NavLink></li>
-              </ul>
-            </li>
-            <li className="menu-item-has-children dropdown">
-              <a href="/#" className="dropdown-toggle" data-toggle="dropdown" role="button" tabIndex="0" aria-haspopup="true" aria-expanded="false">
-                <i className="menu-icon fa fa-stream"></i>Hiring Pipeline
-              </a>
-              <ul className="sub-menu children dropdown-menu">
-                <li><NavLink to="/initial-qualification">Initial Qualification</NavLink></li>
-                <li><NavLink to="/first-interview">First Interview</NavLink></li>
-                <li><NavLink to="/second-interview">Second Interview</NavLink></li>
-                <li><NavLink to="/contract-proposal">Contract Proposal</NavLink></li>
-                <li><NavLink to="/contract-signed">Signed Contracts</NavLink></li>
-              </ul>
-            </li>
 
             <li>
               <NavLink activeClassName="activeLink" to="/approval-workflow">
@@ -130,11 +87,6 @@ const Navigation = () => {
 
             {/* ── INTERVIEWS & ASSESSMENTS ── */}
             <li className="nav-section-label">Interviews &amp; Assessments</li>
-            <li>
-              <NavLink activeClassName="activeLink" to="/interview">
-                <i className="menu-icon fa fa-calendar-check"></i>Interview Schedule
-              </NavLink>
-            </li>
             <li>
               <NavLink activeClassName="activeLink" to="/enterprise/assessment">
                 <i className="menu-icon fa fa-clipboard-check"></i>Assessments

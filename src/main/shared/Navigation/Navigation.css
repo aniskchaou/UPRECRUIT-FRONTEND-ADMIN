@@ -3,3 +3,11 @@
 .navbar-nav li>.activeLink {
     font-weight: 700;
   }
+
+aside.left-panel .workspace-nav-card {
+  margin-top: 12px;
+}
+
+aside.left-panel .navbar {
+  margin-top: 28px !important;
+}
